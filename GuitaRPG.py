@@ -1,4 +1,5 @@
 from neoscore.common import *
+import pyOSC3
 import numpy as np
 import time
 import pathlib
@@ -192,6 +193,9 @@ class tree_branch:
             note_1 = Chordrest(staff.unit(loc+4), staff, ["g,"],(1,8), table=notehead_tables.TRIANGLE_UP)
             note_2 = Chordrest(staff.unit(loc+8), staff, ["g,"],(1,8), table=notehead_tables.TRIANGLE_UP)
 
+        def star(loc):
+            Image((Unit(staff.unit(loc)),Unit(-150)), staff, self.image_path, scale=self.scale)
+
         self.exp_gain()
 
         if self.skill == "E_scrape_rank_1":E_scrape_rank_1(loc),tree_branch.E_scrape_exp_gain()
@@ -204,6 +208,7 @@ class tree_branch:
         elif self.skill == "perc_rank_3":perc_rank_3(loc),tree_branch.perc_exp_gain()
         elif self.skill == "tamb_rank_1":tamb_rank_1(loc),tree_branch.tamb_exp_gain()
         elif self.skill == "tamb_rank_2":tamb_rank_2(loc),tree_branch.tamb_exp_gain()
+        elif self.skill == "star":star(loc)
         else: print("not a skill")
 
 def make_render_area():
@@ -307,7 +312,7 @@ def go_rotate(rot_time, degrees, start_time, static_elements, HUD_elements):
 
 def sequence(static_elements, HUD_elements):
     global region
-    global skills
+    global skills, soundbank
     global scrape_HUD, perc_HUD, tamb_HUD
     unit_length = 1000
     rate = 12
@@ -315,6 +320,7 @@ def sequence(static_elements, HUD_elements):
     start_time = time.time()
     print("sequencing", region)
     if region == "A0":
+        soundbank = np.append(soundbank,tree_branch(skill = "star", image_path = star_1))
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements) #format(duration(s), distance(px))
         region = "A1"
     elif region == "A1":
@@ -464,7 +470,7 @@ def make_reference_staff(viewport_x_ini):
     return staff
 
 def generate_staff_contents():
-    global cells, skills, staff
+    global cells, skills, soundbank, staff, msg
     cells = np.array([])
     weights = np.array([])
     number_of_cells = 4
@@ -476,13 +482,18 @@ def generate_staff_contents():
         for i in range(number_of_cells):
             skills[weighted_list[i]].exp_gain
             cells = np.append(cells,skills[weighted_list[i]].generate_cell(5+i*10))
+    cells = np.append(cells,soundbank[0].generate_cell(5+10*random.randint(1,4)))
+    msg.clearData()
+    #msg.append("plinky_wood")
+    msg.append("scratchy_string")
+    client.send(msg)
 
 def main():
     global region
     global viewport_x_ini, viewport_y_ini, viewport_rot_ini
     global viewport_offset
     global staff
-    global skills, cells
+    global skills, soundbank, cells
     viewport_x_ini = Unit(0)
     viewport_y_ini = Unit(0)
     viewport_rot_ini = 0
@@ -491,6 +502,7 @@ def main():
     neoscore.setup()
 
     skills = np.array([])
+    soundbank = np.array([])
     cells = np.array([])
 
     static_elements = np.array([])
@@ -507,6 +519,10 @@ def main():
     neoscore.show(display_page_geometry=False, auto_viewport_interaction_enabled=False, min_window_size=(1280,720), max_window_size=(1280,720))
 
 if __name__ == '__main__':
+    client = pyOSC3.OSCClient()
+    client.connect( ( '127.0.0.1', 57120 ) )
+    msg = pyOSC3.OSCMessage()
+    msg.setAddress("/print")
     perc_image = np.array([])
     for filename in os.listdir("Assets/perc_images"):
         perc_image = np.append(perc_image, filename)
