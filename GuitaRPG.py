@@ -226,8 +226,8 @@ def make_map(static_elements):
     static_elements = np.append(static_elements,static_element(Unit(0+(unit_length*4)),Unit(-500),0,staff_30_junction))
 
     static_elements = np.append(static_elements,static_element(Unit(40),Unit(-100),0,"Hello, and welcome to the tech demo for GuitaRPG!"))
-    static_elements = np.append(static_elements,static_element(Unit(340),Unit(-100),0,"This piece is written for classical guitar, and SuperCollider is used to generate additional sounds in real-time (not yet implemented)"))
-    static_elements = np.append(static_elements,static_element(Unit(1100),Unit(-100),0,"The guitarist reads the staff, playing material as it passes through the reticle, while calls to SuperCollider are represented by shapes above the staff"))
+    static_elements = np.append(static_elements,static_element(Unit(340),Unit(-100),0,"This piece is written for classical guitar, and SuperCollider is used to generate additional sounds in real-time"))
+    static_elements = np.append(static_elements,static_element(Unit(1100),Unit(-100),0,"The guitarist reads the staff, playing material as it passes through the reticle, while calls to SuperCollider are represented by stars above the staff"))
     #static_elements = np.append(static_elements,static_element(Unit(1200),Unit(0),0,guit_cell_1))
 
     static_elements = np.append(static_elements,static_element(Unit(1950),Unit(-100),0,"In this demo, there are three types of materials which will appear: scraping along the E string, various percussive effects, and tambura"))
@@ -310,21 +310,31 @@ def go_rotate(rot_time, degrees, start_time, static_elements, HUD_elements):
             sequence(static_elements, HUD_elements)
     neoscore.set_refresh_func(refresh_func_rot, framerate)
 
+def send_particle(name):
+    global msg
+    msg.clearData()
+    msg.append(name)
+    try:
+        client.send(msg)
+    except:
+        print("message failed to send to SuperCollider")
+
+
 def sequence(static_elements, HUD_elements):
     global region
     global skills, soundbank
-    global scrape_HUD, perc_HUD, tamb_HUD
+    global scrape_HUD, perc_HUD, tamb_HUD, msg
     unit_length = 1000
     rate = 12
     rot_rate = 4
     start_time = time.time()
     print("sequencing", region)
     if region == "A0":
-        soundbank = np.append(soundbank,tree_branch(skill = "star", image_path = star_1))
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements) #format(duration(s), distance(px))
         region = "A1"
     elif region == "A1":
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements)
+        soundbank = np.append(soundbank,tree_branch(skill = "star", image_path = star_1))
         region = "A2"
     elif region == "A2":
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements)
@@ -452,6 +462,12 @@ def make_HUD():
     HUD_elements = np.append(HUD_elements, clef)
     time_text = Text((Unit(-100), Unit(-150)), None, "0.00")
     HUD_elements = np.append(HUD_elements, time_text)
+    scrape_level_text = Text((Unit(100),Unit(-150)),None, "Scrape: ")
+    HUD_elements = np.append(HUD_elements, scrape_level_text)
+    perc_level_text = Text((Unit(100),Unit(-150)),None, "Perc: ")
+    HUD_elements = np.append(HUD_elements, perc_level_text)
+    tamb_level_text = Text((Unit(100),Unit(-150)),None, "Tamb: ")
+    HUD_elements = np.append(HUD_elements, tamb_level_text)
     return HUD_elements
 
 def move_HUD(HUD_elements):
@@ -463,6 +479,9 @@ def move_HUD(HUD_elements):
     HUD_elements[4].x = x - Unit(200) #time
     total_time = float(time.time())-program_start_time
     HUD_elements[4].text = ("{:#.2f}"+" seconds").format(total_time)
+    HUD_elements[5].x = x - Unit(-230) #scrape level
+    HUD_elements[6].x = x - Unit(-180) #perc level
+    HUD_elements[7].x = x - Unit(-120) #perc level
 
 def make_reference_staff(viewport_x_ini):
     staff = Staff((viewport_x_ini-Unit(20),Unit(0)), None, Unit(500), line_spacing=Unit(20), pen = (Pen(pattern = PenPattern.INVISIBLE)))
@@ -470,7 +489,7 @@ def make_reference_staff(viewport_x_ini):
     return staff
 
 def generate_staff_contents():
-    global cells, skills, soundbank, staff, msg
+    global cells, skills, soundbank, staff
     cells = np.array([])
     weights = np.array([])
     number_of_cells = 4
@@ -482,11 +501,11 @@ def generate_staff_contents():
         for i in range(number_of_cells):
             skills[weighted_list[i]].exp_gain
             cells = np.append(cells,skills[weighted_list[i]].generate_cell(5+i*10))
-    cells = np.append(cells,soundbank[0].generate_cell(5+10*random.randint(1,4)))
-    msg.clearData()
-    #msg.append("plinky_wood")
-    msg.append("scratchy_string")
-    client.send(msg)
+    if soundbank.size > 0: 
+        cells = np.append(cells,soundbank[0].generate_cell(15))
+        send_particle("scratchy_string")
+    #cells = np.append(cells,soundbank[0].generate_cell(5+10*random.randint(1,4)))
+    
 
 def main():
     global region
@@ -525,11 +544,7 @@ if __name__ == '__main__':
     msg.setAddress("/print")
     perc_image = np.array([])
     for filename in os.listdir("Assets/perc_images"):
-        perc_image = np.append(perc_image, filename)
-        print(perc_image)
-    #perc_image_1 = pathlib.Path("Assets/perc_images")/"perc_image_1.png"
-    #perc_image_2 = pathlib.Path("Assets/perc_images")/"perc_image_2.png"
-    #perc_image_3 = pathlib.Path("Assets/perc_images")/"perc_image_3.png"
+        perc_image = np.append(perc_image, "Assets/perc_images/"+filename)
     staff_angle_30 = pathlib.Path("Assets")/"staff_angle_30.png"
     staff_angle_60 = pathlib.Path("Assets")/"staff_angle_60.svg"
     staff_30_junction = pathlib.Path("Assets")/"staff_30_junction.png"
