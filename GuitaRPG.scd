@@ -56,7 +56,10 @@ x = OSCFunc( { | msg, time, addr, port |
 	( "attempting to play synth" + synthType ).postln;
 	case
 	{ synthType == "plinky_wood"} {10.do(~plinky_wood)}
-	{ synthType == "scratchy_string"} {10.do(~scratchy_string)};
+	{ synthType == "scratchy_string"} {10.do(~scratchy_string)}
+	{ synthType == "Region_1_effect"} {~delSynth.set(\decay, 4)}
+	{ synthType == "Region_2_effect"} {~delSynth.set(\decay, 40)}
+	{ synthType == "Region_3_effect"} {~delSynth.set(\mix, -1);~sftSynth.set(\width, 2.0);};
 
 }, "/print" );
 
@@ -137,8 +140,8 @@ SynthDef.new(\delay, {
 ~delSynth.set(\mix, -0.5);
 ~delSynth.set(\addfactors, 0.0);
 ~delSynth.set(\decay, 4);
-~delSynth.set(\delMin, 0.1);
-~delSynth.set(\delMin, 0.5);
+~delSynth.set(\delMin, 10.1);
+~delSynth.set(\delMin, 10.5);
 ~sftSynth.set(\width, 0.0);
 ~smpdelSynth.set(\mix, 0.5);
 ~smpdelSynth.set(\addfactors, 0.0);

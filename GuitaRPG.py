@@ -3,13 +3,15 @@ import pyOSC3
 import numpy as np
 import time
 import pathlib
-import threading
 import random
 import os
 
+#If there are any memory leak issues, the framerate can be lowered to mitigate the issue slightly.
+#I have only ever experienced a memory leak on a Windows 10 laptop.
 framerate = 60
 
 class static_element:
+    #This class describes the location of every static element in the window. All visible staff-lines staff lines have these properties.
     def __init__(self, xpos, ypos, rot, image_or_string, scale=1.0):
         self.xpos = xpos
         self.xpos_ini = xpos
@@ -24,12 +26,16 @@ class static_element:
         else:
             self.obj = Image((self.xpos,self.ypos),None,self.image_or_string, rotation=self.rot,scale=self.scale)
 
+    
     def obj_rotate(self,t,degrees,rot_time,x_point,y_point):
+        #The viewport only moves horizontally. To make the viewport seem like it is rotating, I rotate all static elements about a single point.
+        #I do this because there is no way currently to use the neoscore staff object off-axis. I should go and add that feature sometime. 
         self.obj.rotation = self.rot_ini + t*degrees/rot_time
         self.obj.x = ((self.xpos_ini-x_point) * np.cos(t*np.deg2rad(degrees)/rot_time)-(self.ypos_ini-y_point)*np.sin(t*np.deg2rad(degrees)/rot_time))+x_point
         self.obj.y = ((self.ypos_ini-y_point)*np.cos(t*np.deg2rad(degrees)/rot_time)+(self.xpos_ini-x_point)*np.sin(t*np.deg2rad(degrees)/rot_time))+y_point
 
     def confirm_obj_rotate(self,degrees,x_point,y_point):
+        #The time-dependent rotation is sometimes innacurate. This corrects animation glitches.
         self.obj.rotation = self.rot_ini + degrees
         self.obj.x = ((self.xpos_ini-x_point) * np.cos(np.deg2rad(degrees))-(self.ypos_ini-y_point)*np.sin(np.deg2rad(degrees)))+x_point
         self.obj.y = ((self.ypos_ini-y_point)*np.cos(np.deg2rad(degrees))+(self.xpos_ini-x_point)*np.sin(np.deg2rad(degrees)))+y_point
@@ -38,12 +44,15 @@ class static_element:
         self.ypos_ini = self.obj.y
 
 class tree_branch:
+    #This class maintains all information about skill experience. 
+    #The rank and experience of each skills is stored at the class level.
+    #The class also handles the generation of materials for the performer to play.
     E_scrape_exp = 1
-    E_scrape_rank = 1
+    E_scrape_rank = 0
     perc_exp = 1
-    perc_rank = 1
+    perc_rank = 0
     tamb_exp = 1
-    tamb_rank = 1
+    tamb_rank = 0
 
     def __init__(self, image_path = "image_path", skill="skill_name", rank=0, exp=1, max_exp = 5, min_exp = 1):
         self.skill = skill
@@ -55,6 +64,8 @@ class tree_branch:
         self.min_exp = min_exp
 
     def exp_gain(self, gain=1):
+        #This increases the experience level of a skill and resets the experience after a certain number is reached.
+        #This experience level affects the likelyhood of a particular skill appearing.
         self.exp = self.exp + gain
         if self.exp > self.max_exp:
             self.exp = self.min_exp
@@ -62,66 +73,55 @@ class tree_branch:
     @classmethod
     def E_scrape_exp_gain(cls,gain=1):
         global skills
-        global scrape_HUD
-        temp_exp = 1
+        temp_exp = 5
         temp_max_exp = 5
         temp_min_exp = 1
+        E_scrape_max_rank = 5
         cls.E_scrape_exp = cls.E_scrape_exp + gain
         if cls.E_scrape_exp > 4:
             cls.E_scrape_exp = 1
-            cls.E_scrape_rank = cls.E_scrape_rank + 1
+            if (cls.E_scrape_rank < E_scrape_max_rank): cls.E_scrape_rank = cls.E_scrape_rank + 1
             if(cls.E_scrape_rank == 2):
                 skills = np.append(skills,tree_branch(skill = "E_scrape_rank_2", exp = temp_exp, max_exp = temp_max_exp, min_exp = temp_min_exp))
-                scrape_HUD.text = "Scrape "+ str(tree_branch.E_scrape_rank)
             elif(cls.E_scrape_rank == 3):
                 skills = np.append(skills,tree_branch(skill = "E_scrape_rank_3", exp = temp_exp, max_exp = temp_max_exp, min_exp = temp_min_exp))
-                scrape_HUD.text = "Scrape "+ str(tree_branch.E_scrape_rank)
             elif(cls.E_scrape_rank == 4):
                 skills = np.append(skills,tree_branch(skill = "E_scrape_rank_4", exp = temp_exp, max_exp = temp_max_exp, min_exp = temp_min_exp))
-                scrape_HUD.text = "Scrape "+ str(tree_branch.E_scrape_rank)
             elif(cls.E_scrape_rank == 5):
                 skills = np.append(skills,tree_branch(skill = "E_scrape_rank_5", exp = temp_exp, max_exp = temp_max_exp, min_exp = temp_min_exp))
-                scrape_HUD.text = "Scrape max"
-            else:scrape_HUD.text = "Scrape max"
 
     @classmethod
     def perc_exp_gain(cls,gain=1):
         global skills
-        global perc_HUD
-        temp_exp = 6
-        temp_max_exp = 12
+        temp_exp = 15
+        temp_max_exp = 16
         temp_min_exp = 6
+        perc_max_rank = 3
         cls.perc_exp = cls.perc_exp + gain
         if cls.perc_exp > 5:
             cls.perc_exp = 2
-            cls.perc_rank = cls.perc_rank + 1
-            perc_HUD.text = "Perc "+ str(tree_branch.perc_rank)
+            if (cls.perc_rank < perc_max_rank): cls.perc_rank = cls.perc_rank + 1
             if(cls.perc_rank == 2):
                 skills = np.append(skills,tree_branch(skill = "perc_rank_2", image_path = perc_image[1], exp = temp_exp, max_exp = temp_max_exp, min_exp = temp_min_exp))
-                perc_HUD.text = "Perc "+ str(tree_branch.perc_rank)
             elif(cls.perc_rank == 3):
                 skills = np.append(skills,tree_branch(skill = "perc_rank_3", image_path = perc_image[2], exp = temp_exp, max_exp = temp_max_exp, min_exp = temp_min_exp))
-                perc_HUD.text = "Perc max"
-            else:perc_HUD.text = "Perc max"
 
     @classmethod
     def tamb_exp_gain(cls,gain=1):
         global skills
-        global tamb_HUD
-        temp_exp = 10
-        temp_max_exp = 20
-        temp_min_exp = 10
+        temp_exp = 30
+        temp_max_exp = 31
+        temp_min_exp = 18
+        tamb_max_rank = 2
         cls.tamb_exp = cls.tamb_exp + gain
         if cls.tamb_exp > 4:
             cls.tamb_exp = 1
-            cls.tamb_rank = cls.tamb_rank + 1
-            tamb_HUD.text = "Tamb "+ str(tree_branch.tamb_rank)
+            if (cls.tamb_rank < tamb_max_rank): cls.tamb_rank = cls.tamb_rank + 1
             if(cls.tamb_rank == 2):
                 skills = np.append(skills,tree_branch(skill = "tamb_rank_2", exp = temp_exp, max_exp = temp_max_exp, min_exp = temp_min_exp))
-                tamb_HUD.text = "Tamb max"
-            else:tamb_HUD.text = "Tamb max"
 
     def generate_cell(self, loc):
+        #This is an inelegant way to select and generate materials which the performer plays.
         def E_scrape_rank_1(loc):
             start = Chordrest(staff.unit(loc), staff, ["e'"],(1,4), table=notehead_tables.X)
             end = Chordrest(staff.unit(loc+8), staff, ["e"],(1,4), table=notehead_tables.X)
@@ -212,12 +212,14 @@ class tree_branch:
         else: print("not a skill")
 
 def make_render_area():
-    # Scene bounding rect
+    # Scene bounding rectangle. This ensures translation works as desired.
     bound_val = 9999
     Path.rect((Mm(-bound_val), Mm(-bound_val)), None, Mm(2*bound_val), Mm(2*bound_val),
               Brush.no_brush(), "#ff00ff55")
 
 def make_map(static_elements):
+    #This manually places every static element in the window.
+    #This should be a generative process in the future.
     unit_length = 1000
 
     for i in range(4):
@@ -239,6 +241,9 @@ def make_map(static_elements):
     static_elements = np.append(static_elements,static_element(Unit(4150),Unit(-100),0,"The performer interacts with the score to choose what direction to go (this is automated for now)"))
 
     static_elements = np.append(static_elements,static_element(Unit(5000),Unit(-100),-30,"Now we are moving to a new region of the score to learn a new skill!"))
+    static_elements = np.append(static_elements,static_element(Unit(4800),Unit(-100),-30, perc_signpost, scale = 0.25))
+    static_elements = np.append(static_elements,static_element(Unit(4800),Unit(100),30, tamb_signpost, scale = 0.25))
+
 
     reg_2_x = 5*unit_length+unit_length*np.cos(np.deg2rad(-30))
     static_elements = np.append(static_elements,static_element(Unit(reg_2_x),Unit(unit_length*np.sin(np.deg2rad(-30))),-90,staff_1))
@@ -253,6 +258,7 @@ def make_map(static_elements):
 
     static_elements = np.append(static_elements,static_element(Unit(reg_2_x+unit_length),Unit(unit_length*np.sin(np.deg2rad(-30))),90,staff_1))
     static_elements = np.append(static_elements,static_element(Unit(reg_2_x+unit_length+100),Unit(unit_length*np.sin(np.deg2rad(-30))+200),90,"Now we move to the next region. Here we focus on sounds using Tambura"))
+    static_elements = np.append(static_elements,static_element(Unit(reg_2_x+unit_length+70),Unit(unit_length*np.sin(np.deg2rad(-30))+200),90,tamb_signpost, scale = 0.2))
 
 
     static_elements = np.append(static_elements,static_element(Unit(reg_2_x),Unit(-unit_length*np.sin(np.deg2rad(-30))),0,staff_1))
@@ -276,6 +282,8 @@ def make_map(static_elements):
     return static_elements
 
 def go_forward(dur, dist, region, start_time, static_elements, HUD_elements):
+    #This function removes the reference staff if present, then makes a new reference staff in the viewport and fills it with materials.
+    #Once the materials are in place, the viewport translates.
     global staff, viewport_x_ini
     try:
         staff.remove()
@@ -296,6 +304,7 @@ def go_forward(dur, dist, region, start_time, static_elements, HUD_elements):
     neoscore.set_refresh_func(refresh_func_forward, framerate)
 
 def go_rotate(rot_time, degrees, start_time, static_elements, HUD_elements):
+    #This function rotates all the static elements after removing the reference staff and corresponding materials.
     global viewport_x_ini, viewport_y_ini, viewport_rot_ini
     global staff
     staff.remove()
@@ -310,26 +319,55 @@ def go_rotate(rot_time, degrees, start_time, static_elements, HUD_elements):
             sequence(static_elements, HUD_elements)
     neoscore.set_refresh_func(refresh_func_rot, framerate)
 
-def send_particle(name):
-    global msg
+def go_static():
+    #This is called at the end of the demo to stop the motion of the viewport.
+    try:
+        staff.remove()
+    except:
+        pass
+    def refresh_func_static(time:float):
+        pass
+    neoscore.set_refresh_func(refresh_func_static)
+
+def send_particle():
+    #This sends a message to SuperCollider. 
+    global msg, macro_region
     msg.clearData()
+    name = "string"
+    if(macro_region == "A"):name = "scratchy_string"
+    elif(macro_region == "B"):name = "plinky_wood"
+    elif(macro_region == "C"):name = "NULL"
+    elif(macro_region == "Null"):name = "Null"
+    else: print("what region is this!?")
     msg.append(name)
     try:
         client.send(msg)
     except:
         print("message failed to send to SuperCollider")
 
+def update_effect(effect_name):
+    global msg
+    msg.clearData()
+    msg.append(effect_name)
+    try:
+        client.send(msg)
+    except:
+        print("message failed to send to SuperCollider")
 
 def sequence(static_elements, HUD_elements):
-    global region
+    #This very long block of code is only here for the demo. This is what automates navigation through the score.
+    #This section will be greatly simplified when user input is used to navigate the score.
+    global region, macro_region
     global skills, soundbank
     global scrape_HUD, perc_HUD, tamb_HUD, msg
     unit_length = 1000
-    rate = 12
-    rot_rate = 4
+    rate = 12 #12
+    rot_rate = 4 #4
     start_time = time.time()
     print("sequencing", region)
     if region == "A0":
+        update_effect("Region_1_effect")
+        macro_region = "A"
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements) #format(duration(s), distance(px))
         region = "A1"
     elif region == "A1":
@@ -340,25 +378,28 @@ def sequence(static_elements, HUD_elements):
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements)
         region = "A3"
     elif region == "A3":
-        scrape_HUD = Text((Unit(450), Unit(-450)), None, "Scrape "+ str(tree_branch.E_scrape_rank))
         skills = np.append(skills,tree_branch(skill = "E_scrape_rank_1"))
+        tree_branch.E_scrape_rank = 1
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements)
         region = "A4"
     elif region == "A4":
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements)
         region = "A4_rot"
     elif region == "A4_rot":
+        macro_region = "Null"
         go_rotate(rot_rate, 30, start_time, static_elements, HUD_elements)
         region = "A5_to_B1"
     elif region == "A5_to_B1":
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements)
         region = "A5_to_B1_rot"
     elif region == "A5_to_B1_rot":
+        macro_region = "B"
         go_rotate(rot_rate, 60, start_time, static_elements, HUD_elements)
         region = "B1"
     elif region == "B1":
-        perc_HUD = Text((Unit(390), Unit(-450)), None, "Perc "+ str(tree_branch.perc_rank))
-        skills = np.append(skills,tree_branch(skill = "perc_rank_1", image_path = perc_image[0], exp = 6, max_exp = 12, min_exp = 6))
+        update_effect("Region_2_effect")
+        skills = np.append(skills,tree_branch(skill = "perc_rank_1", image_path = perc_image[0], exp = 12, max_exp = 20, min_exp = 6))
+        tree_branch.perc_rank = 1
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements)
         region = "B1_rot"
     elif region == "B1_rot":
@@ -405,12 +446,14 @@ def sequence(static_elements, HUD_elements):
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements)
         region = "B3_to_C2_rot_straight"
     elif region == "B3_to_C2_rot_straight":
+        update_effect("Region_3_effect")
+        macro_region = "C"
         #go_rotate(rot_rate,0)
         region = "C2"
         sequence(static_elements, HUD_elements)
     elif region == "C2":
-        tamb_HUD = Text((Unit(320), Unit(-450)), None, "Tamb "+ str(tree_branch.tamb_rank))
-        skills = np.append(skills,tree_branch(skill = "tamb_rank_1", exp=10, max_exp=20, min_exp=10))
+        skills = np.append(skills,tree_branch(skill = "tamb_rank_1", exp=20, max_exp=25, min_exp=15))
+        tree_branch.tamb_rank = 1
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements)
         region = "C2_rot"
     elif region == "C2_rot":
@@ -443,10 +486,11 @@ def sequence(static_elements, HUD_elements):
     elif region == "D1":
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements)
         region = "D2"
-    #else: neoscore.set_refresh_func(static)
+    else: go_static(), neoscore.set_key_event_handler(exit_key)
     return region
 
 def make_HUD():
+    #This generates all elements in the Heads-Up Display and sticks them in an array.
     HUD_elements = np.array([])
     reticle_path = Path((Unit(-10),Unit(110)),None, Brush.no_brush(), pen = Pen("000000",Unit(4), PenPattern.DOT))
     reticle_path.line_to(Unit(0),Unit(-140))
@@ -471,6 +515,7 @@ def make_HUD():
     return HUD_elements
 
 def move_HUD(HUD_elements):
+    #This ensures the HUD is glued to the viewport.
     x,y = neoscore.get_viewport_center_pos()
     HUD_elements[0].x = x - Unit(200) #reticle
     HUD_elements[1].x = x             #blank reference
@@ -480,15 +525,21 @@ def move_HUD(HUD_elements):
     total_time = float(time.time())-program_start_time
     HUD_elements[4].text = ("{:#.2f}"+" seconds").format(total_time)
     HUD_elements[5].x = x - Unit(-230) #scrape level
+    HUD_elements[5].text = ("Scrape: " + str(tree_branch.E_scrape_rank))
     HUD_elements[6].x = x - Unit(-180) #perc level
+    HUD_elements[6].text = ("Perc: " + str(tree_branch.perc_rank))
     HUD_elements[7].x = x - Unit(-120) #perc level
+    HUD_elements[7].text = ("Tamb: " + str(tree_branch.tamb_rank))
 
 def make_reference_staff(viewport_x_ini):
+    #This is the staff upon which performance materials are placed. 
+    #This is invisible, but it is lined up exactly with the map-staff so the pitches are accurate.
     staff = Staff((viewport_x_ini-Unit(20),Unit(0)), None, Unit(500), line_spacing=Unit(20), pen = (Pen(pattern = PenPattern.INVISIBLE)))
     invisible_clef = Clef(Unit(-1000), staff, 'treble', pen = (Pen(pattern = PenPattern.INVISIBLE)))
     return staff
 
 def generate_staff_contents():
+    #This is the function which primarily uses the class tree_branch and generates staff materials.
     global cells, skills, soundbank, staff
     cells = np.array([])
     weights = np.array([])
@@ -496,6 +547,7 @@ def generate_staff_contents():
     skill_indicies = np.arange(skills.size)
     for i in range(skills.size):
         weights = np.append(weights,skills[i].exp)
+    print("weights: ", weights)
     if weights.size > 0:
         weighted_list = random.choices(skill_indicies, weights, k=number_of_cells)
         for i in range(number_of_cells):
@@ -503,9 +555,12 @@ def generate_staff_contents():
             cells = np.append(cells,skills[weighted_list[i]].generate_cell(5+i*10))
     if soundbank.size > 0: 
         cells = np.append(cells,soundbank[0].generate_cell(15))
-        send_particle("scratchy_string")
+        send_particle()
     #cells = np.append(cells,soundbank[0].generate_cell(5+10*random.randint(1,4)))
     
+def exit_key(event):
+    #This is used only at the very end of the demo.
+    neoscore.shutdown()
 
 def main():
     global region
@@ -538,10 +593,12 @@ def main():
     neoscore.show(display_page_geometry=False, auto_viewport_interaction_enabled=False, min_window_size=(1280,720), max_window_size=(1280,720))
 
 if __name__ == '__main__':
+    #Connection to Supercollider initiation
     client = pyOSC3.OSCClient()
     client.connect( ( '127.0.0.1', 57120 ) )
     msg = pyOSC3.OSCMessage()
     msg.setAddress("/print")
+    #Load images
     perc_image = np.array([])
     for filename in os.listdir("Assets/perc_images"):
         perc_image = np.append(perc_image, "Assets/perc_images/"+filename)
@@ -554,10 +611,13 @@ if __name__ == '__main__':
     test_image_3 = pathlib.Path("Assets")/"test_image_3.png"
     test_image_4 = pathlib.Path("Assets")/"test_image_4.png"
     test_image_5 = pathlib.Path("Assets")/"test_image_5.png"
+    perc_signpost = pathlib.Path("Assets")/"percussionville.png"
+    tamb_signpost = pathlib.Path("Assets")/"tambura_land.png"
     staff_1 = pathlib.Path("Assets")/"staff_1000px.png"
     guit_cell_1 = pathlib.Path("Assets")/"squiggle_1.png"
     star_1 = pathlib.Path("Assets")/"star_1.png"
     disk_1 = pathlib.Path("Assets")/"disk.png"
     sul_6 = pathlib.Path("Assets")/"Sul_6.png"
+    #Get program start time
     program_start_time = int(time.time())
     main()
