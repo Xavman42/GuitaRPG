@@ -1,5 +1,8 @@
 # GuitaRPG
 
+SuperCollider is required for audio synthesis and live-processing. The visual components will work fine without SuperCollider.
+Get SuperCollider here: https://supercollider.github.io/ 
+
 First, open `GuitaRPG.scd` in the SuperCollider IDE ("scide" in Linux terminal). 
 
 In the IDE, hit CTRL+b to boot the server. 
