@@ -8,6 +8,7 @@ import os
 
 #If there are any memory leak issues, the framerate can be lowered to mitigate the issue slightly.
 #I have only ever experienced a memory leak on a Windows 10 laptop.
+#For better performance in the future, I will convert many of the calculations to lookup table searches instead. A consistent 60Hz shouldn't be an issue for this project. 
 framerate = 60
 
 class static_element:
@@ -227,6 +228,7 @@ def make_map(static_elements):
 
     static_elements = np.append(static_elements,static_element(Unit(0+(unit_length*4)),Unit(-500),0,staff_30_junction))
 
+    static_elements = np.append(static_elements,static_element(Unit(0),Unit(-125),0,"PRESS ANY KEY TO BEGIN"))
     static_elements = np.append(static_elements,static_element(Unit(40),Unit(-100),0,"Hello, and welcome to the tech demo for GuitaRPG!"))
     static_elements = np.append(static_elements,static_element(Unit(340),Unit(-100),0,"This piece is written for classical guitar, and SuperCollider is used to generate additional sounds in real-time"))
     static_elements = np.append(static_elements,static_element(Unit(1100),Unit(-100),0,"The guitarist reads the staff, playing material as it passes through the reticle, while calls to SuperCollider are represented by stars above the staff"))
@@ -276,7 +278,7 @@ def make_map(static_elements):
     #static_elements = np.append(static_elements,static_element(Unit(reg_2_x+unit_length),Unit(-unit_length*np.sin(np.deg2rad(-30))),-30,staff_1))
 
     reg_3_x = reg_2_x+unit_length+unit_length*np.cos(np.deg2rad(30))
-    static_elements = np.append(static_elements,static_element(Unit(reg_3_x+200),Unit(-200),0,"We've reached the end of the tech demo! Bye bye"))
+    static_elements = np.append(static_elements,static_element(Unit(reg_3_x+200),Unit(-100),0,"We've reached the end of the tech demo! Bye bye. Press any key to exit once the viewport stops moving."))
     #static_elements = np.append(static_elements,static_element(Unit(reg_3_x),Unit(0),0,staff_1))
 
     return static_elements
@@ -336,7 +338,7 @@ def send_particle():
     name = "string"
     if(macro_region == "A"):name = "scratchy_string"
     elif(macro_region == "B"):name = "plinky_wood"
-    elif(macro_region == "C"):name = "NULL"
+    elif(macro_region == "C"):name = "cavernous_thunk"
     elif(macro_region == "Null"):name = "Null"
     else: print("what region is this!?")
     msg.append(name)
@@ -364,8 +366,12 @@ def sequence(static_elements, HUD_elements):
     rate = 12 #12
     rot_rate = 4 #4
     start_time = time.time()
-    print("sequencing", region)
-    if region == "A0":
+    #print("sequencing", region)
+    if region == "loading":
+        go_static()
+        neoscore.set_key_event_handler(start_key)
+    elif region == "A0":
+        neoscore.set_key_event_handler(keyboard_off)
         update_effect("Region_1_effect")
         macro_region = "A"
         go_forward(rate, unit_length, region, start_time, static_elements, HUD_elements) #format(duration(s), distance(px))
@@ -491,6 +497,7 @@ def sequence(static_elements, HUD_elements):
 
 def make_HUD():
     #This generates all elements in the Heads-Up Display and sticks them in an array.
+    x,y = neoscore.get_viewport_center_pos()
     HUD_elements = np.array([])
     reticle_path = Path((Unit(-10),Unit(110)),None, Brush.no_brush(), pen = Pen("000000",Unit(4), PenPattern.DOT))
     reticle_path.line_to(Unit(0),Unit(-140))
@@ -504,13 +511,13 @@ def make_HUD():
     HUD_elements = np.append(HUD_elements, staff_for_clef)
     clef = Clef(ZERO, staff_for_clef, 'treble')
     HUD_elements = np.append(HUD_elements, clef)
-    time_text = Text((Unit(-100), Unit(-150)), None, "0.00")
+    time_text = Text((x-Unit(200), Unit(-150)), None, "0.00")
     HUD_elements = np.append(HUD_elements, time_text)
-    scrape_level_text = Text((Unit(100),Unit(-150)),None, "Scrape: ")
+    scrape_level_text = Text((x-Unit(-230),Unit(-150)),None, "Scrape: ")
     HUD_elements = np.append(HUD_elements, scrape_level_text)
-    perc_level_text = Text((Unit(100),Unit(-150)),None, "Perc: ")
+    perc_level_text = Text((x-Unit(-180),Unit(-150)),None, "Perc: ")
     HUD_elements = np.append(HUD_elements, perc_level_text)
-    tamb_level_text = Text((Unit(100),Unit(-150)),None, "Tamb: ")
+    tamb_level_text = Text((x-Unit(-120),Unit(-150)),None, "Tamb: ")
     HUD_elements = np.append(HUD_elements, tamb_level_text)
     return HUD_elements
 
@@ -521,7 +528,7 @@ def move_HUD(HUD_elements):
     HUD_elements[1].x = x             #blank reference
     HUD_elements[2].x = x - Unit(200) #clef
     #Element 3 is the staff
-    HUD_elements[4].x = x - Unit(200) #time
+    HUD_elements[4].x = x - Unit(300) #time
     total_time = float(time.time())-program_start_time
     HUD_elements[4].text = ("{:#.2f}"+" seconds").format(total_time)
     HUD_elements[5].x = x - Unit(-230) #scrape level
@@ -547,7 +554,7 @@ def generate_staff_contents():
     skill_indicies = np.arange(skills.size)
     for i in range(skills.size):
         weights = np.append(weights,skills[i].exp)
-    print("weights: ", weights)
+    #print("weights: ", weights)
     if weights.size > 0:
         weighted_list = random.choices(skill_indicies, weights, k=number_of_cells)
         for i in range(number_of_cells):
@@ -562,17 +569,29 @@ def exit_key(event):
     #This is used only at the very end of the demo.
     neoscore.shutdown()
 
+def start_key(event):
+    #This is used to start the demo.
+    global region, static_elements, HUD_elements, program_start_time
+    region = "A0"
+    program_start_time = int(time.time())
+    sequence(static_elements, HUD_elements)
+
+def keyboard_off(event):
+    pass
+
+
 def main():
     global region
     global viewport_x_ini, viewport_y_ini, viewport_rot_ini
     global viewport_offset
     global staff
     global skills, soundbank, cells
+    global static_elements, HUD_elements
     viewport_x_ini = Unit(0)
     viewport_y_ini = Unit(0)
     viewport_rot_ini = 0
     viewport_offset = Unit(200)
-    region = "A0"
+    region = "loading"
     neoscore.setup()
 
     skills = np.array([])
@@ -619,5 +638,4 @@ if __name__ == '__main__':
     disk_1 = pathlib.Path("Assets")/"disk.png"
     sul_6 = pathlib.Path("Assets")/"Sul_6.png"
     #Get program start time
-    program_start_time = int(time.time())
     main()

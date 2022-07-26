@@ -46,6 +46,19 @@ SynthDef(\bpfsaw, {
 	],
 );};
 
+~cavernous_thunk = {Synth(
+	\bpfsaw,
+	[
+		\freq, (1/128)*10.60+rrand(-1.0,1.0),
+		\amp, 0.8,
+		\cfmin, 20*2,
+		\cfmax, 50*5,
+		\rqmin, 0.0005,
+		\rqmax, 0.03,
+		\pan, rrand(-1.0,1.0),
+	],
+);};
+
 
 
 x = OSCFunc( { | msg, time, addr, port |
@@ -57,6 +70,7 @@ x = OSCFunc( { | msg, time, addr, port |
 	case
 	{ synthType == "plinky_wood"} {10.do(~plinky_wood)}
 	{ synthType == "scratchy_string"} {10.do(~scratchy_string)}
+	{ synthType == "cavernous_thunk"} {10.do(~cavernous_thunk)}
 	{ synthType == "Region_1_effect"} {~delSynth.set(\decay, 4)}
 	{ synthType == "Region_2_effect"} {~delSynth.set(\decay, 40)}
 	{ synthType == "Region_3_effect"} {~delSynth.set(\mix, -1);~sftSynth.set(\width, 2.0);};
