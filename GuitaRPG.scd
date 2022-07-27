@@ -1,6 +1,6 @@
 (
 
-SynthDef(\bpfsaw, {
+SynthDef.new(\bpfsaw, {
 	arg atk=2, sus=10, rel=3, c1=1, c2=(-1),
 	freq=500, detune=0.2, pan=0,
 	cfmin=500, cfmax=2000, rqmin=0.1, rqmax=0.2, amp=1, out=0;
@@ -16,8 +16,56 @@ SynthDef(\bpfsaw, {
 	Out.ar(out, sig);
 }).add;
 
+//mic synthdef
+(
+SynthDef.new(\mic, {
+	arg in=0, out=0, amp=1;
+	var sig;
+	sig = SoundIn.ar(in!2) * amp;
+	Out.ar(out, sig);
+}).add;
+);
+
+//pitch shift synthdef
+(
+SynthDef.new(\pitchshift, {
+	arg in=0, out=0, mix(0.5), amp=1, width=0;
+	var sig, shift1, shift2, shiftbal;
+	sig = In.ar(in, 2);
+	shift1 = PitchShift.ar(in: sig, pitchRatio: 1.3333+width);// SinOsc.kr(0.5).exprange(0.5, 1.5));
+	shift2 = PitchShift.ar(in: sig, pitchRatio: 0.6667-width);
+	shiftbal = XFade2.ar(inA: shift1, inB: shift2, pan: 0.5);
+	sig = XFade2.ar(inA: sig, inB: shiftbal, pan: mix) * amp; //mixes the input and shift signals.
+	Out.ar(out, sig);
+}).add;
+);
+
+//delay synthdef
+(
+SynthDef.new(\delay, {
+	arg in=0, out=0, mix=(0.5), decay=10, amp=1, delHz=0.26, delMin=0.20, delMax=0.26, addfactors=1;
+	var sig, delay;
+	sig = In.ar(in, 2);
+	delay = CombL.ar(
+		in: sig,
+		maxdelaytime: 0.5,
+		delaytime: Select.kr(addfactors > 0.5, [SinOsc.kr([delHz,delHz*0.9]),
+			SinOsc.kr([delHz,delHz*0.9])
+			+ SinOsc.kr(1.8*[delHz,delHz*0.9])
+			+ SinOsc.kr(2.5*[delHz,delHz*0.9])
+			+ SinOsc.kr(2.6*[delHz,delHz*0.9])].exprange(delMin,delMax)),
+		decaytime: decay
+	);
+	sig = XFade2.ar(inA: sig, inB: delay, pan: mix) * amp; //mixes the input and delay signals.
+	Out.ar(out, sig);
+}).add;
+);
+)
 
 
+
+
+(
 ~plinky_wood = {Synth(
 	\bpfsaw,
 	[
@@ -79,50 +127,7 @@ x = OSCFunc( { | msg, time, addr, port |
 
 
 
-//mic synthdef
-(
-SynthDef.new(\mic, {
-	arg in=0, out=0, amp=1;
-	var sig;
-	sig = SoundIn.ar(in!2) * amp;
-	Out.ar(out, sig);
-}).add;
-);
 
-//pitch shift synthdef
-(
-SynthDef.new(\pitchshift, {
-	arg in=0, out=0, mix(0.5), amp=1, width=0;
-	var sig, shift1, shift2, shiftbal;
-	sig = In.ar(in, 2);
-	shift1 = PitchShift.ar(in: sig, pitchRatio: 1.3333+width);// SinOsc.kr(0.5).exprange(0.5, 1.5));
-	shift2 = PitchShift.ar(in: sig, pitchRatio: 0.6667-width);
-	shiftbal = XFade2.ar(inA: shift1, inB: shift2, pan: 0.5);
-	sig = XFade2.ar(inA: sig, inB: shiftbal, pan: mix) * amp; //mixes the input and shift signals.
-	Out.ar(out, sig);
-}).add;
-);
-
-//delay synthdef
-(
-SynthDef.new(\delay, {
-	arg in=0, out=0, mix=(0.5), decay=10, amp=1, delHz=0.26, delMin=0.20, delMax=0.26, addfactors=1;
-	var sig, delay;
-	sig = In.ar(in, 2);
-	delay = CombL.ar(
-		in: sig,
-		maxdelaytime: 0.5,
-		delaytime: Select.kr(addfactors > 0.5, [SinOsc.kr([delHz,delHz*0.9]),
-			SinOsc.kr([delHz,delHz*0.9])
-			+ SinOsc.kr(1.8*[delHz,delHz*0.9])
-			+ SinOsc.kr(2.5*[delHz,delHz*0.9])
-			+ SinOsc.kr(2.6*[delHz,delHz*0.9])].exprange(delMin,delMax)),
-		decaytime: decay
-	);
-	sig = XFade2.ar(inA: sig, inB: delay, pan: mix) * amp; //mixes the input and delay signals.
-	Out.ar(out, sig);
-}).add;
-);
 
 //create busses
 (

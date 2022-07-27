@@ -1,4 +1,4 @@
-Name
+﻿Name
 
 Xavier Davenport
 
@@ -49,7 +49,7 @@ The neoscore library is used for visualization and interactivity.
 Numpy is used for faster matrix calculations (may be unnecessary).
 SuperCollider is used for synth generation and live-effect processing.
 pyOSC3 is used to send messages from Python to SuperCollider.
-A simple footswitch or other device is required for interactivity.
+A simple foot-switch or other device is required for interactivity.
 In a performance venue, stereo speakers are required. A projector or television is recommended so that the audience can see the score.
 
 
