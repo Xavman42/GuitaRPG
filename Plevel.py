@@ -1,5 +1,3 @@
-from pyOSC3 import OSCClient, OSCMessage
-
 class Plevel:
     """Class containing all the player level information for each skill
     

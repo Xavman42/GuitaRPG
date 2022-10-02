@@ -1,4 +1,3 @@
-import enum
 from Plevel import Plevel
 
 level = Plevel()
