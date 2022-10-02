@@ -618,24 +618,17 @@ if __name__ == '__main__':
     msg = pyOSC3.OSCMessage()
     msg.setAddress("/print")
     #Load images
+    cwd = "C:/Users/xavie/GuitaRPG/GuitaRPG"
     perc_image = np.array([])
-    for filename in os.listdir("Assets/perc_images"):
-        perc_image = np.append(perc_image, "Assets/perc_images/"+filename)
-    staff_angle_30 = pathlib.Path("Assets")/"staff_angle_30.png"
-    staff_angle_60 = pathlib.Path("Assets")/"staff_angle_60.svg"
-    staff_30_junction = pathlib.Path("Assets")/"staff_30_junction.png"
-    staff_30_junction_close = pathlib.Path("Assets")/"staff_30_junction_close.png"
-    test_image_1 = pathlib.Path("Assets")/"test_image_1.png"
-    test_image_2 = pathlib.Path("Assets")/"test_image_2.png"
-    test_image_3 = pathlib.Path("Assets")/"test_image_3.png"
-    test_image_4 = pathlib.Path("Assets")/"test_image_4.png"
-    test_image_5 = pathlib.Path("Assets")/"test_image_5.png"
-    perc_signpost = pathlib.Path("Assets")/"percussionville.png"
-    tamb_signpost = pathlib.Path("Assets")/"tambura_land.png"
-    staff_1 = pathlib.Path("Assets")/"staff_1000px.png"
-    guit_cell_1 = pathlib.Path("Assets")/"squiggle_1.png"
-    star_1 = pathlib.Path("Assets")/"star_1.png"
-    disk_1 = pathlib.Path("Assets")/"disk.png"
-    sul_6 = pathlib.Path("Assets")/"Sul_6.png"
+    for filename in os.listdir(cwd + "/Assets/perc_images"):
+        perc_image = np.append(perc_image, cwd + "/Assets/perc_images/"+filename)
+    staff_angle_30 = pathlib.Path(cwd + "/Assets/staff_angle_30.png")
+    staff_angle_60 = pathlib.Path(cwd + "/Assets/staff_angle_60.svg")
+    staff_30_junction = pathlib.Path(cwd + "/Assets/staff_30_junction.png")
+    staff_30_junction_close = pathlib.Path(cwd + "/Assets/staff_30_junction_close.png")
+    perc_signpost = pathlib.Path(cwd + "/Assets/percussionville.png")
+    tamb_signpost = pathlib.Path(cwd + "/Assets/tambura_land.png")
+    staff_1 = pathlib.Path(cwd + "/Assets/staff_1000px.png")
+    star_1 = pathlib.Path(cwd + "/Assets/star_1.png")
     #Get program start time
     main()
