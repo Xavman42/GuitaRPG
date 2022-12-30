@@ -91,7 +91,7 @@ def calculate_trajectory():
 
 
 def populate_staff(here, there, region):
-    global last_index, staves, level_dict
+    global last_index, staves, level_dict, xp_dict
     try:
         staves[last_index].remove()
         staves[last_index] = make_map_segment(network[last_index][0], network[last_index][1], network[last_index][2],
@@ -108,11 +108,14 @@ def populate_staff(here, there, region):
     length = Unit(sqrt(
         (network[my_index][2] - network[my_index][0]) ** 2 + (network[my_index][3] - network[my_index][1]) ** 2))
     apply_region_modifier(level_dict, region, 100)
+    xp_dict, level_dict = initialize_skill(xp_dict, level_dict, region)
     offset = Unit(100)
     cell_length = 0
     while Unit(offset) < length - Unit(100):
         func, reg = get_cell_func(level_dict)
         cell_length = func(staves[my_index], offset)
+        xp_dict, lvl = increase_xp(xp_dict, reg)
+        level_dict = set_skill_probability(level_dict, reg, lvl)
         offset = offset + cell_length + Unit(30)
     last_index = my_index
 
@@ -166,6 +169,7 @@ if __name__ == '__main__':
 
     level_dict = make_cell_dict()
     level_dict = set_skill_probability(level_dict, "scrape", 1)
+    xp_dict = make_xp_dict()
     last_point = -1
     last_index = -1
     current_point = 0

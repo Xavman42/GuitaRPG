@@ -49,6 +49,40 @@ def make_cell_dict():
     return cell_dict
 
 
+def make_xp_dict():
+    default_xp = 0
+    default_level = 0
+    xp_dict = {'scrape': [1, default_xp],
+               'bartok': [default_level, default_xp],
+               'tambura': [default_level, default_xp],
+               'perc': [default_level, default_xp],
+               'melody': [default_level, default_xp],
+               'harmonic': [default_level, default_xp],
+               'rake': [default_level, default_xp],
+               'tremolo': [default_level, default_xp],
+               'adv_harm': [default_level, default_xp]}
+    return xp_dict
+
+
+def increase_xp(xp_dict, key):
+    max_xp = 5
+    xp_dict[key][1] += 1
+    if xp_dict[key][1] >= 5 and xp_dict[key][0] < 4:
+        xp_dict[key][0] += 1
+        xp_dict[key][1] = 0
+    return xp_dict, xp_dict[key][0]
+
+
+def initialize_skill(xp_dict, cell_dict, key):
+    try:
+        if xp_dict[key][0] == 0:
+            xp_dict[key][0] = 1
+            set_skill_probability(cell_dict, key, 1)
+    except KeyError:
+        pass
+    return xp_dict, cell_dict
+
+
 def apply_area_modifier(cell_dict, area):
     default_mod = 1
     area_mod_value = 10
@@ -273,6 +307,9 @@ if __name__ == '__main__':
     my_cell_dict = apply_area_modifier(my_cell_dict, 1)
     my_cell_dict = set_skill_probability(my_cell_dict, "scrape", 4)
     my_cell_dict = apply_region_modifier(my_cell_dict, "scrape", 100)
+    my_xp_dict = make_xp_dict()
+    for i in range(12):
+        my_xp_dict, lvl = increase_xp(my_xp_dict, "scrape")
 
     get_cell_func(my_cell_dict)
     #for i in range(20):
