@@ -111,7 +111,8 @@ def populate_staff(here, there, region):
     offset = Unit(100)
     cell_length = 0
     while Unit(offset) < length - Unit(100):
-        cell_length = get_cell_func(level_dict)(staves[my_index], offset)
+        func, reg = get_cell_func(level_dict)
+        cell_length = func(staves[my_index], offset)
         offset = offset + cell_length + Unit(30)
     last_index = my_index
 
@@ -164,6 +165,7 @@ if __name__ == '__main__':
     neoscore.setup()
 
     level_dict = make_cell_dict()
+    level_dict = set_skill_probability(level_dict, "scrape", 1)
     last_point = -1
     last_index = -1
     current_point = 0

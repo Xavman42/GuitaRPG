@@ -3,49 +3,49 @@ from Cells import *
 
 def make_cell_dict():
     # Dictionary format: 'key': [probability, function, area multiplier, region multiplier]
-    default_probability = 1
+    default_probability = 0
     area_modifier = 1
     region_modifier = 1
-    cell_dict = {'scrape_rank_1': [default_probability, scrape_rank_1, area_modifier, region_modifier],
-                 'scrape_rank_2': [default_probability, scrape_rank_2, area_modifier, region_modifier],
-                 'scrape_rank_3': [default_probability, scrape_rank_3, area_modifier, region_modifier],
-                 'scrape_rank_4': [default_probability, scrape_rank_4, area_modifier, region_modifier],
-                 'bartok_rank_1': [default_probability, bartok_rank_1, area_modifier, region_modifier],
-                 'bartok_rank_2': [default_probability, bartok_rank_2, area_modifier, region_modifier],
-                 'bartok_rank_3': [default_probability, bartok_rank_3, area_modifier, region_modifier],
-                 'bartok_rank_4': [default_probability, bartok_rank_4, area_modifier, region_modifier],
-                 'tambura_rank_1': [default_probability, tambura_rank_1, area_modifier, region_modifier],
-                 'tambura_rank_2': [default_probability, tambura_rank_2, area_modifier, region_modifier],
-                 'tambura_rank_3': [default_probability, tambura_rank_3, area_modifier, region_modifier],
-                 'tambura_rank_4': [default_probability, tambura_rank_4, area_modifier, region_modifier],
-                 'perc_rank_1': [default_probability, perc_rank_1, area_modifier, region_modifier],
-                 'perc_rank_2': [default_probability, perc_rank_2, area_modifier, region_modifier],
-                 'perc_rank_3': [default_probability, perc_rank_3, area_modifier, region_modifier],
-                 'perc_rank_4': [default_probability, perc_rank_4, area_modifier, region_modifier],
-                 'triad_rank_1': [default_probability, triad_rank_1, area_modifier, region_modifier],
-                 'triad_rank_2': [default_probability, triad_rank_2, area_modifier, region_modifier],
-                 'triad_rank_3': [default_probability, triad_rank_3, area_modifier, region_modifier],
-                 'triad_rank_4': [default_probability, triad_rank_4, area_modifier, region_modifier],
-                 'melody_rank_1': [default_probability, melody_rank_1, area_modifier, region_modifier],
-                 'melody_rank_2': [default_probability, melody_rank_2, area_modifier, region_modifier],
-                 'melody_rank_3': [default_probability, melody_rank_3, area_modifier, region_modifier],
-                 'melody_rank_4': [default_probability, melody_rank_4, area_modifier, region_modifier],
-                 'harmonic_rank_1': [default_probability, harmonic_rank_1, area_modifier, region_modifier],
-                 'harmonic_rank_2': [default_probability, harmonic_rank_2, area_modifier, region_modifier],
-                 'harmonic_rank_3': [default_probability, harmonic_rank_3, area_modifier, region_modifier],
-                 'harmonic_rank_4': [default_probability, harmonic_rank_4, area_modifier, region_modifier],
-                 'rake_rank_1': [default_probability, rake_rank_1, area_modifier, region_modifier],
-                 'rake_rank_2': [default_probability, rake_rank_2, area_modifier, region_modifier],
-                 'rake_rank_3': [default_probability, rake_rank_3, area_modifier, region_modifier],
-                 'rake_rank_4': [default_probability, rake_rank_4, area_modifier, region_modifier],
-                 'tremolo_rank_1': [default_probability, tremolo_rank_1, area_modifier, region_modifier],
-                 'tremolo_rank_2': [default_probability, tremolo_rank_2, area_modifier, region_modifier],
-                 'tremolo_rank_3': [default_probability, tremolo_rank_3, area_modifier, region_modifier],
-                 'tremolo_rank_4': [default_probability, tremolo_rank_4, area_modifier, region_modifier],
-                 'adv_harm_rank_1': [default_probability, adv_harm_rank_1, area_modifier, region_modifier],
-                 'adv_harm_rank_2': [default_probability, adv_harm_rank_2, area_modifier, region_modifier],
-                 'adv_harm_rank_3': [default_probability, adv_harm_rank_3, area_modifier, region_modifier],
-                 'adv_harm_rank_4': [default_probability, adv_harm_rank_4, area_modifier, region_modifier]}
+    cell_dict = {'scrape_rank_1': [default_probability, scrape_rank_1, area_modifier, region_modifier, "scrape"],
+                 'scrape_rank_2': [default_probability, scrape_rank_2, area_modifier, region_modifier, "scrape"],
+                 'scrape_rank_3': [default_probability, scrape_rank_3, area_modifier, region_modifier, "scrape"],
+                 'scrape_rank_4': [default_probability, scrape_rank_4, area_modifier, region_modifier, "scrape"],
+                 'bartok_rank_1': [default_probability, bartok_rank_1, area_modifier, region_modifier, "bartok"],
+                 'bartok_rank_2': [default_probability, bartok_rank_2, area_modifier, region_modifier, "bartok"],
+                 'bartok_rank_3': [default_probability, bartok_rank_3, area_modifier, region_modifier, "bartok"],
+                 'bartok_rank_4': [default_probability, bartok_rank_4, area_modifier, region_modifier, "bartok"],
+                 'tambura_rank_1': [default_probability, tambura_rank_1, area_modifier, region_modifier, "tambura"],
+                 'tambura_rank_2': [default_probability, tambura_rank_2, area_modifier, region_modifier, "tambura"],
+                 'tambura_rank_3': [default_probability, tambura_rank_3, area_modifier, region_modifier, "tambura"],
+                 'tambura_rank_4': [default_probability, tambura_rank_4, area_modifier, region_modifier, "tambura"],
+                 'perc_rank_1': [default_probability, perc_rank_1, area_modifier, region_modifier, "perc"],
+                 'perc_rank_2': [default_probability, perc_rank_2, area_modifier, region_modifier, "perc"],
+                 'perc_rank_3': [default_probability, perc_rank_3, area_modifier, region_modifier, "perc"],
+                 'perc_rank_4': [default_probability, perc_rank_4, area_modifier, region_modifier, "perc"],
+                 'triad_rank_1': [default_probability, triad_rank_1, area_modifier, region_modifier, "triad"],
+                 'triad_rank_2': [default_probability, triad_rank_2, area_modifier, region_modifier, "triad"],
+                 'triad_rank_3': [default_probability, triad_rank_3, area_modifier, region_modifier, "triad"],
+                 'triad_rank_4': [default_probability, triad_rank_4, area_modifier, region_modifier, "triad"],
+                 'melody_rank_1': [default_probability, melody_rank_1, area_modifier, region_modifier, "melody"],
+                 'melody_rank_2': [default_probability, melody_rank_2, area_modifier, region_modifier, "melody"],
+                 'melody_rank_3': [default_probability, melody_rank_3, area_modifier, region_modifier, "melody"],
+                 'melody_rank_4': [default_probability, melody_rank_4, area_modifier, region_modifier, "melody"],
+                 'harmonic_rank_1': [default_probability, harmonic_rank_1, area_modifier, region_modifier, "harmonic"],
+                 'harmonic_rank_2': [default_probability, harmonic_rank_2, area_modifier, region_modifier, "harmonic"],
+                 'harmonic_rank_3': [default_probability, harmonic_rank_3, area_modifier, region_modifier, "harmonic"],
+                 'harmonic_rank_4': [default_probability, harmonic_rank_4, area_modifier, region_modifier, "harmonic"],
+                 'rake_rank_1': [default_probability, rake_rank_1, area_modifier, region_modifier, "rake"],
+                 'rake_rank_2': [default_probability, rake_rank_2, area_modifier, region_modifier, "rake"],
+                 'rake_rank_3': [default_probability, rake_rank_3, area_modifier, region_modifier, "rake"],
+                 'rake_rank_4': [default_probability, rake_rank_4, area_modifier, region_modifier, "rake"],
+                 'tremolo_rank_1': [default_probability, tremolo_rank_1, area_modifier, region_modifier, "tremolo"],
+                 'tremolo_rank_2': [default_probability, tremolo_rank_2, area_modifier, region_modifier, "tremolo"],
+                 'tremolo_rank_3': [default_probability, tremolo_rank_3, area_modifier, region_modifier, "tremolo"],
+                 'tremolo_rank_4': [default_probability, tremolo_rank_4, area_modifier, region_modifier, "tremolo"],
+                 'adv_harm_rank_1': [default_probability, adv_harm_rank_1, area_modifier, region_modifier, "adv_harm"],
+                 'adv_harm_rank_2': [default_probability, adv_harm_rank_2, area_modifier, region_modifier, "adv_harm"],
+                 'adv_harm_rank_3': [default_probability, adv_harm_rank_3, area_modifier, region_modifier, "adv_harm"],
+                 'adv_harm_rank_4': [default_probability, adv_harm_rank_4, area_modifier, region_modifier, "adv_harm"]}
     return cell_dict
 
 
@@ -243,7 +243,9 @@ def set_skill_probability(cell_dict, skill, level):
 
 def get_cell_func(cell_dict):
     function_list = []
+    key_list = []
     for key, value in cell_dict.items():
+        key_list.append(key)
         function_list.append(value[1])
     probability_list = []
     for key, value in cell_dict.items():
@@ -257,7 +259,13 @@ def get_cell_func(cell_dict):
     mod_list = []
     for i in range(len(probability_list)):
         mod_list.append(probability_list[i]*area_modifier_list[i]*region_modifier_list[i])
-    return random.choices(function_list, mod_list)[0]
+    index_list = list(range(0, len(function_list)))
+    random_number = random.choices(index_list, mod_list)[0]
+    my_choice = function_list[random_number]
+    for key, value in cell_dict.items():
+        if value[1] == my_choice:
+            my_region = value[4]
+    return my_choice, my_region
 
 
 if __name__ == '__main__':
