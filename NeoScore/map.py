@@ -402,6 +402,8 @@ if __name__ == '__main__':
                                       Text((Unit(40), Unit(-80)), None, "tremolo: ", Font("Bravura", 6)))
     hud_elements = add_element_to_hud(hud_elements,
                                       Text((Unit(40), Unit(-70)), None, "ext. harm: ", Font("Bravura", 6)))
+    hud_elements = add_element_to_hud(hud_elements,
+                                      Path.arrow((Unit(0), Unit(64)), None, (Unit(0), Unit(-5))))
     scale = 5
     network_points = [[j*scale for j in i] for i in network_points]
     network[:, 0] *= scale
@@ -415,4 +417,5 @@ if __name__ == '__main__':
     start_time = time.time()
     neoscore.set_viewport_center_pos((Unit(network_points[last_point][0]+100), Unit(network_points[last_point][1])))
     neoscore.set_viewport_scale(5)
-    neoscore.show(default_refresh_func, display_page_geometry=False, min_window_size=(1920, 1080), max_window_size=(1920, 1080))
+    neoscore.show(default_refresh_func, display_page_geometry=False,
+                  min_window_size=(1920, 1080), max_window_size=(1920, 1080))
