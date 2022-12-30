@@ -91,7 +91,7 @@ def calculate_trajectory():
 
 
 def populate_staff(here, there, region):
-    global last_index, staves, level_dict, xp_dict
+    global last_index, staves, level_dict, xp_dict, text_dict
     try:
         staves[last_index].remove()
         staves[last_index] = make_map_segment(network[last_index][0], network[last_index][1], network[last_index][2],
@@ -107,7 +107,7 @@ def populate_staff(here, there, region):
     mini_staff[my_index].pen = Pen("#2a51ee", Unit(3))
     length = Unit(sqrt(
         (network[my_index][2] - network[my_index][0]) ** 2 + (network[my_index][3] - network[my_index][1]) ** 2))
-    apply_region_modifier(level_dict, region, 100)
+    apply_region_modifier(level_dict, region, 10)
     xp_dict, level_dict = initialize_skill(xp_dict, level_dict, region)
     offset = Unit(100)
     cell_length = 0
@@ -116,6 +116,7 @@ def populate_staff(here, there, region):
         cell_length = func(staves[my_index], offset)
         xp_dict, lvl = increase_xp(xp_dict, reg)
         level_dict = set_skill_probability(level_dict, reg, lvl)
+        text_dict[reg][0].text = reg + ": " + str(lvl)
         offset = offset + cell_length + Unit(30)
     last_index = my_index
 
@@ -162,6 +163,43 @@ def camera_forward_refresh_func(real_time: float):
         current_point = next_point
         new_move = True
         neoscore.set_refresh_func(default_refresh_func)
+
+
+def make_level_text(my_hud_elements):
+    scrape_text = Text((Unit(-50), Unit(-90)), None, "scrape: ", Font("Bravura", 6))
+    bartok_text = Text((Unit(-50), Unit(-80)), None, "Bartok: ", Font("Bravura", 6))
+    tambura_text = Text((Unit(-50), Unit(-70)), None, "tambura: ", Font("Bravura", 6))
+    perc_text = Text((Unit(-50), Unit(-60)), None, "perc: ", Font("Bravura", 6))
+    triad_text = Text((Unit(-10), Unit(-90)), None, "triads: ", Font("Bravura", 6))
+    melody_text = Text((Unit(-10), Unit(-80)), None, "melody: ", Font("Bravura", 6))
+    harmonic_text = Text((Unit(-10), Unit(-70)), None, "harmonics: ", Font("Bravura", 6))
+    rake_text = Text((Unit(-10), Unit(-60)), None, "rake harm: ", Font("Bravura", 6))
+    rasg_text = Text((Unit(40), Unit(-90)), None, "rasgueado: ", Font("Bravura", 6))
+    tremolo_text = Text((Unit(40), Unit(-80)), None, "tremolo: ", Font("Bravura", 6))
+    adv_harm_text = Text((Unit(40), Unit(-70)), None, "ext. harm: ", Font("Bravura", 6))
+    my_hud_elements = add_element_to_hud(my_hud_elements, scrape_text)
+    my_hud_elements = add_element_to_hud(my_hud_elements, bartok_text)
+    my_hud_elements = add_element_to_hud(my_hud_elements, tambura_text)
+    my_hud_elements = add_element_to_hud(my_hud_elements, perc_text)
+    my_hud_elements = add_element_to_hud(my_hud_elements, triad_text)
+    my_hud_elements = add_element_to_hud(my_hud_elements, melody_text)
+    my_hud_elements = add_element_to_hud(my_hud_elements, harmonic_text)
+    my_hud_elements = add_element_to_hud(my_hud_elements, rake_text)
+    my_hud_elements = add_element_to_hud(my_hud_elements, rasg_text)
+    my_hud_elements = add_element_to_hud(my_hud_elements, tremolo_text)
+    my_hud_elements = add_element_to_hud(my_hud_elements, adv_harm_text)
+    level_texts = {'scrape': [scrape_text, 0],
+                   'bartok': [bartok_text, 0],
+                   'tambura': [tambura_text, 0],
+                   'perc': [perc_text, 0],
+                   'triad': [triad_text, 0],
+                   'melody': [melody_text, 0],
+                   'harmonic': [harmonic_text, 0],
+                   'rake': [rake_text, 0],
+                   'rasg': [rasg_text, 0],
+                   'tremolo': [tremolo_text, 0],
+                   'adv_harm': [adv_harm_text, 0]}
+    return my_hud_elements, level_texts
 
 
 if __name__ == '__main__':
@@ -392,25 +430,10 @@ if __name__ == '__main__':
     hud_elements = []
     for i in mini_staff:
         hud_elements = add_element_to_hud(hud_elements, i)
-    hud_elements = add_element_to_hud(hud_elements, Text((Unit(-50), Unit(-90)), None, "scrape: ", Font("Bravura", 6)))
-    hud_elements = add_element_to_hud(hud_elements, Text((Unit(-50), Unit(-80)), None, "Bartok: ", Font("Bravura", 6)))
-    hud_elements = add_element_to_hud(hud_elements, Text((Unit(-50), Unit(-70)), None, "tambura: ", Font("Bravura", 6)))
-    hud_elements = add_element_to_hud(hud_elements, Text((Unit(-50), Unit(-60)), None, "perc: ", Font("Bravura", 6)))
-    hud_elements = add_element_to_hud(hud_elements, Text((Unit(-10), Unit(-90)), None, "triads: ", Font("Bravura", 6)))
-    hud_elements = add_element_to_hud(hud_elements, Text((Unit(-10), Unit(-80)), None, "melody: ", Font("Bravura", 6)))
-    hud_elements = add_element_to_hud(hud_elements,
-                                      Text((Unit(-10), Unit(-70)), None, "harmonics: ", Font("Bravura", 6)))
-    hud_elements = add_element_to_hud(hud_elements,
-                                      Text((Unit(-10), Unit(-60)), None, "rake harm: ", Font("Bravura", 6)))
-    hud_elements = add_element_to_hud(hud_elements,
-                                      Text((Unit(40), Unit(-90)), None, "rasgueado: ", Font("Bravura", 6)))
-    hud_elements = add_element_to_hud(hud_elements,
-                                      Text((Unit(40), Unit(-80)), None, "tremolo: ", Font("Bravura", 6)))
-    hud_elements = add_element_to_hud(hud_elements,
-                                      Text((Unit(40), Unit(-70)), None, "ext. harm: ", Font("Bravura", 6)))
+    hud_elements, text_dict = make_level_text(hud_elements)
     hud_elements = add_element_to_hud(hud_elements,
                                       Path.arrow((Unit(0), Unit(64)), None, (Unit(0), Unit(-5))))
-    scale = 5
+    scale = 4
     network_points = [[j*scale for j in i] for i in network_points]
     network[:, 0] *= scale
     network[:, 1] *= scale
