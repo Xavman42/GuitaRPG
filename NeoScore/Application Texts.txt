@@ -1,0 +1,60 @@
+﻿Name
+
+Xavier Davenport
+
+
+Email
+
+xavieredavenport@hotmail.com
+
+
+Which country do you live in?
+
+U.S.A.
+
+
+What is your age? (Optional: survey purposes only)
+26
+
+
+What is your gender? (Optional: survey purposes only)
+cis male
+
+
+Link to your website & portfolio
+
+https://www.xavierdavenport.com/neoscore-landing-page
+
+
+Github (or similar repo) link to your neoscore demo/prototype
+
+https://github.com/Xavman42/GuitaRPG/tree/main
+
+
+About your idea (max 200 words)
+
+GuitaRPG is an interactive 2-dimensional score through which the performer may freely navigate - the path is predetermined in the demo. Taking inspiration from Role Playing Games (RPGs), the performer may move through regions of the score at their own pace, each region featuring its own distinct soundscape. Upon encountering a new region, the performer will be presented with a new sound or technique to explore on their instrument, accumulating sounds all the way until the climax at the end of the piece. 
+
+When the piece begins, the performer has access only to regions which feature percussive and non-pitched material. As the piece progresses, the player gains access to more and more complicated pitched materials. The live-processed and generated components also emphasizes rhythmic complexity early on, then move to harmonic complexity, then combining the two at the climax. Rather than describe the somewhat-complicated form of the piece here, I have added a simple preliminary "structural diagram" on github.
+
+If for whatever reason you have difficulties running the demo, I have recorded a quick video performance here: https://youtu.be/t3ycuHPp22I. Please excuse the poor video quality – I recorded it using Zoom.
+
+
+Musicians
+
+Currently scored for solo classical guitar to be performed by the composer (Xavier Davenport).
+
+
+About your score tech (max 100 words)
+
+The neoscore library is used for visualization and interactivity.
+Numpy is used for faster matrix calculations (may be unnecessary).
+SuperCollider is used for synth generation and live-effect processing.
+pyOSC3 is used to send messages from Python to SuperCollider.
+A simple foot-switch or other device is required for interactivity.
+In a performance venue, stereo speakers are required. A projector or television is recommended so that the audience can see the score. In-ear monitors for the performer may nice to have.
+
+
+Transforming creativity (max 100 words) 
+
+I spend much time thinking about how to clearly write music that is both structured and improvisational. This software has allowed me to further explore this intermediate region between rigid literalism and unstructured freedom. Because the score is animated, I can add complicated temporal constraints without using imprecise durational notation or difficult and precise rhythms. Because the score is interactive, the score is an exploratory and improvisatory, yet structured and developing, piece of music. Because material and formal guidance is algorithmically determined, the performer can focus less on structural elements and more on individual sounds and large-scale gestures.
