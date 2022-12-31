@@ -1,0 +1,3 @@
+numpy~=1.24.1
+neoscore~=0.1.10
+pyOSC3~=1.2
