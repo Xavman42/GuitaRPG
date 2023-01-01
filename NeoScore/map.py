@@ -73,10 +73,10 @@ def calculate_trajectory():
         indices.remove(last_point)
     except ValueError:
         pass
-    #try:
-    #    path_options.remove(0)
-    #except ValueError:
-    #    pass
+    try:
+        path_options.remove(0)
+    except ValueError:
+        pass
     next_point = random.choice(path_options)
     my_index = indices[path_options.index(next_point)]
     my_region = possible_paths[my_index][2]
@@ -87,7 +87,33 @@ def calculate_trajectory():
     y_distance = Unit(network_points[next_point][1]-network_points[current_point][1])
     distance = Unit(sqrt((network_points[next_point][0]-network_points[current_point][0])**2 +
                          (network_points[next_point][1]-network_points[current_point][1])**2))
+    get_path_arrows()
     return angle, distance, x_distance, y_distance
+
+
+def get_path_arrows():
+    path_options = []
+    indices = []
+    for index, point in enumerate(possible_paths):
+        if point[0] == next_point:
+            path_options.append(point[1])
+            indices.append(index)
+        if point[1] == next_point:
+            path_options.append(point[0])
+            indices.append(index)
+    try:
+        path_options.remove(last_point)
+        indices.remove(last_point)
+    except ValueError:
+        pass
+    try:
+        path_options.remove(0)
+    except ValueError:
+        pass
+    for path in path_options:
+        angle = degrees(atan2(network_points[path][1] - network_points[current_point][1],
+                        network_points[path][0] - network_points[current_point][0]))
+        print(angle)
 
 
 def populate_staff(here, there, region):
@@ -166,17 +192,17 @@ def camera_forward_refresh_func(real_time: float):
 
 
 def make_level_text(my_hud_elements):
-    scrape_text = Text((Unit(-50), Unit(-90)), None, "scrape: ", Font("Bravura", 6))
-    bartok_text = Text((Unit(-50), Unit(-80)), None, "Bartok: ", Font("Bravura", 6))
-    tambura_text = Text((Unit(-50), Unit(-70)), None, "tambura: ", Font("Bravura", 6))
-    perc_text = Text((Unit(-50), Unit(-60)), None, "perc: ", Font("Bravura", 6))
-    triad_text = Text((Unit(-10), Unit(-90)), None, "triads: ", Font("Bravura", 6))
-    melody_text = Text((Unit(-10), Unit(-80)), None, "melody: ", Font("Bravura", 6))
-    harmonic_text = Text((Unit(-10), Unit(-70)), None, "harmonics: ", Font("Bravura", 6))
-    rake_text = Text((Unit(-10), Unit(-60)), None, "rake harm: ", Font("Bravura", 6))
-    rasg_text = Text((Unit(40), Unit(-90)), None, "rasgueado: ", Font("Bravura", 6))
-    tremolo_text = Text((Unit(40), Unit(-80)), None, "tremolo: ", Font("Bravura", 6))
-    adv_harm_text = Text((Unit(40), Unit(-70)), None, "ext. harm: ", Font("Bravura", 6))
+    scrape_text = Text((Unit(-50), Unit(-90)), None, "scrape: ", Font("Lora", 6))
+    bartok_text = Text((Unit(-50), Unit(-80)), None, "Bartok: ", Font("Lora", 6))
+    tambura_text = Text((Unit(-50), Unit(-70)), None, "tambura: ", Font("Lora", 6))
+    perc_text = Text((Unit(-50), Unit(-60)), None, "perc: ", Font("Lora", 6))
+    triad_text = Text((Unit(-10), Unit(-90)), None, "triads:", Font("Lora", 6))
+    melody_text = Text((Unit(-10), Unit(-80)), None, "melody:", Font("Lora", 6))
+    harmonic_text = Text((Unit(-10), Unit(-70)), None, "harmonics:", Font("Lora", 6))
+    rake_text = Text((Unit(-10), Unit(-60)), None, "rake harm:", Font("Lora", 6))
+    rasg_text = Text((Unit(40), Unit(-90)), None, "rasgueado:", Font("Lora", 6))
+    tremolo_text = Text((Unit(40), Unit(-80)), None, "tremolo:", Font("Lora", 6))
+    adv_harm_text = Text((Unit(40), Unit(-70)), None, "ext. harm:", Font("Lora", 6))
     my_hud_elements = add_element_to_hud(my_hud_elements, scrape_text)
     my_hud_elements = add_element_to_hud(my_hud_elements, bartok_text)
     my_hud_elements = add_element_to_hud(my_hud_elements, tambura_text)
