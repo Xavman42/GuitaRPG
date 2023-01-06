@@ -12,6 +12,8 @@ def make_map_segment(
         y_coordinate_start,
         x_coordinate_end,
         y_coordinate_end):
+    x_offset = -4.9
+    y_offset = 9.92
     length = Unit(sqrt((x_coordinate_end - x_coordinate_start) ** 2 + (y_coordinate_end - y_coordinate_start) ** 2))
     rotation = degrees(atan2(y_coordinate_end - y_coordinate_start, x_coordinate_end - x_coordinate_start))
     x_coordinate = x_coordinate_start + x_offset
@@ -113,11 +115,15 @@ def get_path_arrows():
     for path in path_options:
         angle = degrees(atan2(network_points[path][1] - network_points[current_point][1],
                         network_points[path][0] - network_points[current_point][0]))
-        print(angle)
+        camera_x = neoscore.get_viewport_center_pos().x + Unit(100)
+        camera_y = neoscore.get_viewport_center_pos().y - Unit(100)
+        arrow_end_x = 30*Unit(cos(radians(angle)))
+        arrow_end_y = 30*Unit(sin(radians(angle)))
+        Path.arrow((camera_x, camera_y), None, (arrow_end_x, arrow_end_y), None)
 
 
 def populate_staff(here, there, region):
-    global last_index, staves, level_dict, xp_dict, text_dict
+    global last_index, staves, level_dict, xp_dict, text_dict, scene_changed
     try:
         staves[last_index].remove()
         staves[last_index] = make_map_segment(network[last_index][0], network[last_index][1], network[last_index][2],
@@ -145,17 +151,15 @@ def populate_staff(here, there, region):
         text_dict[reg][0].text = reg + ": " + str(lvl)
         offset = offset + cell_length + Unit(30)
     last_index = my_index
+    scene_changed = True
 
 
-def camera_rotate_refresh_func(real_time: float):
-    global reference_time, prev_angle, hud_elements
+def camera_rotate_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
+    global reference_time, prev_angle, hud_elements, scene_changed
     t = real_time - reference_time
     rotation_time = 1
-    # zoom = 4+5*(sin(t*pi/rotation_time))
-    # neoscore.set_viewport_scale(zoom)
-    # print("sin calc ", sin(t*pi/rotation_time))
-    # print("full calc", zoom)
-    # print("neo scale", neoscore.get_viewport_scale())
+    zoom = 5+5*(sin(t*pi/rotation_time))
+    neoscore.set_viewport_scale(zoom)
     if abs(my_angle - prev_angle) < 180:
         neoscore.set_viewport_rotation(-prev_angle - t * (my_angle - prev_angle) / rotation_time)
     elif (my_angle-prev_angle) < 0:
@@ -173,11 +177,16 @@ def camera_rotate_refresh_func(real_time: float):
         neoscore.set_refresh_func(camera_forward_refresh_func)
         prev_angle -= (prev_angle - my_angle)
         prev_angle = prev_angle
+    result = neoscore.RefreshFuncResult(scene_changed)
+    scene_changed = False
+    return result
 
 
-def camera_forward_refresh_func(real_time: float):
-    global my_angle, my_distance, my_move_dur, new_move, last_point, current_point, hud_elements
+def camera_forward_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
+    global my_angle, my_distance, my_move_dur, new_move, last_point, current_point, hud_elements, scene_changed
     t = real_time - reference_time
+    x_offset = -4.9
+    y_offset = 9.92
     x = Unit(network_points[current_point][0] + x_offset + t * my_x_move_rate)
     y = Unit(network_points[current_point][1] + y_offset + t * my_y_move_rate)
     neoscore.set_viewport_center_pos((x, y))
@@ -189,6 +198,9 @@ def camera_forward_refresh_func(real_time: float):
         current_point = next_point
         new_move = True
         neoscore.set_refresh_func(default_refresh_func)
+    result = neoscore.RefreshFuncResult(scene_changed)
+    scene_changed = False
+    return result
 
 
 def make_level_text(my_hud_elements):
@@ -228,36 +240,13 @@ def make_level_text(my_hud_elements):
     return my_hud_elements, level_texts
 
 
-if __name__ == '__main__':
-    neoscore.setup()
-
-    level_dict = make_cell_dict()
-    level_dict = set_skill_probability(level_dict, "scrape", 1)
-    xp_dict = make_xp_dict()
-    last_point = -1
-    last_index = -1
-    current_point = 0
-    next_point = 1
-    move_rate = 120
-    my_x_move_rate = 80
-    my_y_move_rate = 0
-    my_angle = 0
-    my_distance = 0
-    my_x_distance = 0
-    my_y_distance = 0
-    my_move_dur = 0
-    new_move = True
-    reference_time = 0
-    prev_angle = 0
-    rotate_cw = True
-    rotate_dist = 0
-
+def initialize_map():
     bound_val = 9999
     Path.rect((Mm(-bound_val), Mm(-bound_val)), None, Mm(2 * bound_val), Mm(2 * bound_val),
               Brush.no_brush(), "#ff00ff55")
-    x_offset = -4.9
-    y_offset = 9.92
-    hypo_offset = sqrt(x_offset**2+y_offset)
+
+
+def make_network():
     network_points = [
         # 0 scrape region
         [0, 0],  # start
@@ -279,7 +268,7 @@ if __name__ == '__main__':
         [375, -250],  # rake harmonics
         # 15
         [375, -100],  # rake harmonics and natural harmonics
-        [450, -175],   # rake harmonics
+        [450, -175],  # rake harmonics
         [375, 0],  # natural harmonics
         [475, 0],  # natural harmonics
         [475, -100],  # natural harmonics
@@ -387,14 +376,14 @@ if __name__ == '__main__':
         [network_points[11][0], network_points[11][1], network_points[12][0], network_points[12][1], 1, 4],
         [network_points[12][0], network_points[12][1], network_points[3][0], network_points[3][1], 1, 4],
         # area 1-2 stitching
-        #15
+        # 15
         [network_points[6][0], network_points[6][1], network_points[13][0], network_points[13][1], 1, 0],
         [network_points[9][0], network_points[9][1], network_points[15][0], network_points[15][1], 1, 0],
         [network_points[10][0], network_points[10][1], network_points[21][0], network_points[21][1], 1, 0],
         # rake harmonics
         [network_points[13][0], network_points[13][1], network_points[14][0], network_points[14][1], 2, 5],
         [network_points[13][0], network_points[13][1], network_points[15][0], network_points[15][1], 2, 5],
-        #20
+        # 20
         [network_points[14][0], network_points[14][1], network_points[16][0], network_points[16][1], 2, 5],
         [network_points[15][0], network_points[15][1], network_points[16][0], network_points[16][1], 2, 5],
         # natural harmonics
@@ -446,6 +435,40 @@ if __name__ == '__main__':
         # ending
         [network_points[29][0], network_points[29][1], network_points[37][0], network_points[37][1], 3, 0]
     ])
+    return network_points, possible_paths, network
+
+
+if __name__ == '__main__':
+    neoscore.setup()
+
+    level_dict = make_cell_dict()
+    level_dict = set_skill_probability(level_dict, "scrape", 1)
+    xp_dict = make_xp_dict()
+
+    last_point = -1
+    last_index = -1
+    current_point = 0
+    next_point = 1
+    move_rate = 20
+    my_x_move_rate = 80
+    my_y_move_rate = 0
+    my_angle = 0
+    my_distance = 0
+    my_x_distance = 0
+    my_y_distance = 0
+    my_move_dur = 0
+    new_move = True
+    reference_time = 0
+    prev_angle = 0
+    rotate_cw = True
+    rotate_dist = 0
+    scene_changed = False
+
+    initialize_map()
+    x_off = -4.9
+    y_off = 9.92
+    hypo_offset = sqrt(x_off**2+y_off)
+    network_points, possible_paths, network = make_network()
     mini_map_network = network
     mini_staff = []
     mini_scale = 9
