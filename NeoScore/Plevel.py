@@ -65,7 +65,6 @@ def make_xp_dict():
 
 
 def increase_xp(xp_dict, key):
-    max_xp = 5
     xp_dict[key][1] += 1
     if xp_dict[key][1] >= 5 and xp_dict[key][0] < 4:
         xp_dict[key][0] += 1
@@ -312,9 +311,7 @@ if __name__ == '__main__':
         my_xp_dict, lvl = increase_xp(my_xp_dict, "scrape")
 
     get_cell_func(my_cell_dict)
-    #for i in range(20):
+    # for i in range(20):
     #    print(my_cell_dict.items())
     #  for key, value in my_cell_dict.items():
     #      print(value)
-
-

@@ -1,8 +1,5 @@
-import numpy as np
-from math import atan2, sin, cos, pi, sqrt, degrees, radians
-from neoscore.common import *
+from math import atan2, pi, sqrt, degrees
 import time
-import random
 from Plevel import *
 from HUD import *
 
@@ -31,17 +28,18 @@ def make_map_segment(
 
 
 def default_refresh_func(real_time: float):
-    global my_angle, my_distance, my_move_dur, my_x_distance, my_y_distance, \
-        my_x_move_rate, my_y_move_rate, reference_time, rotate_cw, rotate_dist
-    t = real_time-start_time
+    global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
+        my_next_point, my_staves, my_network_points, scene_changed, my_last_index
+    move_rate = 120
     if new_move:
-        my_angle, my_distance, my_x_distance, my_y_distance = calculate_trajectory()
-        my_angle = my_angle
-        my_move_dur = my_distance.base_value/move_rate
+        my_angle, distance, my_next_point, my_staves, scene_changed, my_last_index = \
+            calculate_trajectory(my_point, my_last_point, my_last_index, my_possible_paths, my_staves, my_network,
+                                 my_level_dict, my_xp_dict, my_network_points)
+        my_move_dur = distance.base_value/move_rate
         my_x_move_rate = cos(radians(my_angle)) * move_rate
         my_y_move_rate = sin(radians(my_angle)) * move_rate
         a = my_angle
-        b = prev_angle
+        b = my_prev_angle
         a, b = max(a, b), min(a, b)
         rotate_dist = min(a-b, b+360-a)
         if a > b:
@@ -54,13 +52,13 @@ def default_refresh_func(real_time: float):
                 rotate_dist = a + 360 - b  # positive
             else:
                 rotate_dist = a - b  # negative
+        new_move = False
         reference_time = time.time()
-        neoscore.set_refresh_func(camera_rotate_refresh_func)
+        neoscore.set_refresh_func(default_camera_rotate_refresh_func)
 
 
-def calculate_trajectory():
-    global new_move, next_point
-    new_move = False
+def calculate_trajectory(current_point, last_point, last_index, possible_paths, staves, network, level_dict, xp_dict,
+                         network_points):
     path_options = []
     indices = []
     for index, point in enumerate(possible_paths):
@@ -82,15 +80,16 @@ def calculate_trajectory():
     next_point = random.choice(path_options)
     my_index = indices[path_options.index(next_point)]
     my_region = possible_paths[my_index][2]
-    populate_staff(current_point, next_point, my_region)
+    staves, scene_change, my_index = populate_staff(current_point, next_point, my_region, last_index, staves, network,
+                                          possible_paths, level_dict, xp_dict)
     angle = degrees(atan2(network_points[next_point][1]-network_points[current_point][1],
                           network_points[next_point][0]-network_points[current_point][0]))
     x_distance = Unit(network_points[next_point][0]-network_points[current_point][0])
     y_distance = Unit(network_points[next_point][1]-network_points[current_point][1])
     distance = Unit(sqrt((network_points[next_point][0]-network_points[current_point][0])**2 +
                          (network_points[next_point][1]-network_points[current_point][1])**2))
-    get_path_arrows()
-    return angle, distance, x_distance, y_distance
+    # get_path_arrows()
+    return angle, distance, next_point, staves, scene_change, my_index
 
 
 def get_path_arrows():
@@ -122,12 +121,11 @@ def get_path_arrows():
         Path.arrow((camera_x, camera_y), None, (arrow_end_x, arrow_end_y), None)
 
 
-def populate_staff(here, there, region):
-    global last_index, staves, level_dict, xp_dict, text_dict, scene_changed
+def populate_staff(here, there, region, last_index, staves, network, possible_paths, level_dict, xp_dict):
     try:
         staves[last_index].remove()
-        staves[last_index] = make_map_segment(network[last_index][0], network[last_index][1], network[last_index][2],
-                                              network[last_index][3])
+        staves[last_index] = make_map_segment(network[last_index][0], network[last_index][1],
+                                              network[last_index][2], network[last_index][3])
     except ValueError:
         pass
     for index, i in enumerate(possible_paths):
@@ -135,8 +133,8 @@ def populate_staff(here, there, region):
             my_index = index
     InvisibleClef(Unit(0), staves[my_index], 'treble')
     # mini map highlighting
-    mini_staff[last_index].pen = Pen()
-    mini_staff[my_index].pen = Pen("#2a51ee", Unit(3))
+    # mini_staff[last_index].pen = Pen()
+    # mini_staff[my_index].pen = Pen("#2a51ee", Unit(3))
     length = Unit(sqrt(
         (network[my_index][2] - network[my_index][0]) ** 2 + (network[my_index][3] - network[my_index][1]) ** 2))
     apply_region_modifier(level_dict, region, 10)
@@ -148,54 +146,51 @@ def populate_staff(here, there, region):
         cell_length = func(staves[my_index], offset)
         xp_dict, lvl = increase_xp(xp_dict, reg)
         level_dict = set_skill_probability(level_dict, reg, lvl)
-        text_dict[reg][0].text = reg + ": " + str(lvl)
+        # text_dict[reg][0].text = reg + ": " + str(lvl)
         offset = offset + cell_length + Unit(30)
-    last_index = my_index
-    scene_changed = True
+    scene_change = True
+    return staves, scene_change, my_index
 
 
-def camera_rotate_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
-    global reference_time, prev_angle, hud_elements, scene_changed
+def default_camera_rotate_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
+    global reference_time, my_prev_angle, scene_changed
     t = real_time - reference_time
     rotation_time = 1
     zoom = 5+5*(sin(t*pi/rotation_time))
     neoscore.set_viewport_scale(zoom)
-    if abs(my_angle - prev_angle) < 180:
-        neoscore.set_viewport_rotation(-prev_angle - t * (my_angle - prev_angle) / rotation_time)
-    elif (my_angle-prev_angle) < 0:
-        neoscore.set_viewport_rotation(-prev_angle + t * rotate_dist / rotation_time)
+    if abs(my_angle - my_prev_angle) < 180:
+        neoscore.set_viewport_rotation(-my_prev_angle - t * (my_angle - my_prev_angle) / rotation_time)
+    elif (my_angle-my_prev_angle) < 0:
+        neoscore.set_viewport_rotation(-my_prev_angle + t * rotate_dist / rotation_time)
     else:
-        neoscore.set_viewport_rotation(-prev_angle + t * rotate_dist / rotation_time)
+        neoscore.set_viewport_rotation(-my_prev_angle + t * rotate_dist / rotation_time)
     x, y = neoscore.get_viewport_center_pos()
-    hud_elements = set_hud_coordinates(hud_elements, x, y)
-    hud_elements = set_hud_rotation(hud_elements, neoscore.get_viewport_rotation(), x, y)
+    # hud_elements = set_hud_coordinates(hud_elements, x, y)
+    # hud_elements = set_hud_rotation(hud_elements, neoscore.get_viewport_rotation(), x, y)
     if t > rotation_time:
-        neoscore.set_viewport_rotation(-prev_angle - (my_angle - prev_angle))
-        # neoscore.set_viewport_scale(4)
-        # print(neoscore.get_viewport_scale())
+        neoscore.set_viewport_rotation(-my_prev_angle - (my_angle - my_prev_angle))
         reference_time = time.time()
-        neoscore.set_refresh_func(camera_forward_refresh_func)
-        prev_angle -= (prev_angle - my_angle)
-        prev_angle = prev_angle
+        neoscore.set_refresh_func(default_camera_forward_refresh_func)
+        my_prev_angle -= (my_prev_angle - my_angle)
     result = neoscore.RefreshFuncResult(scene_changed)
     scene_changed = False
     return result
 
 
-def camera_forward_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
-    global my_angle, my_distance, my_move_dur, new_move, last_point, current_point, hud_elements, scene_changed
+def default_camera_forward_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
+    global my_angle, my_move_dur, new_move, my_last_point, my_point, scene_changed
     t = real_time - reference_time
     x_offset = -4.9
     y_offset = 9.92
-    x = Unit(network_points[current_point][0] + x_offset + t * my_x_move_rate)
-    y = Unit(network_points[current_point][1] + y_offset + t * my_y_move_rate)
+    x = Unit(my_network_points[my_point][0] + x_offset + t * my_x_move_rate)
+    y = Unit(my_network_points[my_point][1] + y_offset + t * my_y_move_rate)
     neoscore.set_viewport_center_pos((x, y))
     x, y = neoscore.get_viewport_center_pos()
-    hud_elements = set_hud_coordinates(hud_elements, x, y)
-    hud_elements = set_hud_rotation(hud_elements, neoscore.get_viewport_rotation(), x, y)
+    # hud_elements = set_hud_coordinates(hud_elements, x, y)
+    # hud_elements = set_hud_rotation(hud_elements, neoscore.get_viewport_rotation(), x, y)
     if t > my_move_dur:
-        last_point = current_point
-        current_point = next_point
+        my_last_point = my_point
+        my_point = my_next_point
         new_move = True
         neoscore.set_refresh_func(default_refresh_func)
     result = neoscore.RefreshFuncResult(scene_changed)
@@ -439,84 +434,94 @@ def make_network():
 
 
 if __name__ == '__main__':
-    neoscore.setup()
-
-    level_dict = make_cell_dict()
-    level_dict = set_skill_probability(level_dict, "scrape", 1)
-    xp_dict = make_xp_dict()
-
-    last_point = -1
-    last_index = -1
-    current_point = 0
-    next_point = 1
-    move_rate = 20
-    my_x_move_rate = 80
-    my_y_move_rate = 0
-    my_angle = 0
-    my_distance = 0
-    my_x_distance = 0
-    my_y_distance = 0
-    my_move_dur = 0
-    new_move = True
-    reference_time = 0
-    prev_angle = 0
-    rotate_cw = True
-    rotate_dist = 0
-    scene_changed = False
-
-    initialize_map()
-    x_off = -4.9
-    y_off = 9.92
-    network_points, possible_paths, network = make_network()
-    mini_map_network = network
-    mini_staff = []
-    mini_scale = 9
-    for coord in mini_map_network:
-        mini_staff.append(Path.straight_line(Point(Unit(-175+coord[0]/mini_scale), Unit(-75+coord[1]/mini_scale)), None,
-                                             Point(Unit(coord[2]/mini_scale-coord[0]/mini_scale),
-                                                   Unit(coord[3]/mini_scale-coord[1]/mini_scale))))
-    hud_elements = []
-    for i in mini_staff:
-        hud_elements = add_element_to_hud(hud_elements, i)
-    hud_elements, text_dict = make_level_text(hud_elements)
-    hud_elements = add_element_to_hud(hud_elements,
-                                      Path.arrow((Unit(0), Unit(64)), None, (Unit(0), Unit(-5))))
-    scale = 4
-    network_points = [[j*scale for j in i] for i in network_points]
-    network[:, 0] *= scale
-    network[:, 1] *= scale
-    network[:, 2] *= scale
-    network[:, 3] *= scale
-    staves = np.array([])
-
-    for idx, coord in enumerate(network):
-        staves = np.append(staves, make_map_segment(coord[0], coord[1], coord[2], coord[3]))
-    start_time = time.time()
-    neoscore.set_viewport_center_pos((Unit(network_points[last_point][0]+100), Unit(network_points[last_point][1])))
-    neoscore.set_viewport_scale(5)
-    neoscore.show(default_refresh_func, display_page_geometry=False,
-                  min_window_size=(1920, 1080), max_window_size=(1920, 1080))
+    # neoscore.setup()
+    #
+    # level_dict = make_cell_dict()
+    # level_dict = set_skill_probability(level_dict, "scrape", 1)
+    # xp_dict = make_xp_dict()
+    #
+    # last_point = -1
+    # last_index = -1
+    # current_point = 0
+    # next_point = 1
+    # move_rate = 20
+    # my_x_move_rate = 80
+    # my_y_move_rate = 0
+    # my_angle = 0
+    # my_distance = 0
+    # my_x_distance = 0
+    # my_y_distance = 0
+    # my_move_dur = 0
+    # new_move = True
+    # reference_time = 0
+    # prev_angle = 0
+    # rotate_cw = True
+    # rotate_dist = 0
+    # scene_changed = False
+    #
+    # initialize_map()
+    # x_off = -4.9
+    # y_off = 9.92
+    # network_points, possible_paths, network = make_network()
+    # mini_map_network = network
+    # mini_staff = []
+    # mini_scale = 9
+    # for coord in mini_map_network:
+    #     mini_staff.append(Path.straight_line(Point(Unit(-175+coord[0]/mini_scale), Unit(-75+coord[1]/mini_scale)), None,
+    #                                          Point(Unit(coord[2]/mini_scale-coord[0]/mini_scale),
+    #                                                Unit(coord[3]/mini_scale-coord[1]/mini_scale))))
+    # hud_elements = []
+    # for i in mini_staff:
+    #     hud_elements = add_element_to_hud(hud_elements, i)
+    # hud_elements, text_dict = make_level_text(hud_elements)
+    # hud_elements = add_element_to_hud(hud_elements,
+    #                                   Path.arrow((Unit(0), Unit(64)), None, (Unit(0), Unit(-5))))
+    # scale = 4
+    # network_points = [[j*scale for j in i] for i in network_points]
+    # network[:, 0] *= scale
+    # network[:, 1] *= scale
+    # network[:, 2] *= scale
+    # network[:, 3] *= scale
+    # staves = np.array([])
+    #
+    # for idx, coord in enumerate(network):
+    #     staves = np.append(staves, make_map_segment(coord[0], coord[1], coord[2], coord[3]))
+    # start_time = time.time()
+    # neoscore.set_viewport_center_pos((Unit(network_points[last_point][0]+100), Unit(network_points[last_point][1])))
+    # neoscore.set_viewport_scale(5)
+    # neoscore.show(default_refresh_func, display_page_geometry=False,
+    #               min_window_size=(1920, 1080), max_window_size=(1920, 1080))
 
 # This is what should actually be here
-#     neoscore.setup()
-#     level_dict = make_cell_dict()
-#     level_dict = set_skill_probability(level_dict, "scrape", 1)
-#     xp_dict = make_xp_dict()
-#
-#     initialize_map()
-#     network_points, possible_paths, network = make_network()
-#
-#     scale = 4
-#     network_points = [[j * scale for j in i] for i in network_points]
-#     for i in range(4):
-#         network[:, i] *= scale
-#     staves = np.array([])
-#     for idx, coord in enumerate(network):
-#         staves = np.append(staves, make_map_segment(coord[0], coord[1], coord[2], coord[3]))
-#
-#     new_move = True
-#     neoscore.set_viewport_center_pos((Unit(network_points[0][0] + 100), Unit(network_points[0][1])))
-#     neoscore.set_viewport_scale(5)
-#     reference_time = time.time()
-#     neoscore.show(refresh_func, display_page_geometry=False,
-#                   min_window_size=(1920, 1080), max_window_size=(1920, 1080))
+    neoscore.setup()
+    my_level_dict = make_cell_dict()
+    my_level_dict = set_skill_probability(my_level_dict, "scrape", 1)
+    my_xp_dict = make_xp_dict()
+
+    initialize_map()
+    my_network_points, my_possible_paths, my_network = make_network()
+
+    scale = 4
+    my_network_points = [[j * scale for j in i] for i in my_network_points]
+    for i in range(4):
+        my_network[:, i] *= scale
+    my_staves = np.array([])
+    for idx, coord in enumerate(my_network):
+        my_staves = np.append(my_staves, make_map_segment(coord[0], coord[1], coord[2], coord[3]))
+
+    my_point = 0
+    my_next_point = 0
+    my_prev_angle = 0
+    my_angle = 0
+    my_last_point = -1
+    my_last_index = -1
+    my_x_move_rate = 0
+    my_y_move_rate = 0
+    my_move_dur = 0
+    rotate_dist = 0
+    new_move = True
+    neoscore.set_viewport_center_pos((Unit(my_network_points[0][0] + 100), Unit(my_network_points[0][1])))
+    neoscore.set_viewport_scale(5)
+    reference_time = time.time()
+    neoscore.show(default_refresh_func, display_page_geometry=False,
+                  min_window_size=(1920, 1080), max_window_size=(1920, 1080))
