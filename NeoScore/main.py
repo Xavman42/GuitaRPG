@@ -6,6 +6,7 @@ from HUD import *
 def refresh_func(func_time: float):
     t = reference_time - func_time
     if new_move:
+        return
         my_angle, my_distance, my_x_distance, my_y_distance = calculate_trajectory()
 
 
@@ -20,10 +21,8 @@ if __name__ == '__main__':
 
     scale = 4
     network_points = [[j * scale for j in i] for i in network_points]
-    network[:, 0] *= scale
-    network[:, 1] *= scale
-    network[:, 2] *= scale
-    network[:, 3] *= scale
+    for i in range(4):
+        network[:, i] *= scale
     staves = np.array([])
     for idx, coord in enumerate(network):
         staves = np.append(staves, make_map_segment(coord[0], coord[1], coord[2], coord[3]))

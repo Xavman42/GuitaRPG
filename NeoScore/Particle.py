@@ -30,3 +30,9 @@ class Particle:
             self.client.send(self.msg)
         except:
             print("message failed to send to SuperCollider")
+
+
+if __name__ == '__main__':
+    my_particle = Particle("A", "perc", 3)
+
+    my_particle.send_particle()
