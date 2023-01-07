@@ -1,11 +1,12 @@
 from map import *
 from Plevel import *
 from HUD import *
+from multiprocessing import Process, Value
 
 
 def refresh_func(func_time: float):
     global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
-        my_next_point, my_staves, network, my_scene_changed, my_last_index
+        my_next_point, my_staves, network, my_scene_changed, my_last_index, hud_last_index
     move_rate = 120
     if new_move:
         my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index = \
@@ -30,6 +31,8 @@ def refresh_func(func_time: float):
                 rotate_dist = a - b  # negative
         new_move = False
         reference_time = time.time()
+        hud_current_index.value = my_current_index
+        hud_last_index.value = my_last_index
         neoscore.set_refresh_func(camera_rotate_refresh_func)
 
 
@@ -46,8 +49,6 @@ def camera_rotate_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
     else:
         neoscore.set_viewport_rotation(-my_prev_angle + t * rotate_dist / rotation_time)
     x, y = neoscore.get_viewport_center_pos()
-    # hud_elements = set_hud_coordinates(hud_elements, x, y)
-    # hud_elements = set_hud_rotation(hud_elements, neoscore.get_viewport_rotation(), x, y)
     if t > rotation_time:
         neoscore.set_viewport_rotation(-my_prev_angle - (my_angle - my_prev_angle))
         reference_time = time.time()
@@ -67,8 +68,6 @@ def camera_forward_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
     y = Unit(my_network_points[my_point][1] + y_offset + t * my_y_move_rate)
     neoscore.set_viewport_center_pos((x, y))
     x, y = neoscore.get_viewport_center_pos()
-    # hud_elements = set_hud_coordinates(hud_elements, x, y)
-    # hud_elements = set_hud_rotation(hud_elements, neoscore.get_viewport_rotation(), x, y)
     if t > my_move_dur:
         my_last_point = my_point
         my_point = my_next_point
@@ -79,11 +78,47 @@ def camera_forward_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
     return result
 
 
-def hud_process(n):
-    pass
+def hud_process_func(last_index, current_index):
+    global ref_current_index
+    def hud_refresh_func(func_time: float):
+        global ref_current_index
+        if ref_current_index != last_index.value:
+            mini_staff[ref_current_index].pen = Pen("#000000", Unit(0.5))
+            mini_staff[last_index.value].pen = Pen("#2a51ee", Unit(3))
+            ref_current_index = last_index.value
+
+        pass
+
+    ref_current_index = 0
+    neoscore.setup()
+    initialize_map()
+    my_network_points, possible_paths, my_network = make_network()
+    mini_map_network = my_network
+    mini_staff = []
+    mini_scale = 9
+    for coord in mini_map_network:
+        mini_staff.append(Path.straight_line(Point(Unit(75+coord[0]/mini_scale), Unit(1+coord[1]/mini_scale)), None,
+                                             Point(Unit(coord[2]/mini_scale-coord[0]/mini_scale),
+                                                   Unit(coord[3]/mini_scale-coord[1]/mini_scale)), None,
+                                             Brush.no_brush(), Pen("#000000", Unit(0.5))))
+    mini_staff[0].pen = Pen("#2a51ee", Unit(3))
+    hud_elements = []
+    hud_elements, text_dict = make_level_text(hud_elements)
+    x, y = neoscore.get_viewport_center_pos()
+    hud_elements = set_hud_coordinates(hud_elements, x-Unit(125), y+Unit(75))
+
+    neoscore.set_viewport_scale(5)
+    neoscore.set_refresh_func(hud_refresh_func, 5)
+    neoscore.show(display_page_geometry=False, auto_viewport_interaction_enabled=False,
+                  min_window_size=(1920, 360), max_window_size=(1920, 360))
 
 
 if __name__ == '__main__':
+    hud_last_index = Value('i', 0)
+    hud_current_index = Value('i', 0)
+    hud_process = Process(target=hud_process_func, args=(hud_last_index, hud_current_index))
+    hud_process.start()
+
     neoscore.setup()
     my_level_dict = make_cell_dict()
     my_level_dict = set_skill_probability(my_level_dict, "scrape", 1)
@@ -101,6 +136,7 @@ if __name__ == '__main__':
         my_staves = np.append(my_staves, make_map_segment(coord[0], coord[1], coord[2], coord[3]))
 
     my_point = 0
+    my_current_index = 0
     my_next_point = 0
     my_prev_angle = 0
     my_angle = 0
@@ -116,4 +152,4 @@ if __name__ == '__main__':
     neoscore.set_viewport_scale(5)
     reference_time = time.time()
     neoscore.show(refresh_func, display_page_geometry=False,
-                  min_window_size=(1920, 1080), max_window_size=(1920, 1080))
+                  min_window_size=(1920, 680), max_window_size=(1920, 680))
