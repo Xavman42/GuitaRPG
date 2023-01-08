@@ -32,7 +32,7 @@ def default_refresh_func(real_time: float):
         my_next_point, my_staves, my_network_points, scene_changed, my_last_index
     move_rate = 120
     if new_move:
-        my_angle, distance, my_next_point, my_staves, scene_changed, my_last_index = \
+        my_angle, distance, my_next_point, my_staves, scene_changed, my_last_index, share_dict = \
             calculate_trajectory(my_point, my_last_point, my_last_index, my_possible_paths, my_staves, my_network,
                                  my_level_dict, my_xp_dict, my_network_points)
         my_move_dur = distance.base_value/move_rate
@@ -80,8 +80,9 @@ def calculate_trajectory(current_point, last_point, last_index, possible_paths, 
     next_point = random.choice(path_options)
     my_index = indices[path_options.index(next_point)]
     my_region = possible_paths[my_index][2]
-    staves, scene_change, my_index = populate_staff(current_point, next_point, my_region, last_index, staves, network,
-                                          possible_paths, level_dict, xp_dict)
+    staves, scene_change, my_index, share_dict = \
+        populate_staff(current_point, next_point, my_region, last_index, staves, network, possible_paths, level_dict,
+                       xp_dict)
     angle = degrees(atan2(network_points[next_point][1]-network_points[current_point][1],
                           network_points[next_point][0]-network_points[current_point][0]))
     x_distance = Unit(network_points[next_point][0]-network_points[current_point][0])
@@ -89,7 +90,7 @@ def calculate_trajectory(current_point, last_point, last_index, possible_paths, 
     distance = Unit(sqrt((network_points[next_point][0]-network_points[current_point][0])**2 +
                          (network_points[next_point][1]-network_points[current_point][1])**2))
     # get_path_arrows()
-    return angle, distance, next_point, staves, scene_change, my_index
+    return angle, distance, next_point, staves, scene_change, my_index, share_dict
 
 
 def get_path_arrows():
@@ -132,24 +133,23 @@ def populate_staff(here, there, region, last_index, staves, network, possible_pa
         if (i[0] == here and i[1] == there) or (i[1] == here and i[0] == there):
             my_index = index
     InvisibleClef(Unit(0), staves[my_index], 'treble')
-    # mini map highlighting
-    # mini_staff[last_index].pen = Pen()
-    # mini_staff[my_index].pen = Pen("#2a51ee", Unit(3))
     length = Unit(sqrt(
         (network[my_index][2] - network[my_index][0]) ** 2 + (network[my_index][3] - network[my_index][1]) ** 2))
     apply_region_modifier(level_dict, region, 10)
     xp_dict, level_dict = initialize_skill(xp_dict, level_dict, region)
     offset = Unit(100)
     cell_length = 0
+    share_dict = {}
     while Unit(offset) < length - Unit(100):
         func, reg = get_cell_func(level_dict)
         cell_length = func(staves[my_index], offset)
         xp_dict, lvl = increase_xp(xp_dict, reg)
         level_dict = set_skill_probability(level_dict, reg, lvl)
+        share_dict[reg] = lvl
         # text_dict[reg][0].text = reg + ": " + str(lvl)
         offset = offset + cell_length + Unit(30)
     scene_change = True
-    return staves, scene_change, my_index
+    return staves, scene_change, my_index, share_dict
 
 
 def default_camera_rotate_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:

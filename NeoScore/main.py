@@ -1,15 +1,15 @@
 from map import *
 from Plevel import *
 from HUD import *
-from multiprocessing import Process, Value
+from multiprocessing import Process, Value, Manager
 
 
 def refresh_func(func_time: float):
     global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
-        my_next_point, my_staves, network, my_scene_changed, my_last_index, hud_last_index
+        my_next_point, my_staves, network, my_scene_changed, my_last_index, hud_last_index, hud_share_dict
     move_rate = 120
     if new_move:
-        my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index = \
+        my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict = \
             calculate_trajectory(my_point, my_last_point, my_last_index, possible_paths, my_staves, my_network,
                                  my_level_dict, my_xp_dict, my_network_points)
         my_move_dur = distance.base_value / move_rate
@@ -31,6 +31,7 @@ def refresh_func(func_time: float):
                 rotate_dist = a - b  # negative
         new_move = False
         reference_time = time.time()
+        hud_share_dict.update(share_dict)
         hud_current_index.value = my_current_index
         hud_last_index.value = my_last_index
         neoscore.set_refresh_func(camera_rotate_refresh_func)
@@ -78,7 +79,7 @@ def camera_forward_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
     return result
 
 
-def hud_process_func(last_index, current_index):
+def hud_process_func(last_index, current_index, share_dict):
     global ref_current_index
     def hud_refresh_func(func_time: float):
         global ref_current_index
@@ -86,10 +87,11 @@ def hud_process_func(last_index, current_index):
             mini_staff[ref_current_index].pen = Pen("#000000", Unit(0.5))
             mini_staff[last_index.value].pen = Pen("#2a51ee", Unit(3))
             ref_current_index = last_index.value
+            for key, value in share_dict.items():
+                text_dict[key][0].text = str(key) + ": " + str(value)
 
-        pass
 
-    ref_current_index = 0
+    ref_current_index = -1
     neoscore.setup()
     initialize_map()
     my_network_points, possible_paths, my_network = make_network()
@@ -114,9 +116,11 @@ def hud_process_func(last_index, current_index):
 
 
 if __name__ == '__main__':
+    manager = Manager()
+    hud_share_dict = manager.dict()
     hud_last_index = Value('i', 0)
     hud_current_index = Value('i', 0)
-    hud_process = Process(target=hud_process_func, args=(hud_last_index, hud_current_index))
+    hud_process = Process(target=hud_process_func, args=(hud_last_index, hud_current_index, hud_share_dict))
     hud_process.start()
 
     neoscore.setup()
