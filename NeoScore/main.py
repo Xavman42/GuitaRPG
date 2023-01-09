@@ -12,7 +12,7 @@ def refresh_func(func_time: float):
     global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
         my_next_point, my_staves, network, my_scene_changed, my_last_index, hud_last_index, hud_share_dict, \
         my_top_layer_assets
-    move_rate = 120
+    move_rate = 30
     if new_move:
         my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict, indices, \
             path_options, my_current_point = \
