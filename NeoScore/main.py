@@ -1,3 +1,5 @@
+from neoscore.core.key_event import KeyEventType
+
 from map import *
 from Plevel import *
 from HUD import *
@@ -9,13 +11,13 @@ import pathlib
 def refresh_func(func_time: float):
     global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
         my_next_point, my_staves, network, my_scene_changed, my_last_index, hud_last_index, hud_share_dict, \
-        my_top_layer_assets, hud_angles_dict
+        my_top_layer_assets
     move_rate = 120
     if new_move:
         my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict, indices, \
             path_options, my_current_point = \
             calculate_trajectory(my_point, my_last_point, my_last_index, possible_paths, my_staves, my_network,
-                                 my_level_dict, my_xp_dict, my_network_points)
+                                 my_level_dict, my_xp_dict, my_network_points, hud_return_point.value)
         my_top_layer_assets = redo_top_layer_assets(my_top_layer_assets)
         my_move_dur = distance.base_value / move_rate
         my_x_move_rate = cos(radians(my_angle)) * move_rate
@@ -37,11 +39,6 @@ def refresh_func(func_time: float):
         new_move = False
         reference_time = time.time()
         hud_share_dict.update(share_dict)
-        angles = {}
-        hud_angles_dict.clear()
-        for index, value in enumerate(indices):
-            angles[indices[index]] = path_options[index]
-        hud_angles_dict.update(angles)
         hud_current_index.value = my_current_index
         hud_last_index.value = my_last_index
         hud_current_point.value = my_current_point
@@ -91,18 +88,26 @@ def camera_forward_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
     return result
 
 
-def hud_process_func(last_index, current_index, share_dict, angles_dict, current_point, next_point):
-    global ref_current_index, arrows
+def direction_select(event):
+    # Press key 'a' to cycle through path directions
+    global direction_tick
+    if event.event_type == KeyEventType.PRESS and event.text == 'a':
+        direction_tick += 1
+
+
+def hud_process_func(last_index, current_index, share_dict, current_point, next_point, return_point):
+    global ref_current_index, arrows, direction_tick
 
     def hud_refresh_func(func_time: float):
-        global ref_current_index, arrows
+        global ref_current_index, arrows, direction_tick
+        path_options = []
+        indices = []
         if ref_current_index != last_index.value:
             mini_staff[ref_current_index].pen = Pen("#000000", Unit(0.5))
             mini_staff[last_index.value].pen = Pen("#2a51ee", Unit(3))
             ref_current_index = last_index.value
+            direction_tick = 0
 
-        path_options = []
-        indices = []
         for index, point in enumerate(possible_paths):
             if point[0] == next_point.value:
                 path_options.append(point[1])
@@ -132,7 +137,9 @@ def hud_process_func(last_index, current_index, share_dict, angles_dict, current
                                   network_points[future_point][0] - network_points[next_point.value][0]))
             arrow_end_x = 30 * Unit(cos(radians(angle)))
             arrow_end_y = 30 * Unit(sin(radians(angle)))
-            arrows.append(Path.arrow((Unit(0), Unit(0)), None, (arrow_end_x, arrow_end_y), None))
+            arrows.append(Path.arrow((Unit(0), Unit(0)), None, (arrow_end_x, arrow_end_y), None, Brush("#cccccc")))
+        arrows[direction_tick % len(arrows)].brush = Brush("#000000")
+        return_point.value = path_options[direction_tick % len(arrows)]
         for key, value in share_dict.items():
             text_dict[key][0].text = str(key) + ": " + str(value)
 
@@ -143,6 +150,7 @@ def hud_process_func(last_index, current_index, share_dict, angles_dict, current
     mini_map_network = network
     mini_staff = []
     mini_scale = 9
+    direction_tick = 0
     for coord in mini_map_network:
         mini_staff.append(
             Path.straight_line(Point(Unit(75 + coord[0] / mini_scale), Unit(1 + coord[1] / mini_scale)), None,
@@ -158,6 +166,7 @@ def hud_process_func(last_index, current_index, share_dict, angles_dict, current
 
     neoscore.set_viewport_scale(5)
     neoscore.set_refresh_func(hud_refresh_func, 5)
+    neoscore.set_key_event_handler(direction_select)
     neoscore.show(display_page_geometry=False, auto_viewport_interaction_enabled=False,
                   min_window_size=(1920, 360), max_window_size=(1920, 360))
 
@@ -188,13 +197,14 @@ def redo_top_layer_assets(top_layer_assets):
 if __name__ == '__main__':
     manager = Manager()
     hud_share_dict = manager.dict()
-    hud_angles_dict = manager.dict()
     hud_last_index = Value('i', 0)
     hud_current_index = Value('i', 0)
     hud_current_point = Value('i', 0)
     hud_next_point = Value('i', 0)
+    hud_return_point = Value('i', 1)
     hud_process = Process(target=hud_process_func, args=(hud_last_index, hud_current_index, hud_share_dict,
-                                                         hud_angles_dict, hud_current_point, hud_next_point))
+                                                         hud_current_point, hud_next_point,
+                                                         hud_return_point))
     hud_process.start()
 
     neoscore.setup()

@@ -59,7 +59,7 @@ def default_refresh_func(real_time: float):
 
 
 def calculate_trajectory(current_point, last_point, last_index, possible_paths, staves, network, level_dict, xp_dict,
-                         network_points):
+                         network_points, future_point):
     path_options = []
     indices = []
     for index, point in enumerate(possible_paths):
@@ -81,7 +81,7 @@ def calculate_trajectory(current_point, last_point, last_index, possible_paths, 
         indices.pop(index)
     except ValueError:
         pass
-    next_point = random.choice(path_options)
+    next_point = future_point
     my_index = indices[path_options.index(next_point)]
     my_region = possible_paths[my_index][2]
     staves, scene_change, my_index, share_dict = \
