@@ -1,7 +1,7 @@
 from map import *
 from Plevel import *
 from HUD import *
-from multiprocessing import Process, Value, Manager
+from multiprocessing import Process, Value, Array, Manager
 import os
 import pathlib
 
@@ -9,10 +9,11 @@ import pathlib
 def refresh_func(func_time: float):
     global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
         my_next_point, my_staves, network, my_scene_changed, my_last_index, hud_last_index, hud_share_dict, \
-        my_top_layer_assets
+        my_top_layer_assets, hud_angles_dict
     move_rate = 120
     if new_move:
-        my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict = \
+        my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict, indices, \
+            path_options = \
             calculate_trajectory(my_point, my_last_point, my_last_index, possible_paths, my_staves, my_network,
                                  my_level_dict, my_xp_dict, my_network_points)
         my_top_layer_assets = redo_top_layer_assets(my_top_layer_assets)
@@ -36,6 +37,13 @@ def refresh_func(func_time: float):
         new_move = False
         reference_time = time.time()
         hud_share_dict.update(share_dict)
+        # angles = {}
+        # print(indices)
+        # print(path_options)
+        # for index, value in enumerate(indices):
+        #     angles[indices[index]] = path_options[index]
+        angles = {'1': my_angle}
+        hud_angles_dict.update(angles)
         hud_current_index.value = my_current_index
         hud_last_index.value = my_last_index
         neoscore.set_refresh_func(camera_rotate_refresh_func)
@@ -83,17 +91,24 @@ def camera_forward_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
     return result
 
 
-def hud_process_func(last_index, current_index, share_dict):
-    global ref_current_index
+def hud_process_func(last_index, current_index, share_dict, angles_dict):
+    global ref_current_index, arrows
 
     def hud_refresh_func(func_time: float):
-        global ref_current_index
+        global ref_current_index, arrows
         if ref_current_index != last_index.value:
             mini_staff[ref_current_index].pen = Pen("#000000", Unit(0.5))
             mini_staff[last_index.value].pen = Pen("#2a51ee", Unit(3))
             ref_current_index = last_index.value
-            for key, value in share_dict.items():
-                text_dict[key][0].text = str(key) + ": " + str(value)
+        for i in arrows:
+            i.remove()
+            arrows = []
+        for key, value in angles_dict.items():
+            arrow_end_x = 30 * Unit(cos(radians(value)))
+            arrow_end_y = 30 * Unit(sin(radians(value)))
+            arrows.append(Path.arrow((Unit(0), Unit(0)), None, (arrow_end_x, arrow_end_y), None))
+        for key, value in share_dict.items():
+            text_dict[key][0].text = str(key) + ": " + str(value)
 
     ref_current_index = -1
     neoscore.setup()
@@ -110,6 +125,7 @@ def hud_process_func(last_index, current_index, share_dict):
                                Brush.no_brush(), Pen("#000000", Unit(0.5))))
     mini_staff[0].pen = Pen("#2a51ee", Unit(3))
     hud_elements = []
+    arrows = []
     hud_elements, text_dict = make_level_text(hud_elements)
     x, y = neoscore.get_viewport_center_pos()
     hud_elements = set_hud_coordinates(hud_elements, x - Unit(125), y + Unit(75))
@@ -123,6 +139,9 @@ def hud_process_func(last_index, current_index, share_dict):
 def load_assets():
     cwd = os.getcwd()
     disk = pathlib.Path(cwd + "/Assets/circle")
+    scrape_background = pathlib.Path(cwd + "/Assets/scrape_background")
+    Image((Unit(0), Unit(-125)), None, scrape_background, scale = 1/2)
+
     top_layer_assets = []
     for i in my_network_points:
         top_layer_assets.append(Image((Unit((i[0]-42.5)), Unit((i[1]-12.5))), None, disk, scale=1/8))
@@ -143,9 +162,11 @@ def redo_top_layer_assets(top_layer_assets):
 if __name__ == '__main__':
     manager = Manager()
     hud_share_dict = manager.dict()
+    hud_angles_dict = manager.dict()
     hud_last_index = Value('i', 0)
     hud_current_index = Value('i', 0)
-    hud_process = Process(target=hud_process_func, args=(hud_last_index, hud_current_index, hud_share_dict))
+    hud_process = Process(target=hud_process_func, args=(hud_last_index, hud_current_index, hud_share_dict,
+                                                         hud_angles_dict))
     hud_process.start()
 
     neoscore.setup()

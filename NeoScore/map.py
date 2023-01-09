@@ -32,9 +32,9 @@ def default_refresh_func(real_time: float):
         my_next_point, my_staves, my_network_points, scene_changed, my_last_index
     move_rate = 120
     if new_move:
-        my_angle, distance, my_next_point, my_staves, scene_changed, my_last_index, share_dict = \
-            calculate_trajectory(my_point, my_last_point, my_last_index, my_possible_paths, my_staves, my_network,
-                                 my_level_dict, my_xp_dict, my_network_points)
+        my_angle, distance, my_next_point, my_staves, scene_changed, my_last_index, share_dict, indices, path_options \
+            = calculate_trajectory(my_point, my_last_point, my_last_index, my_possible_paths, my_staves, my_network,
+                                   my_level_dict, my_xp_dict, my_network_points)
         my_move_dur = distance.base_value/move_rate
         my_x_move_rate = cos(radians(my_angle)) * move_rate
         my_y_move_rate = sin(radians(my_angle)) * move_rate
@@ -90,7 +90,7 @@ def calculate_trajectory(current_point, last_point, last_index, possible_paths, 
     distance = Unit(sqrt((network_points[next_point][0]-network_points[current_point][0])**2 +
                          (network_points[next_point][1]-network_points[current_point][1])**2))
     # get_path_arrows()
-    return angle, distance, next_point, staves, scene_change, my_index, share_dict
+    return angle, distance, next_point, staves, scene_change, my_index, share_dict, indices, path_options
 
 
 def get_path_arrows():
