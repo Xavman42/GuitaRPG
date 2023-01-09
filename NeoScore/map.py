@@ -32,7 +32,8 @@ def default_refresh_func(real_time: float):
         my_next_point, my_staves, my_network_points, scene_changed, my_last_index
     move_rate = 120
     if new_move:
-        my_angle, distance, my_next_point, my_staves, scene_changed, my_last_index, share_dict, indices, path_options \
+        my_angle, distance, my_next_point, my_staves, scene_changed, my_last_index, share_dict, indices, path_options, \
+            current_point \
             = calculate_trajectory(my_point, my_last_point, my_last_index, my_possible_paths, my_staves, my_network,
                                    my_level_dict, my_xp_dict, my_network_points)
         my_move_dur = distance.base_value/move_rate
@@ -69,12 +70,15 @@ def calculate_trajectory(current_point, last_point, last_index, possible_paths, 
             path_options.append(point[0])
             indices.append(index)
     try:
+        index = path_options.index(last_point)
         path_options.remove(last_point)
-        indices.remove(last_point)
+        indices.pop(index)
     except ValueError:
         pass
     try:
+        index = path_options.index(0)
         path_options.remove(0)
+        indices.pop(index)
     except ValueError:
         pass
     next_point = random.choice(path_options)
@@ -89,37 +93,7 @@ def calculate_trajectory(current_point, last_point, last_index, possible_paths, 
     y_distance = Unit(network_points[next_point][1]-network_points[current_point][1])
     distance = Unit(sqrt((network_points[next_point][0]-network_points[current_point][0])**2 +
                          (network_points[next_point][1]-network_points[current_point][1])**2))
-    # get_path_arrows()
-    return angle, distance, next_point, staves, scene_change, my_index, share_dict, indices, path_options
-
-
-def get_path_arrows():
-    path_options = []
-    indices = []
-    for index, point in enumerate(possible_paths):
-        if point[0] == next_point:
-            path_options.append(point[1])
-            indices.append(index)
-        if point[1] == next_point:
-            path_options.append(point[0])
-            indices.append(index)
-    try:
-        path_options.remove(last_point)
-        indices.remove(last_point)
-    except ValueError:
-        pass
-    try:
-        path_options.remove(0)
-    except ValueError:
-        pass
-    for path in path_options:
-        angle = degrees(atan2(network_points[path][1] - network_points[current_point][1],
-                        network_points[path][0] - network_points[current_point][0]))
-        camera_x = neoscore.get_viewport_center_pos().x + Unit(100)
-        camera_y = neoscore.get_viewport_center_pos().y - Unit(100)
-        arrow_end_x = 30*Unit(cos(radians(angle)))
-        arrow_end_y = 30*Unit(sin(radians(angle)))
-        Path.arrow((camera_x, camera_y), None, (arrow_end_x, arrow_end_y), None)
+    return angle, distance, next_point, staves, scene_change, my_index, share_dict, indices, path_options, current_point
 
 
 def populate_staff(here, there, region, last_index, staves, network, possible_paths, level_dict, xp_dict):
