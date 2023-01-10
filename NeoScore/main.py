@@ -15,7 +15,7 @@ def refresh_func(func_time: float):
     move_rate = 30
     if new_move:
         my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict, indices, \
-            path_options, my_current_point = \
+            path_options, my_current_point, my_region = \
             calculate_trajectory(my_point, my_last_point, my_last_index, possible_paths, my_staves, my_network,
                                  my_level_dict, my_xp_dict, my_network_points, hud_return_point.value)
         my_top_layer_assets = redo_top_layer_assets(my_top_layer_assets)
@@ -38,6 +38,7 @@ def refresh_func(func_time: float):
                 rotate_dist = a - b  # negative
         new_move = False
         reference_time = time.time()
+        # share_dict['current_region'] = my_region
         hud_share_dict.update(share_dict)
         hud_current_index.value = my_current_index
         hud_last_index.value = my_last_index
@@ -145,6 +146,7 @@ def hud_process_func(last_index, current_index, share_dict, current_point, next_
 
     ref_current_index = -1
     neoscore.setup()
+    load_hud_assets()
     initialize_map()
     network_points, possible_paths, network = make_network()
     mini_map_network = network
@@ -153,7 +155,7 @@ def hud_process_func(last_index, current_index, share_dict, current_point, next_
     direction_tick = 0
     for coord in mini_map_network:
         mini_staff.append(
-            Path.straight_line(Point(Unit(75 + coord[0] / mini_scale), Unit(1 + coord[1] / mini_scale)), None,
+            Path.straight_line(Point(Unit(72 + coord[0] / mini_scale), Unit(-1 + coord[1] / mini_scale)), None,
                                Point(Unit(coord[2] / mini_scale - coord[0] / mini_scale),
                                      Unit(coord[3] / mini_scale - coord[1] / mini_scale)), None,
                                Brush.no_brush(), Pen("#000000", Unit(0.5))))
@@ -169,6 +171,24 @@ def hud_process_func(last_index, current_index, share_dict, current_point, next_
     neoscore.set_key_event_handler(direction_select)
     neoscore.show(display_page_geometry=False, auto_viewport_interaction_enabled=False,
                   min_window_size=(1920, 360), max_window_size=(1920, 360))
+
+
+def load_hud_assets():
+    cwd = os.getcwd()
+    rosette_segment = pathlib.Path(cwd + "/Assets/rosette_segment")
+    western_red_cedar = pathlib.Path(cwd + "/Assets/western_red_cedar")
+    Image((Unit(-192), Unit(-36)), None, western_red_cedar, scale = 1/5)
+    Image((Unit(0), Unit(-36)), None, western_red_cedar, scale=1 / 5)
+    for i in range(24):
+        Image((Unit(-192+16.25*i), Unit(-36)), None, rosette_segment, scale = 1/64)
+    for i in range(24):
+        Image((Unit(-192+16.25*i), Unit(30)), None, rosette_segment, scale = 1/64)
+    for i in range(5):
+        temp = Image((Unit(-186), Unit(-36 + 16.25*i)), None, rosette_segment, scale = 1/64)
+        temp.rotation = 90
+    for i in range(5):
+        temp = Image((Unit(191), Unit(-36 + 16.25*i)), None, rosette_segment, scale = 1/64)
+        temp.rotation = 90
 
 
 def load_assets():
