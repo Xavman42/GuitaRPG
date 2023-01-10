@@ -218,9 +218,9 @@ def set_skill_probability(cell_dict, skill, level):
         l4 = 0
     elif level == 4:
         l1 = 1
-        l2 = 2
-        l3 = 3
-        l4 = 4
+        l2 = 1
+        l3 = 1
+        l4 = 2
     if skill == "scrape":
         cell_dict['scrape_rank_1'][0] = l1
         cell_dict['scrape_rank_2'][0] = l2

@@ -110,7 +110,8 @@ def populate_staff(here, there, region, last_index, staves, network, possible_pa
     InvisibleClef(Unit(0), staves[my_index], 'treble')
     length = Unit(sqrt(
         (network[my_index][2] - network[my_index][0]) ** 2 + (network[my_index][3] - network[my_index][1]) ** 2))
-    apply_region_modifier(level_dict, region, 10)
+    apply_region_modifier(level_dict, region, 20)
+    print(region)
     xp_dict, level_dict = initialize_skill(xp_dict, level_dict, region)
     offset = Unit(100)
     cell_length = 0
