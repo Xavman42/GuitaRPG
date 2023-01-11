@@ -1,9 +1,11 @@
 (
 //Tambura Region Growth Level 1
 ~tambL1 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_3, inf));
 	Pdefn(\duration, Pwhite(0.5, 2.0));
 	Pdefn(\play_rate, Pwhite(0.5, 2.2));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 1.0, \freq, 500.0, \rq, 1.0, \lag, 2, \amp, 2);
 	~hi_pass_synth.set(\mix, 1.0, \freq, 300, \lag, 2, \amp, 2);
 	~comb_synth.set(\mix, 1.0, \maxdelaytime, 0.2, \delaytime, 0.05, \decaytime, 4.0, \lag, 2, \amp, 2);
@@ -18,9 +20,11 @@
 
 //Tambura Region Growth Level 2
 ~tambL2 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_3, inf));
 	Pdefn(\duration, Pwhite(0.1, 3.0));
 	Pdefn(\play_rate, Pwhite(0.5, 2.2));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 1.0, \freq, 200.0, \rq, 1.0, \lag, 2, \amp, 2);
 	~hi_pass_synth.set(\mix, 1.0, \freq, 200, \lag, 2, \amp, 2);
 	~comb_synth.set(\mix, 1.0, \maxdelaytime, 0.2, \delaytime, 0.04, \decaytime, 5.0, \lag, 2, \amp, 2);
@@ -35,9 +39,11 @@
 
 //Tambura Region Growth Level 3
 ~tambL3 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_3, inf));
 	Pdefn(\duration, Pwhite(0.2, 0.7));
 	Pdefn(\play_rate, Pwhite(0.1, 1.2));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 1.0, \freq, 500.0, \rq, 0.01, \lag, 2, \amp, 2);
 	~hi_pass_synth.set(\mix, 1.0, \freq, 150, \lag, 2, \amp, 2);
 	~comb_synth.set(\mix, 1.0, \maxdelaytime, 0.2, \delaytime, 0.06, \decaytime, 3.0, \lag, 2, \amp, 2);
@@ -52,9 +58,11 @@
 
 //Tambura Region Growth Level 4
 ~tambL4 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_3, inf));
 	Pdefn(\duration, Pwhite(0.01, 0.5));
 	Pdefn(\play_rate, Pwhite(1.0, 10.0));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 1.0, \freq, 1000.0, \rq, 0.01, \lag, 2, \amp, 2);
 	~hi_pass_synth.set(\mix, 1.0, \freq, 500, \lag, 2, \amp, 2);
 	~comb_synth.set(\mix, 1.0, \maxdelaytime, 0.2, \delaytime, 0.04, \decaytime, 2.0, \lag, 2, \amp, 2);
@@ -70,9 +78,11 @@
 
 //Tambura Region Growth Level 5
 ~tambL5 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_3, inf));
 	Pdefn(\duration, Pwhite(1.3, 2.5));
 	Pdefn(\play_rate, Pwhite(0.1, 2.2));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 1.0, \freq, 10000.0, \rq, 1.0, \lag, 2, \amp, 2);
 	~hi_pass_synth.set(\mix, 1.0, \freq, 150, \lag, 2, \amp, 2);
 	~comb_synth.set(\mix, 1.0, \maxdelaytime, 0.2, \delaytime, 0.01, \decaytime, 4.0, \lag, 2, \amp, 2);

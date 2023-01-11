@@ -1,9 +1,11 @@
 (
 //Perc Region Growth Level 1
 ~percL1 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_2, inf));
 	Pdefn(\duration, Pwhite(0.5, 1.0));
 	Pdefn(\play_rate, Pwhite(0.8, 1.2));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
 	~hi_pass_synth.set(\mix, 0.0, \freq, 600, \lag, 2, \amp, 1);
 	~comb_synth.set(\mix, 0.0, \maxdelaytime, 0.2, \delaytime, 0.2, \decaytime, 1.0, \lag, 2, \amp, 1);
@@ -18,9 +20,11 @@
 
 //Perc Region Growth Level 2
 ~percL2 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_2, inf));
 	Pdefn(\duration, Pwhite(0.1, 1.0));
 	Pdefn(\play_rate, Pwhite(0.1, 1.2));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
 	~hi_pass_synth.set(\mix, 0.0, \freq, 600, \lag, 2, \amp, 1);
 	~comb_synth.set(\mix, 0.0, \maxdelaytime, 0.2, \delaytime, 0.2, \decaytime, 1.0, \lag, 2, \amp, 1);
@@ -35,9 +39,11 @@
 
 //Perc Region Growth Level 3
 ~percL3 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_2, inf));
 	Pdefn(\duration, Pwhite(0.1, 1.0));
 	Pdefn(\play_rate, Pwhite(0.1, 1.2));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
 	~hi_pass_synth.set(\mix, 0.0, \freq, 600, \lag, 2, \amp, 1);
 	~comb_synth.set(\mix, 0.0, \maxdelaytime, 0.2, \delaytime, 0.2, \decaytime, 1.0, \lag, 2, \amp, 1);
@@ -52,9 +58,11 @@
 
 //Perc Region Growth Level 4
 ~percL4 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_2, inf));
 	Pdefn(\duration, Pwhite(1.0, 2.0));
 	Pdefn(\play_rate, Pwhite(0.1, 5.2));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
 	~hi_pass_synth.set(\mix, 0.0, \freq, 600, \lag, 2, \amp, 1);
 	~comb_synth.set(\mix, 0.0, \maxdelaytime, 0.2, \delaytime, 0.2, \decaytime, 1.0, \lag, 2, \amp, 1);
@@ -69,9 +77,11 @@
 
 //Perc Region Growth Level 5
 ~percL5 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_2, inf));
 	Pdefn(\duration, Pwhite(1.0, 5.0));
 	Pdefn(\play_rate, Pwhite(0.1, 2.2));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
 	~hi_pass_synth.set(\mix, 0.0, \freq, 600, \lag, 2, \amp, 1);
 	~comb_synth.set(\mix, 0.0, \maxdelaytime, 0.2, \delaytime, 0.2, \decaytime, 1.0, \lag, 2, \amp, 1);

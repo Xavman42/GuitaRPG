@@ -125,6 +125,25 @@ SynthDef(\reverb, { |in, predelay = 1, revtime = 10, lpf = 500, amp = 1, out=0, 
 	Out.ar(out, sig);
 }).add;
 
+// Guitar samples
+SynthDef.new(\guitar, {
+	arg amp = 0.8, out = 0, bufnum, gate = 1, rate = 1, start = 0;
+	var sig, env;
+	sig = PlayBuf.ar(
+		numChannels: 1,
+		bufnum: bufnum,
+		rate: BufRateScale.kr(bufnum) * rate,
+		startPos: start
+
+	);
+	env = EnvGen.kr(Env.asr(0.001, 1.0, 0.1), gate, doneAction: 2);
+	sig = sig * env;
+	sig = Pan2.ar(sig);
+	sig = sig * amp;
+	Out.ar(out, sig);
+}).add;
+
+
 ////////////////////
 // Live effects
 ////////////////////

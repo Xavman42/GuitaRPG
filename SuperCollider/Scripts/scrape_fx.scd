@@ -1,9 +1,11 @@
 (
 //Scrape Region Growth Level 1
 ~scrapeL1 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_1, inf));
 	Pdefn(\duration, Pwhite(3.0, 4.4));
 	Pdefn(\play_rate, Pwhite(0.05, 0.2));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
 	~hi_pass_synth.set(\mix, 0.0, \freq, 800, \lag, 2, \amp, 1);
 	~comb_synth.set(\mix, 0.0, \maxdelaytime, 0.2, \delaytime, 0.2, \decaytime, 1.0, \lag, 2, \amp, 1);
@@ -18,9 +20,11 @@
 
 //Scrape Region Growth Level 2
 ~scrapeL2 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_1, inf));
 	Pdefn(\duration, Pwhite(0.5, 4.4));
 	Pdefn(\play_rate, Pwhite(0.1, 0.5));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
 	~hi_pass_synth.set(\mix, 1.0, \freq, 1200, \lag, 2, \amp, 2);
 	~comb_synth.set(\mix, 1.0, \maxdelaytime, 0.2, \delaytime, 0.15, \decaytime, 1.0, \lag, 2, \amp, 2);
@@ -35,9 +39,11 @@
 
 //Scrape Region Growth Level 3
 ~scrapeL3 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_1, inf));
 	Pdefn(\duration, Pwhite(0.5, 4.4));
 	Pdefn(\play_rate, Pwhite(0.1, 0.5));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
 	~hi_pass_synth.set(\mix, 1.0, \freq, 600, \lag, 2, \amp, 2);
 	~comb_synth.set(\mix, 1.0, \maxdelaytime, 0.2, \delaytime, 0.15, \decaytime, 1.0, \lag, 2, \amp, 2);
@@ -52,9 +58,11 @@
 
 //Scrape Region Growth Level 4
 ~scrapeL4 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_1, inf));
 	Pdefn(\duration, Pwhite(0.5, 2.5));
 	Pdefn(\play_rate, Pwhite(0.2, 1.0));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
 	~hi_pass_synth.set(\mix, 1.0, \freq, 200, \lag, 2, \amp, 1);
 	~comb_synth.set(\mix, 1.0, \maxdelaytime, 0.2, \delaytime, 0.15, \decaytime, 1.0, \lag, 2, \amp, 2);
@@ -69,9 +77,11 @@
 
 //Scrape Region Growth Level 5
 ~scrapeL5 = {
+	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_1, inf));
 	Pdefn(\duration, Pwhite(0.5, 1.5));
 	Pdefn(\play_rate, Pwhite(0.2, 1.0));
+	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
 	~hi_pass_synth.set(\mix, 1.0, \freq, 150, \lag, 2, \amp, 1);
 	~comb_synth.set(\mix, 1.0, \maxdelaytime, 0.2, \delaytime, 0.1, \decaytime, 1.0, \lag, 2, \amp, 1);

@@ -28,10 +28,10 @@ s.waitForBoot({
 		~hi_pass_synth = Synth(\hi, [\in, ~hi_pass_bus, \out, ~comb_bus], ~fx_group);
 		~mid_cut_synth = Synth(\mids, [\in, ~mid_cut_bus, \out, ~hi_pass_bus], ~fx_group);
 
-		d = Synth(\live_delay, [in: ~live_delay_bus, out: 0, mix: 1]);
-		r = Synth(\live_reverb, [in: ~live_reverb_bus, out: 0, mix: 1]);
-		c = Synth(\live_chorus, [in: ~live_chorus_bus, out: 0, mix: 1]);
-		m = Synth(\mic, [in0: 0, in1: 1, out0: ~live_reverb_bus, out1: ~live_delay_bus, out2: ~live_chorus_bus]);
+		//d = Synth(\live_delay, [in: ~live_delay_bus, out: 0, mix: 1]);
+		//r = Synth(\live_reverb, [in: ~live_reverb_bus, out: 0, mix: 1]);
+		//c = Synth(\live_chorus, [in: ~live_chorus_bus, out: 0, mix: 1]);
+		//m = Synth(\mic, [in0: 0, in1: 1, out0: ~live_reverb_bus, out1: ~live_delay_bus, out2: ~live_chorus_bus]);
 	};
 
 	ServerTree.add(~init);
@@ -43,6 +43,8 @@ s.waitForBoot({
 	(~path ++ "Scripts/perc_fx.scd").load;
 	(~path ++ "Scripts/tamb_fx.scd").load;
 	(~path ++ "Scripts/bart_fx.scd").load;
+	(~path ++ "Scripts/melody_fx.scd").load;
+	(~path ++ "Scripts/triad_fx.scd").load;
 
 	~piece = ();
 	~piece.scrape = ();
@@ -69,21 +71,42 @@ s.waitForBoot({
 	~piece.bart.l3 = ~bartL3;
 	~piece.bart.l4 = ~bartL4;
 	~piece.bart.l5 = ~bartL5;
+	~piece.melo = ();
+	~piece.melo.l1 = ~meloL1;
+	~piece.melo.l2 = ~meloL2;
+	~piece.melo.l3 = ~meloL3;
+	~piece.melo.l4 = ~meloL4;
+	~piece.triad = ();
+	~piece.triad.l1 = ~triadL1;
 });
 )
 
 (
+~guitar_binds = List[];
+~pitches = Array.new;
+PathName("Samples/Pitches/".resolveRelative).folders.do({
+	arg folder;
+	var sub_array;
+	sub_array = Array.new;
+	folder.entries.do({
+		arg path, i;
+		sub_array = sub_array.add(Buffer.read(s, path.fullPath));
+	});
+	~pitches = ~pitches.add(sub_array);
+});
 Pbind(
 	\instrument, \play_buf,
 	\dur, Pdefn(\duration, Pwhite(0.1, 1.5)),
 	\out, ~hi_pass_bus,
 	\bufnum, Pdefn(\bufarray, Prand(~buff_array_1, inf)),
-	\rate, Pdefn(\play_rate, Pwhite(0.8, 1.2))
+	\rate, Pdefn(\play_rate, Pwhite(0.8, 1.2)),
+	\mul, Pdefn(\buf_mul, 0.1)
 ).play;
 
 x = OSCFunc( { | message, time, addr, port |
 	var area, region, level;
 
+	message.postln;
 	area = message[1].asString;
 	region = message[2].asString;
 	level = message[3].asInteger;
@@ -123,13 +146,16 @@ x = OSCFunc( { | message, time, addr, port |
 	}
 
 }, "/print" );
+~piece.scrape.l1.();
 
 )
 
-~piece.scrape.l3.();
+~piece.scrape.l5.();
 ~piece.perc.l5.();
 ~piece.tamb.l3.();
-~piece.bart.l5.();
+~piece.bart.l1.();
+~piece.melo.l3.();
+~piece.triad.l1.();
 
 (
 //All effects off

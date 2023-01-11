@@ -41,83 +41,90 @@ SynthDef.new(\guitar, {
 
 Synth(\guitar, [amp: 0.25, out: 0, bufnum: ~pitches[20].choose]);
 (
-~melody = Pbind(
-	\instrument, \guitar,
-	\dur, Pwrand([Pseq([0.125],2), 0.25, 0.5, 1], [1, 4, 6, 1].normalizeSum, inf),
-	\amp, 0.4,
-	// \degree, Pwhite(-20, 16), //Full chromatic range
-	\degree, Pwhite(-8, 7), //Full majorPentatonic range
-	// \degree, Pwhite(-11, 8), //Full diatonic range(dorian)
-	\bufnum, Pfunc({
-		arg ev;
+~guitar_binds = List[];
+for (0, 2, {arg i;
+	(
+		~melody = Pbind(
+			\instrument, \guitar,
+			\dur, Pwrand([Pseq([0.125],2), 0.25, 0.5, 1], [1, 4, 6, 1].normalizeSum, inf),
+			\amp, 0.4,
+			// \degree, Pwhite(-20, 16), //Full chromatic range
+			\degree, Pwhite(-8, 7), //Full majorPentatonic range
+			// \degree, Pwhite(-11, 8), //Full diatonic range(dorian)
+			\bufnum, Pfunc({
+				arg ev;
+				var note, midinote;
+				note = ev[\degree].degreeToKey(Scale.majorPentatonic, 12);
+				midinote = note + 60;
+				~pitches[midinote - 40].choose
+			}),
+			\sustain, Pkey(\dur, inf)+Pwrand([0, 0.1, 0.15, 0.2, 0.5], [1, 3, 7, 6, 2], inf),
+			\rate, Pwhite(-0.01, 0.01).midiratio * Pwrand([1, -1], [8, 2], inf),
+			\start, Pfunc({ arg ev;
+				if(
+					ev[\rate] < 0,
+					{ ev[\bufnum].numFrames - 1 },
+					{ 0 }
+				);
+			})
+		);
+		q = ~melody.play(quant:1);
+		~guitar_binds.add(q);
+)});
+)
+(
+for (0, ~guitar_binds.size, {arg i;
+	~guitar_binds[i].stop;
+});
+)
+
+
+	(
+		~chords = Pbind(
+			\instrument, \guitar,
+			\dur, Pseq([1.2], inf),
+			\amp, 0.4,
+			\degree, Ptuple([
+				Prand([0,1,2,3], inf),
+				Prand([4,5,6,7], inf),
+				Prand([8,9,10,11], inf)
+			], inf)  ,
+			\bufnum, Pfunc({
+				arg ev;
+				var note, midinote, bufs;
+				note = ev[\degree].degreeToKey(Scale.chromatic, 12);
+				midinote = note + 60;
+				bufs = ~pitches[midinote - 40];
+				bufs.collect({ arg folder; folder.choose });
+			}),
+			\sustain, Pwhite(0.1, 2),
+			\rate, Pwhite(-0.1, 0.1).midiratio * Prand([1, 1], inf),
+			\start, Pfunc({ arg ev;
+				if(
+					ev[\rate] < 0,
+					{ ev[\bufnum].numFrames - 1 },
+					{ 0 }
+				);
+			})
+
+		);
+		q = ~chords.play;
+	)
+
+	[ ~pitches[20], ~pitches[24], ~pitches[27] ]
+
+
+	q.stop;
+
+	(
 		var note, midinote;
-		note = ev[\degree].degreeToKey(Scale.majorPentatonic, 12);
+		note = 3.degreeToKey(Scale.major, 12);
 		midinote = note + 60;
-		~pitches[midinote - 40].choose
-	}),
-	\sustain, Pkey(\dur, inf)+Pwrand([0, 0.1, 0.15, 0.2, 0.5], [1, 3, 7, 6, 2], inf),
-	\rate, Pwhite(-0.01, 0.01).midiratio * Pwrand([1, -1], [8, 2], inf),
-	\start, Pfunc({ arg ev;
-		if(
-			ev[\rate] < 0,
-			{ ev[\bufnum].numFrames - 1 },
-			{ 0 }
-		);
-	})
+		//~pitches[midinote - 40].choose.bufnum
+	)
 
-);
-q = ~melody.play(quant:1);
-)
-
-q.stop;
-
-
-(
-~chords = Pbind(
-	\instrument, \guitar,
-	\dur, Pseq([1.2], inf),
-	\amp, 0.4,
-	\degree, Ptuple([
-		Prand([0,1,2,3], inf),
-		Prand([4,5,6,7], inf),
-		Prand([8,9,10,11], inf)
-	], inf)  ,
-	\bufnum, Pfunc({
-		arg ev;
-		var note, midinote, bufs;
-		note = ev[\degree].degreeToKey(Scale.chromatic, 12);
-		midinote = note + 60;
-		bufs = ~pitches[midinote - 40];
-		bufs.collect({ arg folder; folder.choose });
-	}),
-	\sustain, Pwhite(0.1, 2),
-	\rate, Pwhite(-0.1, 0.1).midiratio * Prand([1, 1], inf),
-	\start, Pfunc({ arg ev;
-		if(
-			ev[\rate] < 0,
-			{ ev[\bufnum].numFrames - 1 },
-			{ 0 }
-		);
-	})
-
-);
-q = ~chords.play;
-)
-
-[ ~pitches[20], ~pitches[24], ~pitches[27] ]
-
-
-q.stop;
-
-(
-var note, midinote;
-note = 3.degreeToKey(Scale.major, 12);
-midinote = note + 60;
-//~pitches[midinote - 40].choose.bufnum
-)
-
-p.play;
+	p.play;
 
 
 
-Event.partialEvents[\pitchEvent][\midinote].postcs
+	Event.partialEvents[\pitchEvent][\midinote].postcs
