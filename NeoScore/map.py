@@ -84,7 +84,7 @@ def calculate_trajectory(current_point, last_point, last_index, possible_paths, 
     next_point = future_point
     my_index = indices[path_options.index(next_point)]
     my_region = possible_paths[my_index][2]
-    staves, scene_change, my_index, share_dict = \
+    staves, scene_change, my_index, share_dict, region = \
         populate_staff(current_point, next_point, my_region, last_index, staves, network, possible_paths, level_dict,
                        xp_dict)
     angle = degrees(atan2(network_points[next_point][1]-network_points[current_point][1],
@@ -94,7 +94,7 @@ def calculate_trajectory(current_point, last_point, last_index, possible_paths, 
     distance = Unit(sqrt((network_points[next_point][0]-network_points[current_point][0])**2 +
                          (network_points[next_point][1]-network_points[current_point][1])**2))
     return angle, distance, next_point, staves, scene_change, my_index, share_dict, indices, path_options, \
-        current_point, my_region
+        current_point, my_region, region
 
 
 def populate_staff(here, there, region, last_index, staves, network, possible_paths, level_dict, xp_dict):
@@ -111,7 +111,6 @@ def populate_staff(here, there, region, last_index, staves, network, possible_pa
     length = Unit(sqrt(
         (network[my_index][2] - network[my_index][0]) ** 2 + (network[my_index][3] - network[my_index][1]) ** 2))
     apply_region_modifier(level_dict, region, 20)
-    print(region)
     xp_dict, level_dict = initialize_skill(xp_dict, level_dict, region)
     offset = Unit(100)
     cell_length = 0
@@ -125,7 +124,7 @@ def populate_staff(here, there, region, last_index, staves, network, possible_pa
         # text_dict[reg][0].text = reg + ": " + str(lvl)
         offset = offset + cell_length + Unit(30)
     scene_change = True
-    return staves, scene_change, my_index, share_dict
+    return staves, scene_change, my_index, share_dict, region
 
 
 def default_camera_rotate_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:

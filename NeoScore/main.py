@@ -15,7 +15,7 @@ def refresh_func(func_time: float):
     move_rate = 30
     if new_move:
         my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict, indices, \
-            path_options, my_current_point, my_region = \
+            path_options, my_current_point, my_region, region_text = \
             calculate_trajectory(my_point, my_last_point, my_last_index, possible_paths, my_staves, my_network,
                                  my_level_dict, my_xp_dict, my_network_points, hud_return_point.value)
         my_top_layer_assets = redo_top_layer_assets(my_top_layer_assets)
@@ -39,6 +39,8 @@ def refresh_func(func_time: float):
         new_move = False
         reference_time = time.time()
         # share_dict['current_region'] = my_region
+        hud_region_text = {'1': region_text}
+        hud_region_text_dict.update(hud_region_text)
         hud_share_dict.update(share_dict)
         hud_current_index.value = my_current_index
         hud_last_index.value = my_last_index
@@ -96,7 +98,7 @@ def direction_select(event):
         direction_tick += 1
 
 
-def hud_process_func(last_index, current_index, share_dict, current_point, next_point, return_point):
+def hud_process_func(last_index, current_index, share_dict, current_point, next_point, return_point, region_text_dict):
     global ref_current_index, arrows, direction_tick
 
     def hud_refresh_func(func_time: float):
@@ -107,7 +109,7 @@ def hud_process_func(last_index, current_index, share_dict, current_point, next_
             mini_staff[ref_current_index].pen = Pen("#000000", Unit(0.5))
             mini_staff[last_index.value].pen = Pen("#2a51ee", Unit(3))
             ref_current_index = last_index.value
-            direction_tick = 0
+            direction_tick = random.randint(0, 5)
 
         for index, point in enumerate(possible_paths):
             if point[0] == next_point.value:
@@ -143,6 +145,7 @@ def hud_process_func(last_index, current_index, share_dict, current_point, next_
         return_point.value = path_options[direction_tick % len(arrows)]
         for key, value in share_dict.items():
             text_dict[key][0].text = str(key) + ": " + str(value)
+        # text_dict['current_region'][0].text = str(region_text_dict.get('1'))
 
     ref_current_index = -1
     neoscore.setup()
@@ -217,6 +220,7 @@ def redo_top_layer_assets(top_layer_assets):
 if __name__ == '__main__':
     manager = Manager()
     hud_share_dict = manager.dict()
+    hud_region_text_dict = manager.dict()
     hud_last_index = Value('i', 0)
     hud_current_index = Value('i', 0)
     hud_current_point = Value('i', 0)
@@ -224,7 +228,7 @@ if __name__ == '__main__':
     hud_return_point = Value('i', 1)
     hud_process = Process(target=hud_process_func, args=(hud_last_index, hud_current_index, hud_share_dict,
                                                          hud_current_point, hud_next_point,
-                                                         hud_return_point))
+                                                         hud_return_point, hud_region_text_dict))
     hud_process.start()
 
     neoscore.setup()
