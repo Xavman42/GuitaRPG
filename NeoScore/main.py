@@ -1,3 +1,5 @@
+import random
+
 from neoscore.core.key_event import KeyEventType
 
 from map import *
@@ -198,7 +200,22 @@ def load_assets():
     cwd = os.getcwd()
     disk = pathlib.Path(cwd + "/Assets/circle")
     scrape_background = pathlib.Path(cwd + "/Assets/scrape_background")
-    Image((Unit(0), Unit(-125)), None, scrape_background, scale = 1/2)
+    # Scrape region background
+    for i in range(14):
+        Image((Unit(i*50+random.randint(0, 20)), Unit(-125 - random.randint(0, 20))),
+              my_staves[0], scrape_background, scale = 1/2)
+    for i in range(16):
+        temp = Image((Unit(i*50+random.randint(0, 20)), Unit(160 + random.randint(0, 20))),
+              my_staves[0], scrape_background, scale = 1/2)
+        temp.rotation = 180
+    temp = Image((Unit(-200), Unit(40)),
+          my_staves[0], scrape_background, scale=1)
+    temp.rotation = -90
+    temp = Image((Unit(-200), Unit(150)),
+                 my_staves[0], scrape_background, scale=1)
+    temp.rotation = -90
+
+
 
     top_layer_assets = []
     for i in my_network_points:

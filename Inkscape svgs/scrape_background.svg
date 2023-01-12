@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="200"
-   height="100"
-   viewBox="0 0 52.916665 26.458334"
+   width="50"
+   height="50"
+   viewBox="0 0 13.229166 13.229167"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
@@ -29,9 +29,9 @@
      showgrid="false"
      units="px"
      width="200px"
-     inkscape:zoom="4.2532751"
-     inkscape:cx="97.924539"
-     inkscape:cy="77.2346"
+     inkscape:zoom="8.5065502"
+     inkscape:cx="33.092146"
+     inkscape:cy="36.501283"
      inkscape:window-width="1920"
      inkscape:window-height="1016"
      inkscape:window-x="0"
@@ -42,37 +42,49 @@
      id="defs2">
     <linearGradient
        inkscape:collect="always"
-       id="linearGradient4357">
+       id="linearGradient14359">
       <stop
-         style="stop-color:#c8b7b7;stop-opacity:1;"
+         style="stop-color:#000094;stop-opacity:1;"
          offset="0"
-         id="stop4353" />
+         id="stop14355" />
       <stop
-         style="stop-color:#c8b7b7;stop-opacity:0;"
+         style="stop-color:#000094;stop-opacity:0;"
          offset="1"
-         id="stop4355" />
+         id="stop14357" />
     </linearGradient>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter14096"
+       x="-0.075"
+       y="-0.075"
+       width="1.15"
+       height="1.15">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.22669072"
+         id="feGaussianBlur14098" />
+    </filter>
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient4357"
-       id="linearGradient4359"
-       x1="25.934746"
-       y1="0.1557035"
-       x2="25.934746"
-       y2="13.223115"
-       gradientUnits="userSpaceOnUse"
-       spreadMethod="reflect" />
+       xlink:href="#linearGradient14359"
+       id="linearGradient14361"
+       x1="5.9936551"
+       y1="-13.103727"
+       x2="14.335874"
+       y2="-13.103727"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <rect
-       style="fill:url(#linearGradient4359);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.0591"
-       id="rect846"
-       width="52.916668"
-       height="26.458334"
-       x="0"
-       y="0" />
+    <circle
+       style="opacity:0.75;fill:url(#linearGradient14361);fill-opacity:1;stroke:none;stroke-width:0.765;filter:url(#filter14096)"
+       id="path13860"
+       cx="10.164764"
+       cy="-13.103727"
+       r="3.6270516"
+       transform="matrix(0,1.5858092,-1.5858092,0,-14.165428,-9.5047933)" />
   </g>
 </svg>
