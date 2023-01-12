@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="50"
+   height="50"
+   viewBox="0 0 13.229166 13.229167"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="triad_background.svg"
+   inkscape:export-filename="/home/xavier/PycharmProjects/GuitaRPG/NeoScore/Assets/triad_background.png"
+   inkscape:export-xdpi="500"
+   inkscape:export-ydpi="500"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="px"
+     width="200px"
+     inkscape:zoom="8.5065502"
+     inkscape:cx="33.092146"
+     inkscape:cy="36.501283"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient1188">
+      <stop
+         style="stop-color:#cc980c;stop-opacity:1;"
+         offset="0"
+         id="stop1184" />
+      <stop
+         style="stop-color:#cc980c;stop-opacity:0;"
+         offset="1"
+         id="stop1186" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter14096"
+       x="-0.075"
+       y="-0.075"
+       width="1.15"
+       height="1.15">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.22669072"
+         id="feGaussianBlur14098" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1188"
+       id="linearGradient1190"
+       x1="5.9936551"
+       y1="-13.103727"
+       x2="14.335874"
+       y2="-13.103727"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="opacity:0.75;fill:url(#linearGradient1190);fill-opacity:1;stroke:none;stroke-width:0.765;filter:url(#filter14096)"
+       id="path13860"
+       cx="10.164764"
+       cy="-13.103727"
+       r="3.6270516"
+       transform="matrix(0,1.5858092,-1.5858092,0,-14.165428,-9.5047933)" />
+  </g>
+</svg>
