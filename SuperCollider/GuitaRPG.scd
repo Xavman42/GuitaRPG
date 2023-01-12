@@ -78,6 +78,9 @@ s.waitForBoot({
 	~piece.melo.l4 = ~meloL4;
 	~piece.triad = ();
 	~piece.triad.l1 = ~triadL1;
+	~piece.triad.l2 = ~triadL2;
+	~piece.triad.l3 = ~triadL3;
+	~piece.triad.l4 = ~triadL4;
 });
 )
 
@@ -150,12 +153,12 @@ x = OSCFunc( { | message, time, addr, port |
 
 )
 
-~piece.scrape.l5.();
-~piece.perc.l5.();
-~piece.tamb.l3.();
-~piece.bart.l1.();
-~piece.melo.l3.();
-~piece.triad.l1.();
+~piece.scrape.l5.(); //dark dark blue
+~piece.perc.l5.(); //light orange
+~piece.tamb.l5.(); //green
+~piece.bart.l3.(); //pale blue almost white
+~piece.melo.l1.(); //light red
+~piece.triad.l4.(); //light orange
 
 (
 //All effects off

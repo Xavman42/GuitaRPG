@@ -79,52 +79,52 @@ for (0, ~guitar_binds.size, {arg i;
 )
 
 
-	(
-		~chords = Pbind(
-			\instrument, \guitar,
-			\dur, Pseq([1.2], inf),
-			\amp, 0.4,
-			\degree, Ptuple([
-				Prand([0,1,2,3], inf),
-				Prand([4,5,6,7], inf),
-				Prand([8,9,10,11], inf)
-			], inf)  ,
-			\bufnum, Pfunc({
-				arg ev;
-				var note, midinote, bufs;
-				note = ev[\degree].degreeToKey(Scale.chromatic, 12);
-				midinote = note + 60;
-				bufs = ~pitches[midinote - 40];
-				bufs.collect({ arg folder; folder.choose });
-			}),
-			\sustain, Pwhite(0.1, 2),
-			\rate, Pwhite(-0.1, 0.1).midiratio * Prand([1, 1], inf),
-			\start, Pfunc({ arg ev;
-				if(
-					ev[\rate] < 0,
-					{ ev[\bufnum].numFrames - 1 },
-					{ 0 }
-				);
-			})
-
-		);
-		q = ~chords.play;
-	)
-
-	[ ~pitches[20], ~pitches[24], ~pitches[27] ]
-
-
-	q.stop;
-
-	(
-		var note, midinote;
-		note = 3.degreeToKey(Scale.major, 12);
+(
+~chords = Pbind(
+	\instrument, \guitar,
+	\dur, Pseq([1.2], inf),
+	\amp, 0.4,
+	\degree, Ptuple([
+		Prand([0,1,2,3], inf)+Pwhite(-20, 0),
+		Prand([6,7,8,9], inf)+Pwhite(-20, 0),
+		Prand([12,13,14,15], inf)+Pwhite(-20, 0)
+	], inf)  ,
+	\bufnum, Pfunc({
+		arg ev;
+		var note, midinote, bufs;
+		note = ev[\degree].degreeToKey(Scale.chromatic, 12);
 		midinote = note + 60;
-		//~pitches[midinote - 40].choose.bufnum
-	)
+		bufs = ~pitches[midinote - 40];
+		bufs.collect({ arg folder; folder.choose });
+	}),
+	\sustain, Pwhite(0.1, 2),
+	\rate, Pwhite(-0.1, 0.1).midiratio * Prand([1, 1], inf),
+	\start, Pfunc({ arg ev;
+		if(
+			ev[\rate] < 0,
+			{ ev[\bufnum].numFrames - 1 },
+			{ 0 }
+		);
+	})
 
-	p.play;
+);
+q = ~chords.play;
+)
+
+[ ~pitches[20], ~pitches[24], ~pitches[27] ]
+
+
+q.stop;
+
+(
+var note, midinote;
+note = 3.degreeToKey(Scale.major, 12);
+midinote = note + 60;
+//~pitches[midinote - 40].choose.bufnum
+)
+
+p.play;
 
 
 
-	Event.partialEvents[\pitchEvent][\midinote].postcs
+Event.partialEvents[\pitchEvent][\midinote].postcs
