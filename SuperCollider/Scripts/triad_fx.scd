@@ -138,7 +138,7 @@
 };
 
 
-//Triad Region Growth Level 3
+//Triad Region Growth Level 4
 ~triadL4 = {
 	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	~guitar_binds = List[];

@@ -45,6 +45,7 @@ s.waitForBoot({
 	(~path ++ "Scripts/bart_fx.scd").load;
 	(~path ++ "Scripts/melody_fx.scd").load;
 	(~path ++ "Scripts/triad_fx.scd").load;
+	(~path ++ "Scripts/adv_harm_fx.scd").load;
 
 	~piece = ();
 	~piece.scrape = ();
@@ -81,6 +82,8 @@ s.waitForBoot({
 	~piece.triad.l2 = ~triadL2;
 	~piece.triad.l3 = ~triadL3;
 	~piece.triad.l4 = ~triadL4;
+	~piece.adv_harm = ();
+	~piece.adv_harm.l1 = ~adv_harmL1
 });
 )
 
