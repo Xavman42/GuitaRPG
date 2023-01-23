@@ -60,7 +60,9 @@ def make_xp_dict():
                'harmonic': [default_level, default_xp],
                'rake': [default_level, default_xp],
                'tremolo': [default_level, default_xp],
-               'adv_harm': [default_level, default_xp]}
+               'adv_harm': [default_level, default_xp],
+               'rasg': [default_level, default_xp],
+               'triad': [default_level, default_xp]}
     return xp_dict
 
 

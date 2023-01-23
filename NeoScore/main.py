@@ -1,7 +1,9 @@
 import random
 
+import pyOSC3
 from neoscore.core.key_event import KeyEventType
 
+from NeoScore.Particle import send_particle
 from map import *
 from Plevel import *
 from HUD import *
@@ -48,6 +50,10 @@ def refresh_func(func_time: float):
         hud_last_index.value = my_last_index
         hud_current_point.value = my_current_point
         hud_next_point.value = my_next_point
+        try:
+            send_particle(my_client, region_text, my_xp_dict[region_text][0])
+        except KeyError:
+            pass
         neoscore.set_refresh_func(camera_rotate_refresh_func)
 
 
@@ -280,6 +286,8 @@ if __name__ == '__main__':
     hud_process.start()
 
     neoscore.setup()
+    my_client = pyOSC3.OSCClient()
+    my_client.connect(('127.0.0.1', 57121))
     my_level_dict = make_cell_dict()
     my_level_dict = set_skill_probability(my_level_dict, "scrape", 1)
     my_xp_dict = make_xp_dict()

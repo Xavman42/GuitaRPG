@@ -48,6 +48,8 @@ s.waitForBoot({
 	(~path ++ "Scripts/adv_harm_fx.scd").load;
 	(~path ++ "Scripts/harm_fx.scd").load;
 	(~path ++ "Scripts/rake_fx.scd").load;
+	(~path ++ "Scripts/trem_fx.scd").load;
+	(~path ++ "Scripts/rasg_fx.scd").load;
 
 	~piece = ();
 	~piece.scrape = ();
@@ -99,6 +101,16 @@ s.waitForBoot({
 	~piece.rake.l2 = ~rakeL2;
 	~piece.rake.l3 = ~rakeL3;
 	~piece.rake.l4 = ~rakeL4;
+	~piece.trem = ();
+	~piece.trem.l1 = ~tremL1;
+	~piece.trem.l2 = ~tremL2;
+	~piece.trem.l3 = ~tremL3;
+	~piece.trem.l4 = ~tremL4;
+	~piece.rasg = ();
+	~piece.rasg.l1 = ~rasgL1;
+	~piece.rasg.l2 = ~rasgL2;
+	~piece.rasg.l3 = ~rasgL3;
+	~piece.rasg.l4 = ~rasgL4;
 });
 )
 
@@ -128,6 +140,9 @@ x = OSCFunc( { | message, time, addr, port |
 	var area, region, level;
 
 	message.postln;
+	time.postln;
+	addr.postln;
+	port.postln;
 	area = message[1].asString;
 	region = message[2].asString;
 	level = message[3].asInteger;
@@ -165,8 +180,57 @@ x = OSCFunc( { | message, time, addr, port |
 		{ level == 4}{~piece.bart.l4}
 		{ level == 5}{~piece.bart.l5}
 	}
-
+	{ region == "melody"} {
+		case
+		{ level == 1}{~piece.melo.l1}
+		{ level == 2}{~piece.melo.l2}
+		{ level == 3}{~piece.melo.l3}
+		{ level == 4}{~piece.melo.l4}
+	}
+	{ region == "triad"} {
+		case
+		{ level == 1}{~piece.triad.l1}
+		{ level == 2}{~piece.triad.l2}
+		{ level == 3}{~piece.triad.l3}
+		{ level == 4}{~piece.triad.l4}
+	}
+	{ region == "adv_harm"} {
+		case
+		{ level == 1}{~piece.adv_harm.l1}
+		{ level == 2}{~piece.adv_harm.l2}
+		{ level == 3}{~piece.adv_harm.l3}
+		{ level == 4}{~piece.adv_harm.l4}
+	}
+	{ region == "harmonic"} {
+		case
+		{ level == 1}{~piece.harmonics.l1}
+		{ level == 2}{~piece.harmonics.l2}
+		{ level == 3}{~piece.harmonics.l3}
+		{ level == 4}{~piece.harmonics.l4}
+	}
+	{ region == "rake"} {
+		case
+		{ level == 1}{~piece.rake.l1}
+		{ level == 2}{~piece.rake.l2}
+		{ level == 3}{~piece.rake.l3}
+		{ level == 4}{~piece.rake.l4}
+	}
+	{ region == "trem"} {
+		case
+		{ level == 1}{~piece.trem.l1}
+		{ level == 2}{~piece.trem.l2}
+		{ level == 3}{~piece.trem.l3}
+		{ level == 4}{~piece.trem.l4}
+	}
+	{ region == "rasg"} {
+		case
+		{ level == 1}{~piece.rasg.l1}
+		{ level == 2}{~piece.rasg.l2}
+		{ level == 3}{~piece.rasg.l3}
+		{ level == 4}{~piece.rasg.l4}
+	}
 }, "/print" );
+NetAddr.langPort.postln;
 ~piece.scrape.l1.();
 
 )
@@ -180,6 +244,8 @@ x = OSCFunc( { | message, time, addr, port |
 ~piece.adv_harm.l1.();
 ~piece.harmonics.l1.();
 ~piece.rake.l1.();
+~piece.trem.l4.();
+~piece.rasg.l1.();
 
 (
 //All effects off
