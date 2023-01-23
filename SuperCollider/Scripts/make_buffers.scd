@@ -18,15 +18,18 @@ s.newBusAllocators;
 ~region_2_samples = PathName.new(~path ++ "Samples/Perc").files.scramble.copyFromStart(74);
 ~region_3_samples = PathName.new(~path ++ "Samples/Tamb").files.scramble.copyFromStart(34);
 ~region_4_samples = PathName.new(~path ++ "Samples/Bartok").files.scramble.copyFromStart(82);
+~harm_samples = PathName.new(~path ++ "Samples/Natural_Harmonics").files.scramble.copyFromStart(32);
 
 ~buff_array_1 = Array.new;
 ~buff_array_2 = Array.new;
 ~buff_array_3 = Array.new;
 ~buff_array_4 = Array.new;
+~harm_buff_array = Array.new;
 
 ~region_1_samples.do({ |item| ~buff_array_1 = ~buff_array_1.add(Buffer.read(s, item.fullPath)); });
 ~region_2_samples.do({ |item| ~buff_array_2 = ~buff_array_2.add(Buffer.read(s, item.fullPath)); });
 ~region_3_samples.do({ |item| ~buff_array_3 = ~buff_array_3.add(Buffer.read(s, item.fullPath)); });
 ~region_4_samples.do({ |item| ~buff_array_4 = ~buff_array_4.add(Buffer.read(s, item.fullPath)); });
+~harm_samples.do({ |item| ~harm_buff_array = ~harm_buff_array.add(Buffer.read(s, item.fullPath)); });
 ~ppbuf = Buffer.alloc(s, s.sampleRate * 10, 2);
 )

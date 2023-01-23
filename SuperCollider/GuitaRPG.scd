@@ -46,6 +46,8 @@ s.waitForBoot({
 	(~path ++ "Scripts/melody_fx.scd").load;
 	(~path ++ "Scripts/triad_fx.scd").load;
 	(~path ++ "Scripts/adv_harm_fx.scd").load;
+	(~path ++ "Scripts/harm_fx.scd").load;
+	(~path ++ "Scripts/rake_fx.scd").load;
 
 	~piece = ();
 	~piece.scrape = ();
@@ -83,7 +85,20 @@ s.waitForBoot({
 	~piece.triad.l3 = ~triadL3;
 	~piece.triad.l4 = ~triadL4;
 	~piece.adv_harm = ();
-	~piece.adv_harm.l1 = ~adv_harmL1
+	~piece.adv_harm.l1 = ~adv_harmL1;
+	~piece.adv_harm.l2 = ~adv_harmL2;
+	~piece.adv_harm.l3 = ~adv_harmL3;
+	~piece.adv_harm.l4 = ~adv_harmL4;
+	~piece.harmonics = ();
+	~piece.harmonics.l1 = ~harmL1;
+	~piece.harmonics.l2 = ~harmL2;
+	~piece.harmonics.l3 = ~harmL3;
+	~piece.harmonics.l4 = ~harmL4;
+	~piece.rake = ();
+	~piece.rake.l1 = ~rakeL1;
+	~piece.rake.l2 = ~rakeL2;
+	~piece.rake.l3 = ~rakeL3;
+	~piece.rake.l4 = ~rakeL4;
 });
 )
 
@@ -157,11 +172,14 @@ x = OSCFunc( { | message, time, addr, port |
 )
 
 ~piece.scrape.l5.(); //dark dark blue
-~piece.perc.l5.(); //light orange
+~piece.perc.l2.(); //light orange
 ~piece.tamb.l5.(); //green
 ~piece.bart.l3.(); //pale blue almost white
 ~piece.melo.l1.(); //light red
 ~piece.triad.l4.(); //light orange
+~piece.adv_harm.l1.();
+~piece.harmonics.l1.();
+~piece.rake.l1.();
 
 (
 //All effects off
