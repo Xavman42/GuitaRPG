@@ -236,16 +236,16 @@ NetAddr.langPort.postln;
 )
 
 ~piece.scrape.l5.(); //dark dark blue
-~piece.perc.l2.(); //light orange
+~piece.perc.l5.(); //light orange
 ~piece.tamb.l5.(); //green
-~piece.bart.l3.(); //pale blue almost white
-~piece.melo.l1.(); //light red
+~piece.bart.l5.(); //pale blue almost white
+~piece.melo.l4.(); //light red
 ~piece.triad.l4.(); //light orange
-~piece.adv_harm.l1.();
-~piece.harmonics.l1.();
-~piece.rake.l1.();
+~piece.adv_harm.l4.();
+~piece.harmonics.l4.();
+~piece.rake.l4.();
 ~piece.trem.l4.();
-~piece.rasg.l1.();
+~piece.rasg.l4.();
 
 (
 //All effects off

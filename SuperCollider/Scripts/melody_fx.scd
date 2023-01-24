@@ -8,7 +8,7 @@
 			~melody = Pbind(
 				\instrument, \guitar,
 				\dur, Pwrand([Pseq([0.125],2), 0.25, 0.5, 1], [1, 4, 6, 1].normalizeSum, inf),
-				\amp, 0.2,
+				\amp, 1.0,
 				// \degree, Pwhite(-20, 16), //Full chromatic range
 				\degree, Pwhite(-7, 7), //Full majorPentatonic range
 				// \degree, Pwhite(-11, 8), //Full diatonic range(dorian)
@@ -42,7 +42,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 1.0, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 1.0, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 10, \lag, 2);
 	"meloL1".postln;
 };
 
@@ -55,7 +55,7 @@
 			~melody = Pbind(
 				\instrument, \guitar,
 				\dur, Pwrand([Pseq([0.125],2), 0.25, 0.5, 1], [1, 4, 6, 1].normalizeSum, inf),
-				\amp, 0.2,
+				\amp, 1.0,
 				// \degree, Pwhite(-20, 16), //Full chromatic range
 				// \degree, Pwhite(-8, 7), //Full majorPentatonic range
 				\degree, Pwhite(-11, 8), //Full diatonic range(dorian)
@@ -89,7 +89,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.3, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.8, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 0.8, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 10, \lag, 2);
 	"meloL2".postln;
 };
 
@@ -102,7 +102,7 @@
 			~melody = Pbind(
 				\instrument, \guitar,
 				\dur, Pwrand([Pseq([0.125],2), 0.25, 0.5, 1], [1, 4, 6, 1].normalizeSum, inf),
-				\amp, 0.2,
+				\amp, 1.0,
 				// \degree, Pwhite(-20, 16), //Full chromatic range
 				// \degree, Pwhite(-8, 7), //Full majorPentatonic range
 				\degree, Pwhite(-11, 8), //Full diatonic range(dorian)
@@ -136,7 +136,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.5, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.5, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 0.5, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 10, \lag, 2);
 	"meloL3".postln;
 };
 
@@ -150,7 +150,7 @@
 			~melody = Pbind(
 				\instrument, \guitar,
 				\dur, Pwrand([Pseq([0.125],2), 0.25, 0.5, 1], [1, 4, 6, 1].normalizeSum, inf),
-				\amp, 0.2,
+				\amp, 1.0,
 				\degree, Pwhite(-20, 16), //Full chromatic range
 				// \degree, Pwhite(-8, 7), //Full majorPentatonic range
 				//\degree, Pwhite(-11, 8), //Full diatonic range(dorian)
@@ -184,7 +184,7 @@
 	~chorus_synth.set(\mix, 0.1, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.5, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 10, \lag, 2);
 	"meloL4".postln;
 };
 )

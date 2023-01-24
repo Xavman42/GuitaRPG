@@ -20,7 +20,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 0.4, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 2.0, \lag, 2);
+	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 12, \lag, 2);
 	"rakeL1".postln;
 };
 ~rakeL2 = {
@@ -43,7 +43,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 0.4, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 2.0, \lag, 2);
+	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 12, \lag, 2);
 	"rakeL2".postln;
 };
 ~rakeL3 = {
@@ -66,7 +66,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 0.4, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 2.0, \lag, 2);
+	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 12, \lag, 2);
 	"rakeL3".postln;
 };
 ~rakeL4 = {
@@ -89,7 +89,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 0.4, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 2.0, \lag, 2);
+	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 12, \lag, 2);
 	"rakeL4".postln;
 };
 )

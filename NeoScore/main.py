@@ -22,6 +22,7 @@ def refresh_func(func_time: float):
             path_options, my_current_point, my_region, region_text = \
             calculate_trajectory(my_point, my_last_point, my_last_index, possible_paths, my_staves, my_network,
                                  my_level_dict, my_xp_dict, my_network_points, hud_return_point.value)
+        print(my_point)
         my_top_layer_assets = redo_top_layer_assets(my_top_layer_assets)
         my_move_dur = distance.base_value / move_rate
         my_x_move_rate = cos(radians(my_angle)) * move_rate
@@ -53,7 +54,7 @@ def refresh_func(func_time: float):
         try:
             send_particle(my_client, region_text, my_xp_dict[region_text][0])
         except KeyError:
-            pass
+            send_particle(my_client, "scrape", 1)
         neoscore.set_refresh_func(camera_rotate_refresh_func)
 
 
@@ -149,7 +150,7 @@ def hud_process_func(last_index, current_index, share_dict, current_point, next_
             arrow_end_x = 30 * Unit(cos(radians(angle)))
             arrow_end_y = 30 * Unit(sin(radians(angle)))
             arrows.append(Path.arrow((Unit(0), Unit(0)), None, (arrow_end_x, arrow_end_y), None, Brush("#cccccc")))
-        arrows[direction_tick % len(arrows)].brush = Brush("#000000")
+        arrows[direction_tick % len(arrows)].brush = Brush("#2a51ee")
         return_point.value = path_options[direction_tick % len(arrows)]
         for key, value in share_dict.items():
             text_dict[key][0].text = str(key) + ": " + str(value)

@@ -5,7 +5,7 @@
 	~guitar_binds = List[];
 	~chords = Pbind(
 		\instrument, \guitar,
-		\dur, 2,
+		\dur, Prand([2, Pseq([1,1])], inf),
 		\amp, 0.4,
 		\degree, Pseq([[0, 7, 12, 16, 19, 24]-20], inf),
 		\bufnum, Pfunc({
@@ -16,7 +16,7 @@
 			bufs = ~pitches[midinote - 40];
 			bufs.collect({ arg folder; folder.choose });
 		}),
-		\sustain, 2,
+		\sustain, Pkey(\dur),
 		\rate, Pwhite(-0.1, 0.1).midiratio * Prand([1, 1], inf),
 		\start, Pfunc({ arg ev;
 			if(
@@ -39,7 +39,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.5, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 4, \lpf, 500, \amp, 14, \lag, 2);
 	"rasgL1".postln;
 };
 ~rasgL2 = {
@@ -47,9 +47,9 @@
 	~guitar_binds = List[];
 	~chords = Pbind(
 		\instrument, \guitar,
-		\dur, 2,
+		\dur, Prand([2, Pseq([1,1]), Pseq([2/3,2/3,2/3])], inf),
 		\amp, 0.4,
-		\degree, Pseq([[1, 8, 13, 17, 19, 24]-20], inf),
+		\degree, Prand([[1, 8, 13, 17, 19, 24]-20, [0, 7, 12, 16, 19, 24]-20], inf),
 		\bufnum, Pfunc({
 			arg ev;
 			var note, midinote, bufs;
@@ -58,7 +58,7 @@
 			bufs = ~pitches[midinote - 40];
 			bufs.collect({ arg folder; folder.choose });
 		}),
-		\sustain, 2,
+		\sustain, Pkey(\dur),
 		\rate, Pwhite(-0.1, 0.1).midiratio * Prand([1, 1], inf),
 		\start, Pfunc({ arg ev;
 			if(
@@ -81,7 +81,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.5, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 0.15, \predelay, 1, \revtime, 4, \lpf, 500, \amp, 14, \lag, 2);
 	"rasgL1".postln;
 };
 ~rasgL3 = {
@@ -89,9 +89,9 @@
 	~guitar_binds = List[];
 	~chords = Pbind(
 		\instrument, \guitar,
-		\dur, 2,
+		\dur, Prand([2, Pseq([1,1]), Pseq([2/3,2/3,2/3]), Pseq([0.5, 0.5, 0.5, 0.5])], inf),
 		\amp, 0.4,
-		\degree, Pseq([[3, 10, 15, 19, 19, 24]-20], inf),
+		\degree, Prand([[1, 8, 13, 17, 19, 24]-20, [0, 7, 12, 16, 19, 24]-20, [3, 10, 15, 19, 19, 24]-20], inf),
 		\bufnum, Pfunc({
 			arg ev;
 			var note, midinote, bufs;
@@ -100,7 +100,7 @@
 			bufs = ~pitches[midinote - 40];
 			bufs.collect({ arg folder; folder.choose });
 		}),
-		\sustain, 2,
+		\sustain, Pkey(\dur),
 		\rate, Pwhite(-0.1, 0.1).midiratio * Prand([1, 1], inf),
 		\start, Pfunc({ arg ev;
 			if(
@@ -123,7 +123,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.5, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 0.1, \predelay, 1, \revtime, 4, \lpf, 500, \amp, 14, \lag, 2);
 	"rasgL1".postln;
 };
 ~rasgL4 = {
@@ -131,9 +131,9 @@
 	~guitar_binds = List[];
 	~chords = Pbind(
 		\instrument, \guitar,
-		\dur, 2,
+		\dur, Prand([2, Pseq([1,1]), Pseq([2/3,2/3,2/3]), Pseq([0.5, 0.5, 0.5, 0.5]), Pseq([2/5, 2/5, 2/5, 2/5, 2/5])], inf),
 		\amp, 0.4,
-		\degree, Pseq([[5, 12, 17, 20, 24]-20], inf),
+		\degree, Prand([[1, 8, 13, 17, 19, 24]-20, [0, 7, 12, 16, 19, 24]-20, [3, 10, 15, 19, 19, 24]-20, [5, 12, 17, 20, 24]-20], inf),
 		\bufnum, Pfunc({
 			arg ev;
 			var note, midinote, bufs;
@@ -142,7 +142,7 @@
 			bufs = ~pitches[midinote - 40];
 			bufs.collect({ arg folder; folder.choose });
 		}),
-		\sustain, 2,
+		\sustain, Pkey(\dur),
 		\rate, Pwhite(-0.1, 0.1).midiratio * Prand([1, 1], inf),
 		\start, Pfunc({ arg ev;
 			if(
@@ -165,7 +165,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.5, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 0.05, \predelay, 1, \revtime, 4, \lpf, 500, \amp, 14, \lag, 2);
 	"rasgL1".postln;
 };
 )

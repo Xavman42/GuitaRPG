@@ -39,7 +39,7 @@
 	~chorus_synth.set(\mix, 0.0, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.5, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 0.5, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 16, \lag, 2);
 	"triadL1".postln;
 };
 
@@ -84,7 +84,7 @@
 	~chorus_synth.set(\mix, 0.1, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.3, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 0.2, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 16, \lag, 2);
 	"triadL2".postln;
 };
 
@@ -133,7 +133,7 @@
 	~chorus_synth.set(\mix, 0.1, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.3, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.5, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 0.5, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 16, \lag, 2);
 	"triadL3".postln;
 };
 
@@ -182,7 +182,7 @@
 	~chorus_synth.set(\mix, 0.1, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 1);
 	~pitch_shift_synth.set(\mix, 0.1, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.3, \freq, 30, \lag, 2, \amp, 1);
-	~reverb_synth.set(\mix, 0.8, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 4, \lag, 2);
+	~reverb_synth.set(\mix, 0.8, \predelay, 1, \revtime, 10, \lpf, 500, \amp, 16, \lag, 2);
 	"triadL4".postln;
 };
 )
