@@ -12,6 +12,13 @@ import os
 import pathlib
 
 
+def still_refresh_func(func_time: float):
+    global my_scene_changed
+    result = neoscore.RefreshFuncResult(my_scene_changed)
+    my_scene_changed = False
+    return result
+
+
 def refresh_func(func_time: float):
     global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
         my_next_point, my_staves, network, my_scene_changed, my_last_index, hud_last_index, hud_share_dict, \
@@ -107,6 +114,14 @@ def direction_select(event):
         direction_tick += 1
 
 
+def start_game(event):
+    # Press key 'a' to cycle through path directions
+    if event.event_type == KeyEventType.PRESS:
+        neoscore.set_refresh_func(refresh_func)
+        start_text.remove()
+        neoscore.set_key_event_handler(None)
+
+
 def hud_process_func(last_index, current_index, share_dict, current_point, next_point, return_point, region_text_dict):
     global ref_current_index, arrows, direction_tick
 
@@ -179,7 +194,7 @@ def hud_process_func(last_index, current_index, share_dict, current_point, next_
     hud_elements = set_hud_coordinates(hud_elements, x - Unit(125), y + Unit(75))
 
     neoscore.set_viewport_scale(5)
-    neoscore.set_refresh_func(hud_refresh_func, 5)
+    neoscore.set_refresh_func(hud_refresh_func, 30)
     neoscore.set_key_event_handler(direction_select)
     neoscore.show(display_page_geometry=False, auto_viewport_interaction_enabled=False,
                   min_window_size=(1920, 360), max_window_size=(1920, 360))
@@ -318,8 +333,11 @@ if __name__ == '__main__':
     rotate_dist = 0
     new_move = True
     my_scene_changed = False
-    neoscore.set_viewport_center_pos((Unit(my_network_points[0][0] + 100), Unit(my_network_points[0][1])))
-    neoscore.set_viewport_scale(5)
+    neoscore.set_viewport_center_pos((Unit(my_network_points[0][0] - 10), Unit(my_network_points[0][1] + 10)))
+    neoscore.set_viewport_scale(1)
+    start_text = Text((Unit(-200), Unit(-200)), None, "Press any key to start", neoscore.default_font.modified(
+        size=Unit(36)))
+    neoscore.set_key_event_handler(start_game)
     reference_time = time.time()
-    neoscore.show(refresh_func, display_page_geometry=False,
+    neoscore.show(still_refresh_func, display_page_geometry=False, auto_viewport_interaction_enabled=False,
                   min_window_size=(1920, 680), max_window_size=(1920, 680))
