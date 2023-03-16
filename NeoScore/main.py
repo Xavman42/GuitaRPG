@@ -23,46 +23,51 @@ def refresh_func(func_time: float):
     global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
         my_next_point, my_staves, network, my_scene_changed, my_last_index, hud_last_index, hud_share_dict, \
         my_top_layer_assets
-    move_rate = 30
+    move_rate = 230
     if new_move:
-        my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict, indices, \
-            path_options, my_current_point, my_region, region_text = \
-            calculate_trajectory(my_point, my_last_point, my_last_index, possible_paths, my_staves, my_network,
-                                 my_level_dict, my_xp_dict, my_network_points, hud_return_point.value)
-        print(my_point)
-        my_top_layer_assets = redo_top_layer_assets(my_top_layer_assets)
-        my_move_dur = distance.base_value / move_rate
-        my_x_move_rate = cos(radians(my_angle)) * move_rate
-        my_y_move_rate = sin(radians(my_angle)) * move_rate
-        a = my_angle
-        b = my_prev_angle
-        a, b = max(a, b), min(a, b)
-        rotate_dist = min(a - b, b + 360 - a)
-        if a > b:
-            if a - b > b + 360 - a:
-                rotate_dist = b + 360 - a  # positive
+        if not my_last_point == 29:
+            my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict, indices, \
+                path_options, my_current_point, my_region, region_text = \
+                calculate_trajectory(my_point, my_last_point, my_last_index, possible_paths, my_staves, my_network,
+                                     my_level_dict, my_xp_dict, my_network_points, hud_return_point.value)
+            print(my_point)
+            my_top_layer_assets = redo_top_layer_assets(my_top_layer_assets)
+            my_move_dur = distance.base_value / move_rate
+            my_x_move_rate = cos(radians(my_angle)) * move_rate
+            my_y_move_rate = sin(radians(my_angle)) * move_rate
+            a = my_angle
+            b = my_prev_angle
+            a, b = max(a, b), min(a, b)
+            rotate_dist = min(a - b, b + 360 - a)
+            if a > b:
+                if a - b > b + 360 - a:
+                    rotate_dist = b + 360 - a  # positive
+                else:
+                    rotate_dist = b - a  # negative
             else:
-                rotate_dist = b - a  # negative
+                if b - a > a + 360 - b:
+                    rotate_dist = a + 360 - b  # positive
+                else:
+                    rotate_dist = a - b  # negative
+            new_move = False
+            reference_time = time.time()
+            # share_dict['current_region'] = my_region
+            hud_region_text = {'1': region_text}
+            hud_region_text_dict.update(hud_region_text)
+            hud_share_dict.update(share_dict)
+            hud_current_index.value = my_current_index
+            hud_last_index.value = my_last_index
+            hud_current_point.value = my_current_point
+            hud_next_point.value = my_next_point
+            try:
+                send_particle(my_client, region_text, my_xp_dict[region_text][0])
+            except KeyError:
+                send_particle(my_client, "scrape", 1)
+            neoscore.set_refresh_func(camera_rotate_refresh_func)
         else:
-            if b - a > a + 360 - b:
-                rotate_dist = a + 360 - b  # positive
-            else:
-                rotate_dist = a - b  # negative
-        new_move = False
-        reference_time = time.time()
-        # share_dict['current_region'] = my_region
-        hud_region_text = {'1': region_text}
-        hud_region_text_dict.update(hud_region_text)
-        hud_share_dict.update(share_dict)
-        hud_current_index.value = my_current_index
-        hud_last_index.value = my_last_index
-        hud_current_point.value = my_current_point
-        hud_next_point.value = my_next_point
-        try:
-            send_particle(my_client, region_text, my_xp_dict[region_text][0])
-        except KeyError:
-            send_particle(my_client, "scrape", 1)
-        neoscore.set_refresh_func(camera_rotate_refresh_func)
+            end_text = Text((Unit(4030), Unit(-580)), None, "Congratulations!",
+                            neoscore.default_font.modified(size=Unit(16)))
+            neoscore.set_refresh_func(still_refresh_func)
 
 
 def camera_rotate_refresh_func(real_time: float) -> neoscore.RefreshFuncResult:
@@ -125,6 +130,12 @@ def start_game(event):
 def hud_process_func(last_index, current_index, share_dict, current_point, next_point, return_point, region_text_dict):
     global ref_current_index, arrows, direction_tick
 
+    def still_hud_refresh_func(func_time: float):
+        global my_scene_changed
+        result = neoscore.RefreshFuncResult(my_scene_changed)
+        my_scene_changed = False
+        return result
+
     def hud_refresh_func(func_time: float):
         global ref_current_index, arrows, direction_tick
         path_options = []
@@ -134,42 +145,43 @@ def hud_process_func(last_index, current_index, share_dict, current_point, next_
             mini_staff[last_index.value].pen = Pen("#2a51ee", Unit(3))
             ref_current_index = last_index.value
             direction_tick = random.randint(0, 5)
-
-        for index, point in enumerate(possible_paths):
-            if point[0] == next_point.value:
-                path_options.append(point[1])
-                indices.append(index)
-            if point[1] == next_point.value:
-                path_options.append(point[0])
-                indices.append(index)
-        try:
-            index = path_options.index(current_point.value)
-            path_options.remove(current_point.value)
-            indices.pop(index)
-        except ValueError:
-            pass
-        try:
-            index = path_options.index(0)
-            path_options.remove(0)
-            indices.pop(index)
-        except ValueError:
-            pass
+        if not ref_current_index == 53:
+            for index, point in enumerate(possible_paths):
+                if point[0] == next_point.value:
+                    path_options.append(point[1])
+                    indices.append(index)
+                if point[1] == next_point.value:
+                    path_options.append(point[0])
+                    indices.append(index)
+            try:
+                index = path_options.index(current_point.value)
+                path_options.remove(current_point.value)
+                indices.pop(index)
+            except ValueError:
+                pass
+            try:
+                index = path_options.index(0)
+                path_options.remove(0)
+                indices.pop(index)
+            except ValueError:
+                pass
         for i in arrows:
             i.remove()
         arrows = []
-        for future_point in path_options:
-            my_index = indices[path_options.index(future_point)]
-            my_region = possible_paths[my_index][2]
-            angle = degrees(atan2(network_points[future_point][1] - network_points[next_point.value][1],
-                                  network_points[future_point][0] - network_points[next_point.value][0]))
-            arrow_end_x = 30 * Unit(cos(radians(angle)))
-            arrow_end_y = 30 * Unit(sin(radians(angle)))
-            arrows.append(Path.arrow((Unit(0), Unit(0)), None, (arrow_end_x, arrow_end_y), None, Brush("#cccccc")))
-        arrows[direction_tick % len(arrows)].brush = Brush("#2a51ee")
-        return_point.value = path_options[direction_tick % len(arrows)]
-        for key, value in share_dict.items():
-            text_dict[key][0].text = str(key) + ": " + str(value)
-        # text_dict['current_region'][0].text = str(region_text_dict.get('1'))
+        if not ref_current_index == 53:
+            for future_point in path_options:
+                my_index = indices[path_options.index(future_point)]
+                my_region = possible_paths[my_index][2]
+                angle = degrees(atan2(network_points[future_point][1] - network_points[next_point.value][1],
+                                      network_points[future_point][0] - network_points[next_point.value][0]))
+                arrow_end_x = 30 * Unit(cos(radians(angle)))
+                arrow_end_y = 30 * Unit(sin(radians(angle)))
+                arrows.append(Path.arrow((Unit(0), Unit(0)), None, (arrow_end_x, arrow_end_y), None, Brush("#cccccc")))
+            arrows[direction_tick % len(arrows)].brush = Brush("#2a51ee")
+            return_point.value = path_options[direction_tick % len(arrows)]
+            for key, value in share_dict.items():
+                text_dict[key][0].text = str(key) + ": " + str(value)
+            # text_dict['current_region'][0].text = str(region_text_dict.get('1'))
 
     ref_current_index = -1
     neoscore.setup()
@@ -339,5 +351,5 @@ if __name__ == '__main__':
         size=Unit(36)))
     neoscore.set_key_event_handler(start_game)
     reference_time = time.time()
-    neoscore.show(still_refresh_func, display_page_geometry=False, auto_viewport_interaction_enabled=False,
+    neoscore.show(still_refresh_func, display_page_geometry=False,
                   min_window_size=(1920, 680), max_window_size=(1920, 680))
