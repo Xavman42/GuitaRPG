@@ -122,7 +122,7 @@ def populate_staff(here, there, region, last_index, staves, network, possible_pa
         level_dict = set_skill_probability(level_dict, reg, lvl)
         share_dict[reg] = lvl
         # text_dict[reg][0].text = reg + ": " + str(lvl)
-        offset = offset + cell_length + Unit(30)
+        offset = offset + cell_length*1.5 + Unit(1)
     scene_change = True
     return staves, scene_change, my_index, share_dict, region
 

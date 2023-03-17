@@ -20,8 +20,8 @@ def scrape_rank_1(staff, x):
         "guitarString6",
     )
     m2.rotation = 180
-    t1 = Text((staff.unit(x), staff.unit(-5)), staff, "scrape", neoscore.default_font.modified(italic=True))
-    t2 = Text((staff.unit(x)+staff.unit(8), staff.unit(10)), staff, "scrape", neoscore.default_font.modified(italic=True))
+    t1 = Text((staff.unit(x), staff.unit(-5)), staff, " ", neoscore.default_font.modified(italic=True))
+    t2 = Text((staff.unit(x)+staff.unit(8), staff.unit(10)), staff, " ", neoscore.default_font.modified(italic=True))
     t2.rotation = 180
     length = Unit(staff.unit(8))
     return length
@@ -49,8 +49,8 @@ def scrape_rank_2(staff, x):
         "guitarString6",
     )
     m2.rotation = 180
-    t1 = Text((staff.unit(x), staff.unit(-5)), staff, "scrape", neoscore.default_font.modified(italic=True))
-    t2 = Text((staff.unit(x)+staff.unit(8), staff.unit(10)), staff, "scrape", neoscore.default_font.modified(italic=True))
+    t1 = Text((staff.unit(x), staff.unit(-5)), staff, " ", neoscore.default_font.modified(italic=True))
+    t2 = Text((staff.unit(x)+staff.unit(8), staff.unit(10)), staff, " ", neoscore.default_font.modified(italic=True))
     t2.rotation = 180
     length = staff.unit(10)
     return length
@@ -97,8 +97,8 @@ def scrape_rank_3(staff, x):
         "guitarString6",
     )
     m2.rotation = 180
-    t1 = Text((staff.unit(x), staff.unit(-5)), staff, "scrape", neoscore.default_font.modified(italic=True))
-    t2 = Text((staff.unit(x)+staff.unit(10), staff.unit(10)), staff, "scrape", neoscore.default_font.modified(italic=True))
+    t1 = Text((staff.unit(x), staff.unit(-5)), staff, " ", neoscore.default_font.modified(italic=True))
+    t2 = Text((staff.unit(x)+staff.unit(10), staff.unit(10)), staff, " ", neoscore.default_font.modified(italic=True))
     t2.rotation = 180
     length = Unit(staff.unit(10))
     return length
@@ -133,8 +133,8 @@ def scrape_rank_4(staff, x):
         "guitarString6",
     )
     m2.rotation = 180
-    t1 = Text((staff.unit(x), staff.unit(-5)), staff, "scrape", neoscore.default_font.modified(italic=True))
-    t2 = Text((staff.unit(x)+staff.unit(10), staff.unit(10)), staff, "scrape", neoscore.default_font.modified(italic=True))
+    t1 = Text((staff.unit(x), staff.unit(-5)), staff, " ", neoscore.default_font.modified(italic=True))
+    t2 = Text((staff.unit(x)+staff.unit(10), staff.unit(10)), staff, " ", neoscore.default_font.modified(italic=True))
     t2.rotation = 180
     length = Unit(staff.unit(10))
     return length
@@ -391,15 +391,15 @@ def tambura_rank_4(staff, x):
 
 def perc_rank_1(staff, x):
     r1 = Path.rect((staff.unit(x), staff.unit(-2)), staff, Unit(4), Unit(40))
-    t1 = Text((staff.unit(-2), staff.unit(-2)), r1, "perc.", neoscore.default_font.modified(italic=True))
-    t2 = Text((staff.unit(2.5), staff.unit(10)), r1, "perc.", neoscore.default_font.modified(italic=True))
+    t1 = Text((staff.unit(-2), staff.unit(-2)), r1, " ", neoscore.default_font.modified(italic=True))
+    t2 = Text((staff.unit(2.5), staff.unit(10)), r1, " ", neoscore.default_font.modified(italic=True))
     t2.rotation = 180
     length = Unit(staff.unit(3))
     return length
 
 
 def perc_rank_2(staff, x):
-    t1 = Text((staff.unit(0), staff.unit(-2)), staff, "perc.", neoscore.default_font.modified(italic=True))
+    t1 = Text((staff.unit(x), staff.unit(-2)), staff, " ", neoscore.default_font.modified(italic=True))
     n1 = Notehead(staff.unit(1), t1, "g'", Duration(1, 4), table=notehead_tables.X)
     n2 = Notehead(staff.unit(1), n1, "e'", Duration(1, 4), table=notehead_tables.X)
     n3 = Notehead(staff.unit(1), n2, "f'", Duration(1, 4), table=notehead_tables.X)
@@ -416,7 +416,7 @@ def perc_rank_2(staff, x):
     n14 = Notehead(staff.unit(1), n13, "e", Duration(1, 4), table=notehead_tables.X)
     n15 = Notehead(staff.unit(1), n14, "f", Duration(1, 4), table=notehead_tables.X)
     n16 = Notehead(staff.unit(1), n15, "d", Duration(1, 4), table=notehead_tables.X)
-    t2 = Text((staff.unit(18), staff.unit(6)), staff, "perc.", neoscore.default_font.modified(italic=True))
+    t2 = Text((staff.unit(0), staff.unit(2)), n16, " ", neoscore.default_font.modified(italic=True))
     t2.rotation = 180
     length = Unit(staff.unit(18))
     return length
@@ -427,18 +427,18 @@ def perc_rank_3(staff, x):
     r2 = Path.ellipse((staff.unit(6), staff.unit(2)), r1, Unit(8), Unit(20))
     r3 = Path.ellipse((staff.unit(3), staff.unit(2)), r2, Unit(8), Unit(20))
     r4 = Path.ellipse((staff.unit(2), staff.unit(-4)), r3, Unit(8), Unit(20))
-    t1 = Text((staff.unit(-2), staff.unit(-2)), r1, "perc.", neoscore.default_font.modified(italic=True))
-    t2 = Text((staff.unit(13.5), staff.unit(10)), r1, "perc.", neoscore.default_font.modified(italic=True))
+    t1 = Text((staff.unit(-2), staff.unit(-2)), r1, " ", neoscore.default_font.modified(italic=True))
+    t2 = Text((staff.unit(13.5), staff.unit(10)), r1, " ", neoscore.default_font.modified(italic=True))
     t2.rotation = 180
     length = Unit(staff.unit(14))
     return length
 
 
 def perc_rank_4(staff, x):
-    t1 = Text((staff.unit(x), staff.unit(-2)), staff, "perc.", neoscore.default_font.modified(italic=True))
+    t1 = Text((staff.unit(x), staff.unit(-2)), staff, " ", neoscore.default_font.modified(italic=True))
     for i in range(40):
         Path.ellipse((Unit(random.randint(0, 60)), Unit(random.randint(0, 40))), t1, Unit(2), Unit(2))
-    t2 = Text((staff.unit(13.5), staff.unit(10)), t1, "perc.", neoscore.default_font.modified(italic=True))
+    t2 = Text((staff.unit(13.5), staff.unit(10)), t1, " ", neoscore.default_font.modified(italic=True))
     t2.rotation = 180
     length = Unit(staff.unit(14))
     return length

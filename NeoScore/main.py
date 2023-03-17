@@ -25,12 +25,11 @@ def refresh_func(func_time: float):
         my_top_layer_assets
     move_rate = 230
     if new_move:
-        if not my_last_point == 29:
+        if not my_next_point == 37:
             my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict, indices, \
                 path_options, my_current_point, my_region, region_text = \
                 calculate_trajectory(my_point, my_last_point, my_last_index, possible_paths, my_staves, my_network,
                                      my_level_dict, my_xp_dict, my_network_points, hud_return_point.value)
-            print(my_point)
             my_top_layer_assets = redo_top_layer_assets(my_top_layer_assets)
             my_move_dur = distance.base_value / move_rate
             my_x_move_rate = cos(radians(my_angle)) * move_rate
