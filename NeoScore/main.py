@@ -22,14 +22,15 @@ def still_refresh_func(func_time: float):
 def refresh_func(func_time: float):
     global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
         my_next_point, my_staves, network, my_scene_changed, my_last_index, hud_last_index, hud_share_dict, \
-        my_top_layer_assets
+        my_top_layer_assets, my_density
     move_rate = 230
     if new_move:
         if not my_next_point == 37:
+            my_density = max(my_density * 0.95, 0.2)
             my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict, indices, \
                 path_options, my_current_point, my_region, region_text = \
                 calculate_trajectory(my_point, my_last_point, my_last_index, possible_paths, my_staves, my_network,
-                                     my_level_dict, my_xp_dict, my_network_points, hud_return_point.value)
+                                     my_level_dict, my_xp_dict, my_network_points, hud_return_point.value, my_density)
             my_top_layer_assets = redo_top_layer_assets(my_top_layer_assets)
             my_move_dur = distance.base_value / move_rate
             my_x_move_rate = cos(radians(my_angle)) * move_rate
@@ -350,5 +351,6 @@ if __name__ == '__main__':
         size=Unit(36)))
     neoscore.set_key_event_handler(start_game)
     reference_time = time.time()
+    my_density = 2.0
     neoscore.show(still_refresh_func, display_page_geometry=False,
                   min_window_size=(1920, 680), max_window_size=(1920, 680))

@@ -29,13 +29,13 @@ def make_map_segment(
 
 def default_refresh_func(real_time: float):
     global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
-        my_next_point, my_staves, my_network_points, scene_changed, my_last_index
+        my_next_point, my_staves, my_network_points, scene_changed, my_last_index, my_density
     move_rate = 120
     if new_move:
         my_angle, distance, my_next_point, my_staves, scene_changed, my_last_index, share_dict, indices, path_options, \
             current_point \
             = calculate_trajectory(my_point, my_last_point, my_last_index, my_possible_paths, my_staves, my_network,
-                                   my_level_dict, my_xp_dict, my_network_points)
+                                   my_level_dict, my_xp_dict, my_network_points, my_density)
         my_move_dur = distance.base_value/move_rate
         my_x_move_rate = cos(radians(my_angle)) * move_rate
         my_y_move_rate = sin(radians(my_angle)) * move_rate
@@ -59,7 +59,7 @@ def default_refresh_func(real_time: float):
 
 
 def calculate_trajectory(current_point, last_point, last_index, possible_paths, staves, network, level_dict, xp_dict,
-                         network_points, future_point):
+                         network_points, future_point, density):
     path_options = []
     indices = []
     for index, point in enumerate(possible_paths):
@@ -86,7 +86,7 @@ def calculate_trajectory(current_point, last_point, last_index, possible_paths, 
     my_region = possible_paths[my_index][2]
     staves, scene_change, my_index, share_dict, region = \
         populate_staff(current_point, next_point, my_region, last_index, staves, network, possible_paths, level_dict,
-                       xp_dict)
+                       xp_dict, density)
     angle = degrees(atan2(network_points[next_point][1]-network_points[current_point][1],
                           network_points[next_point][0]-network_points[current_point][0]))
     x_distance = Unit(network_points[next_point][0]-network_points[current_point][0])
@@ -97,7 +97,7 @@ def calculate_trajectory(current_point, last_point, last_index, possible_paths, 
         current_point, my_region, region
 
 
-def populate_staff(here, there, region, last_index, staves, network, possible_paths, level_dict, xp_dict):
+def populate_staff(here, there, region, last_index, staves, network, possible_paths, level_dict, xp_dict, density):
     try:
         staves[last_index].remove()
         staves[last_index] = make_map_segment(network[last_index][0], network[last_index][1],
@@ -122,7 +122,7 @@ def populate_staff(here, there, region, last_index, staves, network, possible_pa
         level_dict = set_skill_probability(level_dict, reg, lvl)
         share_dict[reg] = lvl
         # text_dict[reg][0].text = reg + ": " + str(lvl)
-        offset = offset + cell_length*1.5 + Unit(1)
+        offset = offset + cell_length*density + Unit(8)
     scene_change = True
     return staves, scene_change, my_index, share_dict, region
 
