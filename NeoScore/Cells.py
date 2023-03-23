@@ -813,6 +813,104 @@ def rake_rank_4(staff, x):
     return length
 
 
+def rasg_rank_1(staff, x):
+    def chord_diagram(parent):
+        MusicText(
+            (staff.unit(0.05), staff.unit(-4.5)),
+            parent,
+            "fretboardX"
+        )
+        MusicText(
+            (staff.unit(0.725), staff.unit(-3.5)),
+            parent,
+            "fretboardFilledCircle"
+        )
+        MusicText(
+            (staff.unit(1.4), staff.unit(-1.5)),
+            parent,
+            "fretboardFilledCircle"
+        )
+        MusicText(
+            (staff.unit(2.075), staff.unit(-2.5)),
+            parent,
+            "fretboardFilledCircle"
+        )
+        MusicText(
+            (staff.unit(2.75), staff.unit(-1.5)),
+            parent,
+            "fretboardFilledCircle"
+        )
+        MusicText(
+            (staff.unit(3.425), staff.unit(-3.5)),
+            parent,
+            "fretboardFilledCircle"
+        )
+        i = random.randint(0, 3)
+    t1 = Text((staff.unit(x), staff.unit(2)), staff, "R", neoscore.default_font.modified(size=Unit(20), weight=80,
+                                                                                         italic=True))
+    t2 = Text((staff.unit(x)+staff.unit(3), staff.unit(2)), staff, "R", neoscore.default_font.modified(size=Unit(20),
+                                                                                                       weight=80,
+                                                                                                       italic=True))
+    t2.rotation = 180
+    diagram_1 = MusicText(
+        (staff.unit(-1), staff.unit(-1)),
+        t1,
+        "fretboard6String",
+    )
+    chord_diagram(diagram_1)
+    diagram_2 = MusicText(
+        (staff.unit(3), staff.unit(5)),
+        t1,
+        "fretboard6String",
+    )
+    chord_diagram(diagram_2)
+    diagram_2.rotation = 180
+    length = Unit(staff.unit(14))
+    return length
+
+
+def rasg_rank_2(staff, x):
+    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVI (RH~19)")
+    RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
+                           (staff.unit(0), staff.unit(8)), c1,
+                           "wiggleTrillFastest", None)
+    RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
+                           (staff.unit(12), staff.unit(8)), c1,
+                           "wiggleTrillFastest", None)
+    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVI (RH~19)")
+    c2.rotation = 180
+    length = Unit(staff.unit(14))
+    return length
+
+
+def rasg_rank_3(staff, x):
+    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVI (RH~19)")
+    RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
+                           (staff.unit(0), staff.unit(8)), c1,
+                           "wiggleTrillFastest", None)
+    RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
+                           (staff.unit(12), staff.unit(8)), c1,
+                           "wiggleTrillFastest", None)
+    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVI (RH~19)")
+    c2.rotation = 180
+    length = Unit(staff.unit(14))
+    return length
+
+
+def rasg_rank_4(staff, x):
+    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVI (RH~19)")
+    RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
+                           (staff.unit(0), staff.unit(8)), c1,
+                           "wiggleTrillFastest", None)
+    RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
+                           (staff.unit(12), staff.unit(8)), c1,
+                           "wiggleTrillFastest", None)
+    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVI (RH~19)")
+    c2.rotation = 180
+    length = Unit(staff.unit(14))
+    return length
+
+
 def tremolo_rank_1(staff, x):
     n1 = Chordrest(staff.unit(x), staff, ["e'"], (1, 16))
     n2 = Chordrest(staff.unit(x)+staff.unit(2), staff, ["a'"], (1, 16))
@@ -1252,19 +1350,19 @@ if __name__ == '__main__':
 
     staff_33 = Staff((Inch(0.5), Inch(0.5)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_33 = InvisibleClef(Unit(0), staff_33, 'treble')
-    # rasg_rank_1(staff_33, y)
+    rasg_rank_1(staff_33, y)
 
     staff_34 = Staff((Inch(2), Inch(0.5)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_34 = InvisibleClef(Unit(0), staff_34, 'treble')
-    # rasg_rank_2(staff_34, y)
+    rasg_rank_2(staff_34, y)
 
     staff_35 = Staff((Inch(3.5), Inch(0.5)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_35 = InvisibleClef(Unit(0), staff_35, 'treble')
-    # rasg_rank_3(staff_35, y)
+    rasg_rank_3(staff_35, y)
 
     staff_36 = Staff((Inch(5), Inch(0.5)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_36 = InvisibleClef(Unit(0), staff_36, 'treble')
-    # rasg_rank_4(staff_36, y)
+    rasg_rank_4(staff_36, y)
 
     staff_37 = Staff((Inch(0.5), Inch(1.5)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_37 = InvisibleClef(Unit(0), staff_37, 'treble')

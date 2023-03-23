@@ -59,5 +59,5 @@ def update_effect(client, effect_name):
 
 if __name__ == '__main__':
     my_client = pyOSC3.OSCClient()
-    my_client.connect(('127.0.0.1', 57121))
+    my_client.connect(('127.0.0.1', 57120))
     send_particle(my_client, "bart", 2)

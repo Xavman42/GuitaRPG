@@ -315,7 +315,7 @@ if __name__ == '__main__':
 
     neoscore.setup()
     my_client = pyOSC3.OSCClient()
-    my_client.connect(('127.0.0.1', 57121))
+    my_client.connect(('127.0.0.1', 57120))
     my_level_dict = make_cell_dict()
     my_level_dict = set_skill_probability(my_level_dict, "scrape", 1)
     my_xp_dict = make_xp_dict()
