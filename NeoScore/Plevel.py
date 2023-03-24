@@ -45,7 +45,12 @@ def make_cell_dict():
                  'adv_harm_rank_1': [default_probability, adv_harm_rank_1, area_modifier, region_modifier, "adv_harm"],
                  'adv_harm_rank_2': [default_probability, adv_harm_rank_2, area_modifier, region_modifier, "adv_harm"],
                  'adv_harm_rank_3': [default_probability, adv_harm_rank_3, area_modifier, region_modifier, "adv_harm"],
-                 'adv_harm_rank_4': [default_probability, adv_harm_rank_4, area_modifier, region_modifier, "adv_harm"]}
+                 'adv_harm_rank_4': [default_probability, adv_harm_rank_4, area_modifier, region_modifier, "adv_harm"],
+                 'rasg_rank_1': [default_probability, rasg_rank_1, area_modifier, region_modifier, "rasg"],
+                 'rasg_rank_2': [default_probability, rasg_rank_2, area_modifier, region_modifier, "rasg"],
+                 'rasg_rank_3': [default_probability, rasg_rank_3, area_modifier, region_modifier, "rasg"],
+                 'rasg_rank_4': [default_probability, rasg_rank_4, area_modifier, region_modifier, "rasg"],
+                 }
     return cell_dict
 
 
@@ -134,6 +139,11 @@ def apply_area_modifier(cell_dict, area):
         cell_dict['adv_harm_rank_2'][2] = area_mod_value
         cell_dict['adv_harm_rank_3'][2] = area_mod_value
         cell_dict['adv_harm_rank_4'][2] = area_mod_value
+        cell_dict['rasg_1'][2] = area_mod_value
+        cell_dict['rasg_2'][2] = area_mod_value
+        cell_dict['rasg_3'][2] = area_mod_value
+        cell_dict['rasg_4'][2] = area_mod_value
+
     return cell_dict
 
 
@@ -191,6 +201,11 @@ def apply_region_modifier(cell_dict, region, region_mod_value=10):
         cell_dict['adv_harm_rank_2'][3] = region_mod_value
         cell_dict['adv_harm_rank_3'][3] = region_mod_value
         cell_dict['adv_harm_rank_4'][3] = region_mod_value
+    elif region == "rasg":
+        cell_dict['rasg_rank_1'][3] = region_mod_value
+        cell_dict['rasg_rank_2'][3] = region_mod_value
+        cell_dict['rasg_rank_3'][3] = region_mod_value
+        cell_dict['rasg_rank_4'][3] = region_mod_value
     else:
         for i, j in cell_dict.items():
             j[3] = default_mod
@@ -273,6 +288,11 @@ def set_skill_probability(cell_dict, skill, level):
         cell_dict['adv_harm_rank_2'][0] = l2
         cell_dict['adv_harm_rank_3'][0] = l3
         cell_dict['adv_harm_rank_4'][0] = l4
+    elif skill == "rasg":
+        cell_dict['rasg_rank_1'][0] = l1
+        cell_dict['rasg_rank_2'][0] = l2
+        cell_dict['rasg_rank_3'][0] = l3
+        cell_dict['rasg_rank_4'][0] = l4
     return cell_dict
 
 

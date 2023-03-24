@@ -749,65 +749,65 @@ def harmonic_rank_4(staff, x):
 
 
 def rake_rank_1(staff, x):
-    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVI (RH~19)")
+    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVI (RH~19)", None, "#c391c4")
     RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
                            (staff.unit(0), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
+                           "wiggleTrillFastest", brush="#c391c4")
     RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
                            (staff.unit(12), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
-    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVI (RH~19)")
+                           "wiggleTrillFastest", brush="#c391c4")
+    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVI (RH~19)", None, "#c391c4")
     c2.rotation = 180
     length = Unit(staff.unit(14))
     return length
 
 
 def rake_rank_2(staff, x):
-    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CIV (RH~24)")
+    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CIV (RH~24)", None, "#c391c4")
     RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
                            (staff.unit(0), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
+                           "wiggleTrillFastest", brush="#c391c4")
     RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
                            (staff.unit(12), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
-    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CIV (RH~24)")
+                           "wiggleTrillFastest", brush="#c391c4")
+    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CIV (RH~24)", None, "#c391c4")
     c2.rotation = 180
     length = Unit(staff.unit(14))
     return length
 
 
 def rake_rank_3(staff, x):
-    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVII (RH~19)")
+    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVII (RH~19)", None, "#c391c4")
     RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
                            (staff.unit(0), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
+                           "wiggleTrillFastest", brush="#c391c4")
     RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
                            (staff.unit(12), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
-    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVII (RH~19")
+                           "wiggleTrillFastest", brush="#c391c4")
+    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVII (RH~19", None, "#c391c4")
     c2.rotation = 180
     length = Unit(staff.unit(14))
     return length
 
 
 def rake_rank_4(staff, x):
-    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "G5")
+    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "G5", None, "#c391c4")
     RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
                            (staff.unit(0), staff.unit(3)), c1,
-                           "wiggleTrillFastest", None)
+                           "wiggleTrillFastest", brush="#c391c4")
     RepeatingMusicTextLine((staff.unit(2), staff.unit(2)), c1,
                            (staff.unit(2), staff.unit(4)), c1,
-                           "wiggleTrillFastest", None)
+                           "wiggleTrillFastest", brush="#c391c4")
     RepeatingMusicTextLine((staff.unit(4), staff.unit(3)), c1,
                            (staff.unit(4), staff.unit(5)), c1,
-                           "wiggleTrillFastest", None)
+                           "wiggleTrillFastest", brush="#c391c4")
     RepeatingMusicTextLine((staff.unit(6), staff.unit(4)), c1,
                            (staff.unit(6), staff.unit(6)), c1,
-                           "wiggleTrillFastest", None)
+                           "wiggleTrillFastest", brush="#c391c4")
     RepeatingMusicTextLine((staff.unit(8), staff.unit(5)), c1,
                            (staff.unit(8), staff.unit(7)), c1,
-                           "wiggleTrillFastest", None)
-    c2 = Text((staff.unit(9), staff.unit(8)), c1, "G5")
+                           "wiggleTrillFastest", brush="#c391c4")
+    c2 = Text((staff.unit(9), staff.unit(8)), c1, "G5", None, "#c391c4")
     c2.rotation = 180
     length = Unit(staff.unit(10))
     return length
@@ -818,96 +818,221 @@ def rasg_rank_1(staff, x):
         MusicText(
             (staff.unit(0.05), staff.unit(-4.5)),
             parent,
-            "fretboardX"
+            "fretboardO", None, "#f51d1d"
         )
         MusicText(
-            (staff.unit(0.725), staff.unit(-3.5)),
+            (staff.unit(0.725), staff.unit(-2.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#f51d1d"
         )
         MusicText(
-            (staff.unit(1.4), staff.unit(-1.5)),
+            (staff.unit(1.4), staff.unit(-2.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#f51d1d"
         )
         MusicText(
-            (staff.unit(2.075), staff.unit(-2.5)),
+            (staff.unit(2.075), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#f51d1d"
         )
         MusicText(
-            (staff.unit(2.75), staff.unit(-1.5)),
+            (staff.unit(2.75), staff.unit(-4.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardO", None, "#f51d1d"
         )
         MusicText(
-            (staff.unit(3.425), staff.unit(-3.5)),
+            (staff.unit(3.425), staff.unit(-4.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardO", None, "#f51d1d"
         )
         i = random.randint(0, 3)
     t1 = Text((staff.unit(x), staff.unit(2)), staff, "R", neoscore.default_font.modified(size=Unit(20), weight=80,
-                                                                                         italic=True))
-    t2 = Text((staff.unit(x)+staff.unit(3), staff.unit(2)), staff, "R", neoscore.default_font.modified(size=Unit(20),
-                                                                                                       weight=80,
-                                                                                                       italic=True))
+                                                                                         italic=True), "#f51d1d")
+    t2 = Text((staff.unit(x)+staff.unit(3), staff.unit(2)), staff, "R",
+              neoscore.default_font.modified(size=Unit(20), weight=80, italic=True), "#f51d1d")
     t2.rotation = 180
     diagram_1 = MusicText(
-        (staff.unit(-1), staff.unit(-1)),
+        (staff.unit(-0.5), staff.unit(-4)),
         t1,
-        "fretboard6String",
+        "fretboard6String", None, "#f51d1d"
     )
     chord_diagram(diagram_1)
     diagram_2 = MusicText(
-        (staff.unit(3), staff.unit(5)),
+        (staff.unit(3.5), staff.unit(4)),
         t1,
-        "fretboard6String",
+        "fretboard6String", None, "#f51d1d"
     )
     chord_diagram(diagram_2)
     diagram_2.rotation = 180
-    length = Unit(staff.unit(14))
+    length = Unit(staff.unit(6))
     return length
 
 
 def rasg_rank_2(staff, x):
-    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVI (RH~19)")
-    RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
-                           (staff.unit(0), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
-    RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
-                           (staff.unit(12), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
-    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVI (RH~19)")
-    c2.rotation = 180
-    length = Unit(staff.unit(14))
+    def chord_diagram(parent):
+        MusicText(
+            (staff.unit(0.05), staff.unit(-4.5)),
+            parent,
+            "fretboardX", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(0.725), staff.unit(-4.5)),
+            parent,
+            "fretboardO", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(1.4), staff.unit(-2.5)),
+            parent,
+            "fretboardFilledCircle", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(2.075), staff.unit(-2.5)),
+            parent,
+            "fretboardFilledCircle", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(2.75), staff.unit(-3.5)),
+            parent,
+            "fretboardFilledCircle", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(3.425), staff.unit(-4.5)),
+            parent,
+            "fretboardO", None, "#f51d1d"
+        )
+        i = random.randint(0, 3)
+
+    t1 = Text((staff.unit(x), staff.unit(2)), staff, "R", neoscore.default_font.modified(size=Unit(20), weight=80,
+                                                                                         italic=True), "#f51d1d")
+    t2 = Text((staff.unit(x) + staff.unit(3), staff.unit(2)), staff, "R",
+              neoscore.default_font.modified(size=Unit(20), weight=80, italic=True), "#f51d1d")
+    t2.rotation = 180
+    diagram_1 = MusicText(
+        (staff.unit(-0.5), staff.unit(-4)),
+        t1,
+        "fretboard6String", None, "#f51d1d"
+    )
+    chord_diagram(diagram_1)
+    diagram_2 = MusicText(
+        (staff.unit(3.5), staff.unit(4)),
+        t1,
+        "fretboard6String", None, "#f51d1d"
+    )
+    chord_diagram(diagram_2)
+    diagram_2.rotation = 180
+    length = Unit(staff.unit(6))
     return length
 
 
 def rasg_rank_3(staff, x):
-    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVI (RH~19)")
-    RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
-                           (staff.unit(0), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
-    RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
-                           (staff.unit(12), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
-    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVI (RH~19)")
-    c2.rotation = 180
-    length = Unit(staff.unit(14))
+    def chord_diagram(parent):
+        MusicText(
+            (staff.unit(0.05), staff.unit(-3.5)),
+            parent,
+            "fretboardFilledCircle", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(0.725), staff.unit(-1.5)),
+            parent,
+            "fretboardFilledCircle", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(1.4), staff.unit(-1.5)),
+            parent,
+            "fretboardFilledCircle", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(2.075), staff.unit(-2.5)),
+            parent,
+            "fretboardFilledCircle", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(2.75), staff.unit(-4.5)),
+            parent,
+            "fretboardO", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(3.425), staff.unit(-4.5)),
+            parent,
+            "fretboardO", None, "#f51d1d"
+        )
+        i = random.randint(0, 3)
+
+    t1 = Text((staff.unit(x), staff.unit(2)), staff, "R", neoscore.default_font.modified(size=Unit(20), weight=80,
+                                                                                         italic=True), "#f51d1d")
+    t2 = Text((staff.unit(x) + staff.unit(3), staff.unit(2)), staff, "R",
+              neoscore.default_font.modified(size=Unit(20), weight=80, italic=True), "#f51d1d")
+    t2.rotation = 180
+    diagram_1 = MusicText(
+        (staff.unit(-0.5), staff.unit(-4)),
+        t1,
+        "fretboard6String", None, "#f51d1d"
+    )
+    chord_diagram(diagram_1)
+    diagram_2 = MusicText(
+        (staff.unit(3.5), staff.unit(4)),
+        t1,
+        "fretboard6String", None, "#f51d1d"
+    )
+    chord_diagram(diagram_2)
+    diagram_2.rotation = 180
+    length = Unit(staff.unit(6))
     return length
 
 
 def rasg_rank_4(staff, x):
-    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVI (RH~19)")
-    RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
-                           (staff.unit(0), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
-    RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
-                           (staff.unit(12), staff.unit(8)), c1,
-                           "wiggleTrillFastest", None)
-    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVI (RH~19)")
-    c2.rotation = 180
-    length = Unit(staff.unit(14))
+    def chord_diagram(parent):
+        MusicText(
+            (staff.unit(0.05), staff.unit(-4.5)),
+            parent,
+            "fretboardX", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(0.725), staff.unit(-3.5)),
+            parent,
+            "fretboardFilledCircle", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(1.4), staff.unit(-1.5)),
+            parent,
+            "fretboardFilledCircle", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(2.075), staff.unit(-2.5)),
+            parent,
+            "fretboardFilledCircle", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(2.75), staff.unit(-1.5)),
+            parent,
+            "fretboardFilledCircle", None, "#f51d1d"
+        )
+        MusicText(
+            (staff.unit(3.425), staff.unit(-4.5)),
+            parent,
+            "fretboardO", None, "#f51d1d"
+        )
+        i = random.randint(0, 3)
+
+    t1 = Text((staff.unit(x), staff.unit(2)), staff, "R", neoscore.default_font.modified(size=Unit(20), weight=80,
+                                                                                         italic=True), "#f51d1d")
+    t2 = Text((staff.unit(x) + staff.unit(3), staff.unit(2)), staff, "R",
+              neoscore.default_font.modified(size=Unit(20), weight=80, italic=True), "#f51d1d")
+    t2.rotation = 180
+    diagram_1 = MusicText(
+        (staff.unit(-0.5), staff.unit(-4)),
+        t1,
+        "fretboard6String", None, "#f51d1d"
+    )
+    chord_diagram(diagram_1)
+    diagram_2 = MusicText(
+        (staff.unit(3.5), staff.unit(4)),
+        t1,
+        "fretboard6String", None, "#f51d1d"
+    )
+    chord_diagram(diagram_2)
+    diagram_2.rotation = 180
+    length = Unit(staff.unit(6))
     return length
 
 
@@ -917,13 +1042,22 @@ def tremolo_rank_1(staff, x):
     n3 = Chordrest(staff.unit(x)+staff.unit(4), staff, ["a'"], (1, 16))
     n4 = Chordrest(staff.unit(x)+staff.unit(6), staff, ["a'"], (1, 16))
     n = [n1, n2, n3, n4]
-    BeamGroup(n)
-    box = Path.rect((staff.unit(-1), staff.unit(-3)), n1, staff.unit(9), staff.unit(8), brush=Brush.no_brush())
+    for i in n1.noteheads:
+        i.brush = "#0073c4"
+    for i in n2.noteheads:
+        i.brush = "#0073c4"
+    for i in n3.noteheads:
+        i.brush = "#0073c4"
+    for i in n4.noteheads:
+        i.brush = "#0073c4"
+    BeamGroup(n, brush="#0073c499", pen="#0073c499")
+    box = Path.rect((staff.unit(-1), staff.unit(-3)), n1, staff.unit(9), staff.unit(8), brush=Brush.no_brush(),
+                    pen="#0073c4")
     dur = random.randint(2, 9)
     arrow1 = Path.arrow((staff.unit(9.25), staff.unit(4)), box,
-                        (staff.unit(dur), staff.unit(0)), pen=Pen("000000", Mm(1)))
+                        (staff.unit(dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
     arrow2 = Path.arrow((staff.unit(-0.25), staff.unit(4)), box,
-                        (staff.unit(-dur), staff.unit(0)), pen=Pen("000000", Mm(1)))
+                        (staff.unit(-dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
     length = Unit(staff.unit(2*dur + 9))
     return length
 
@@ -934,13 +1068,22 @@ def tremolo_rank_2(staff, x):
     n3 = Chordrest(staff.unit(x)+staff.unit(4), staff, ["a'"], (1, 16))
     n4 = Chordrest(staff.unit(x)+staff.unit(6), staff, ["a'"], (1, 16))
     n = [n1, n2, n3, n4]
-    BeamGroup(n)
-    box = Path.rect((staff.unit(-1), staff.unit(-2.5)), n1, staff.unit(9), staff.unit(8), brush=Brush.no_brush())
+    for i in n1.noteheads:
+        i.brush = "#0073c4"
+    for i in n2.noteheads:
+        i.brush = "#0073c4"
+    for i in n3.noteheads:
+        i.brush = "#0073c4"
+    for i in n4.noteheads:
+        i.brush = "#0073c4"
+    BeamGroup(n, brush="#0073c499", pen="#0073c499")
+    box = Path.rect((staff.unit(-1), staff.unit(-2.5)), n1, staff.unit(9), staff.unit(8),
+                    brush=Brush.no_brush(), pen="#0073c4")
     dur = random.randint(2, 9)
     arrow1 = Path.arrow((staff.unit(9.25), staff.unit(4)), box,
-                        (staff.unit(dur), staff.unit(0)), pen=Pen("000000", Mm(1)))
+                        (staff.unit(dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
     arrow2 = Path.arrow((staff.unit(-0.25), staff.unit(4)), box,
-                        (staff.unit(-dur), staff.unit(0)), pen=Pen("000000", Mm(1)))
+                        (staff.unit(-dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
     length = Unit(staff.unit(2*dur + 9))
     return length
 
@@ -951,13 +1094,22 @@ def tremolo_rank_3(staff, x):
     n3 = Chordrest(staff.unit(x)+staff.unit(4), staff, ["b"], (1, 16))
     n4 = Chordrest(staff.unit(x)+staff.unit(6), staff, ["b"], (1, 16))
     n = [n1, n2, n3, n4]
-    BeamGroup(n)
-    box = Path.rect((staff.unit(-1), staff.unit(-0.5)), n1, staff.unit(9), staff.unit(8), brush=Brush.no_brush())
+    for i in n1.noteheads:
+        i.brush = "#0073c4"
+    for i in n2.noteheads:
+        i.brush = "#0073c4"
+    for i in n3.noteheads:
+        i.brush = "#0073c4"
+    for i in n4.noteheads:
+        i.brush = "#0073c4"
+    BeamGroup(n, brush="#0073c499", pen="#0073c499")
+    box = Path.rect((staff.unit(-1), staff.unit(-0.5)), n1, staff.unit(9), staff.unit(8),
+                    brush=Brush.no_brush(), pen="#0073c4")
     dur = random.randint(2, 9)
     arrow1 = Path.arrow((staff.unit(9.25), staff.unit(4)), box,
-                        (staff.unit(dur), staff.unit(0)), pen=Pen("000000", Mm(1)))
+                        (staff.unit(dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
     arrow2 = Path.arrow((staff.unit(-0.25), staff.unit(4)), box,
-                        (staff.unit(-dur), staff.unit(0)), pen=Pen("000000", Mm(1)))
+                        (staff.unit(-dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
     length = Unit(staff.unit(2*dur + 9))
     return length
 
@@ -968,13 +1120,22 @@ def tremolo_rank_4(staff, x):
     n3 = Chordrest(staff.unit(x)+staff.unit(4), staff, ["d'"], (1, 16))
     n4 = Chordrest(staff.unit(x)+staff.unit(6), staff, ["d'"], (1, 16))
     n = [n1, n2, n3, n4]
-    BeamGroup(n)
-    box = Path.rect((staff.unit(-1), staff.unit(-1.5)), n1, staff.unit(9), staff.unit(8), brush=Brush.no_brush())
+    for i in n1.noteheads:
+        i.brush = "#0073c4"
+    for i in n2.noteheads:
+        i.brush = "#0073c4"
+    for i in n3.noteheads:
+        i.brush = "#0073c4"
+    for i in n4.noteheads:
+        i.brush = "#0073c4"
+    BeamGroup(n, brush="#0073c499", pen="#0073c499")
+    box = Path.rect((staff.unit(-1), staff.unit(-1.5)), n1, staff.unit(9), staff.unit(8),
+                    brush=Brush.no_brush(), pen="#0073c4")
     dur = random.randint(2, 9)
     arrow1 = Path.arrow((staff.unit(9.25), staff.unit(4)), box,
-                        (staff.unit(dur), staff.unit(0)), pen=Pen("000000", Mm(1)))
+                        (staff.unit(dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
     arrow2 = Path.arrow((staff.unit(-0.25), staff.unit(4)), box,
-                        (staff.unit(-dur), staff.unit(0)), pen=Pen("000000", Mm(1)))
+                        (staff.unit(-dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
     length = Unit(staff.unit(2*dur + 9))
     return length
 
@@ -984,38 +1145,38 @@ def adv_harm_rank_1(staff, x):
         MusicText(
             (staff.unit(0.05), staff.unit(-4.5)),
             parent,
-            "fretboardX"
+            "fretboardX", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(0.725), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(1.4), staff.unit(-1.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(2.075), staff.unit(-2.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(2.75), staff.unit(-1.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(3.425), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         i = random.randint(0, 3)
-        Text((staff.unit(-1), staff.unit(-6)), parent, ["BMaj7", "CMaj7", "DMaj7", "EMaj7"][i])
-        Text((staff.unit(4), staff.unit(-2.5)), parent, ["II", "III", "V", "VII"][i])
+        Text((staff.unit(-1), staff.unit(-6)), parent, ["BMaj7", "CMaj7", "DMaj7", "EMaj7"][i], None, "#4b8c27")
+        Text((staff.unit(4), staff.unit(-2.5)), parent, ["II", "III", "V", "VII"][i], None, "#4b8c27")
 
-    path = Path((staff.unit(x), staff.unit(0)), staff, "#ff00ff55")
+    path = Path((staff.unit(x), staff.unit(0)), staff, "#4b8c2755")
     path.line_to(staff.unit(2), staff.unit(4))
     path.line_to(staff.unit(0), staff.unit(4))
     path.line_to(staff.unit(2), staff.unit(0))
@@ -1023,13 +1184,13 @@ def adv_harm_rank_1(staff, x):
     diagram_1 = MusicText(
         (staff.unit(-1), staff.unit(-1)),
         path,
-        "fretboard6String",
+        "fretboard6String", None, "#4b8c27"
     )
     chord_diagram(diagram_1)
     diagram_2 = MusicText(
         (staff.unit(3), staff.unit(5)),
         path,
-        "fretboard6String",
+        "fretboard6String", None, "#4b8c27"
     )
     chord_diagram(diagram_2)
     diagram_2.rotation = 180
@@ -1042,38 +1203,39 @@ def adv_harm_rank_2(staff, x):
         MusicText(
             (staff.unit(0.05), staff.unit(-4.5)),
             parent,
-            "fretboardX"
+            "fretboardX", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(0.725), staff.unit(-4.5)),
             parent,
-            "fretboardX"
+            "fretboardX", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(1.4), staff.unit(-2.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(2.075), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(2.75), staff.unit(-2.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(3.425), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         i = random.randint(0, 3)
-        Text((staff.unit(-1), staff.unit(-6)), parent, ["Fo7", "F#o7", "Go7", "G#o7", "Ao7", "Bbo7", "Co7"][i])
-        Text((staff.unit(4), staff.unit(-2.5)), parent, ["III", "IV", "V", "VI", "VII", "IX"][i])
+        Text((staff.unit(-1), staff.unit(-6)), parent, ["Fo7", "F#o7", "Go7", "G#o7", "Ao7", "Bbo7", "Co7"][i],
+             None, "#4b8c27")
+        Text((staff.unit(4), staff.unit(-2.5)), parent, ["III", "IV", "V", "VI", "VII", "IX"][i], None, "#4b8c27")
 
-    path = Path((staff.unit(x), staff.unit(0)), staff, "#ff00ff55")
+    path = Path((staff.unit(x), staff.unit(0)), staff, "#4b8c2755")
     path.line_to(staff.unit(2), staff.unit(4))
     path.line_to(staff.unit(0), staff.unit(4))
     path.line_to(staff.unit(2), staff.unit(0))
@@ -1081,13 +1243,13 @@ def adv_harm_rank_2(staff, x):
     diagram_1 = MusicText(
         (staff.unit(-1), staff.unit(-1)),
         path,
-        "fretboard6String",
+        "fretboard6String", None, "#4b8c27"
     )
     chord_diagram(diagram_1)
     diagram_2 = MusicText(
         (staff.unit(3), staff.unit(5)),
         path,
-        "fretboard6String",
+        "fretboard6String", None, "#4b8c27"
     )
     chord_diagram(diagram_2)
     diagram_2.rotation = 180
@@ -1100,38 +1262,38 @@ def adv_harm_rank_3(staff, x):
         MusicText(
             (staff.unit(0.05), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(0.725), staff.unit(-1.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(1.4), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(2.075), staff.unit(-2.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(2.75), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(3.425), staff.unit(-1.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         i = random.randint(0, 3)
-        Text((staff.unit(0), staff.unit(-6)), parent, ["F#9", "G9", "Ab9", "A9", "Bb9", "C9"][i])
-        Text((staff.unit(4), staff.unit(-2.5)), parent, ["II", "III", "IV", "V", "VI", "VII"][i])
+        Text((staff.unit(0), staff.unit(-6)), parent, ["F#9", "G9", "Ab9", "A9", "Bb9", "C9"][i], None, "#4b8c27")
+        Text((staff.unit(4), staff.unit(-2.5)), parent, ["II", "III", "IV", "V", "VI", "VII"][i], None, "#4b8c27")
 
-    path = Path((staff.unit(x), staff.unit(0)), staff, "#ff00ff55")
+    path = Path((staff.unit(x), staff.unit(0)), staff, "#4b8c2755")
     path.line_to(staff.unit(2), staff.unit(4))
     path.line_to(staff.unit(0), staff.unit(4))
     path.line_to(staff.unit(2), staff.unit(0))
@@ -1139,13 +1301,13 @@ def adv_harm_rank_3(staff, x):
     diagram_1 = MusicText(
         (staff.unit(-1), staff.unit(-1)),
         path,
-        "fretboard6String",
+        "fretboard6String", None, "#4b8c27"
     )
     chord_diagram(diagram_1)
     diagram_2 = MusicText(
         (staff.unit(3), staff.unit(5)),
         path,
-        "fretboard6String",
+        "fretboard6String", None, "#4b8c27"
     )
     chord_diagram(diagram_2)
     diagram_2.rotation = 180
@@ -1158,40 +1320,40 @@ def adv_harm_rank_4(staff, x):
         MusicText(
             (staff.unit(0.05), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(0.725), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(1.4), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(2.075), staff.unit(-3.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(2.75), staff.unit(-2.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         MusicText(
             (staff.unit(3.425), staff.unit(-2.5)),
             parent,
-            "fretboardFilledCircle"
+            "fretboardFilledCircle", None, "#4b8c27"
         )
         i = random.randint(0, 3)
         Text((staff.unit(0), staff.unit(-6)), parent,
-             ["F#Q", "GQ", "AbQ", "AQ", "BbQ", "CQ", "C#Q", "DQ", "EbQ"][i])
+             ["F#Q", "GQ", "AbQ", "AQ", "BbQ", "CQ", "C#Q", "DQ", "EbQ"][i], None, "#4b8c27")
         Text((staff.unit(4), staff.unit(-2.5)), parent,
-             ["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"][i])
+             ["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"][i], None, "#4b8c27")
 
-    path = Path((staff.unit(x), staff.unit(0)), staff, "#ff00ff55")
+    path = Path((staff.unit(x), staff.unit(0)), staff, "#4b8c2755")
     path.line_to(staff.unit(2), staff.unit(4))
     path.line_to(staff.unit(0), staff.unit(4))
     path.line_to(staff.unit(2), staff.unit(0))
@@ -1199,13 +1361,13 @@ def adv_harm_rank_4(staff, x):
     diagram_1 = MusicText(
         (staff.unit(-1), staff.unit(-1)),
         path,
-        "fretboard6String",
+        "fretboard6String", None, "#4b8c27"
     )
     chord_diagram(diagram_1)
     diagram_2 = MusicText(
         (staff.unit(3), staff.unit(5)),
         path,
-        "fretboard6String",
+        "fretboard6String", None, "#4b8c27"
     )
     chord_diagram(diagram_2)
     diagram_2.rotation = 180
