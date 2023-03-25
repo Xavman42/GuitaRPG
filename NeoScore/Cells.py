@@ -352,12 +352,8 @@ def bartok_rank_4(staff, x):
 
 def tambura_rank_1(staff, x):
     r1 = Path.rect((staff.unit(x), staff.unit(-2)), staff, Unit(10), Unit(40), "#2e2afa50")
-    t1 = Text((staff.unit(-3), staff.unit(-4)), r1, "tambura", neoscore.default_font.modified(italic=True), "#2e2afa")
     c1 = Text((staff.unit(-0.5), staff.unit(-1)), r1, random.choice(["G5", "A5", "B5", "C5"]), None, "#2e2afa")
-    t2 = Text((staff.unit(5.5), staff.unit(12.5)), r1, "tambura", neoscore.default_font.modified(italic=True),
-              "#2e2afa")
     c2 = Text((staff.unit(3), staff.unit(10)), r1, random.choice(["G5", "A5", "B5", "C5"]), None, "#2e2afa")
-    t2.rotation = 180
     c2.rotation = 180
     length = Unit(staff.unit(6))
     return length
@@ -365,7 +361,6 @@ def tambura_rank_1(staff, x):
 
 def tambura_rank_2(staff, x):
     r1 = Path.rect((staff.unit(x), staff.unit(-2)), staff, Unit(10), Unit(40), "#2e2afa50")
-    t1 = Text((staff.unit(-3), staff.unit(-4)), r1, "tambura", neoscore.default_font.modified(italic=True), "#2e2afa")
     # While there is a SMuFL for guitar barre C, it's so similar to a text C that I don't think I'll bother
 #    c1 = MusicText(
 #        (staff.unit(x - 3.5), staff.unit(-1)),
@@ -375,12 +370,9 @@ def tambura_rank_2(staff, x):
     c1 = Text((staff.unit(-0.5), staff.unit(-1)), r1,
               "C" + random.choice(["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"]),
               neoscore.default_font.modified(weight=80), "#2e2afa")
-    t2 = Text((staff.unit(5.5), staff.unit(12.5)), r1, "tambura", neoscore.default_font.modified(italic=True),
-              "#2e2afa")
     c2 = Text((staff.unit(3), staff.unit(10)), r1,
               "C" + random.choice(["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"]),
               neoscore.default_font.modified(weight=80), "#2e2afa")
-    t2.rotation = 180
     c2.rotation = 180
     length = Unit(staff.unit(7))
     return length
@@ -391,7 +383,6 @@ def tambura_rank_3(staff, x):
     chord_2 = random.choice(["G5", "A5", "B5", "C5"])
     chord_3 = random.choice(["G5", "A5", "B5", "C5"])
     r1 = Path.rect((staff.unit(x), staff.unit(-2)), staff, Unit(10), Unit(40), "#2e2afa50")
-    t1 = Text((staff.unit(-3), staff.unit(-4)), r1, "tambura", neoscore.default_font.modified(italic=True), "#2e2afa")
     c1 = Text((staff.unit(-0.5), staff.unit(-1)), r1, chord_1, None, "#2e2afa")
     c2 = Text((staff.unit(2.5), staff.unit(10)), r1, chord_1, None, "#2e2afa")
     c2.rotation = 180
@@ -407,9 +398,6 @@ def tambura_rank_3(staff, x):
     c7 = Text((staff.unit(-0.5), staff.unit(-1)), r4, chord_3, None, "#2e2afa")
     c8 = Text((staff.unit(2.5), staff.unit(10)), r4, chord_3, None, "#2e2afa")
     c8.rotation = 180
-    t2 = Text((staff.unit(5.5), staff.unit(12.5)), r4, "tambura", neoscore.default_font.modified(italic=True),
-              "#2e2afa")
-    t2.rotation = 180
     length = Unit(staff.unit(18))
     return length
 
@@ -421,10 +409,6 @@ def tambura_rank_4(staff, x):
     c1 = Text((staff.unit(-15.5), staff.unit(-1)), r1, chord, neoscore.default_font.modified(weight=80), "#2e2afa")
     c2 = Text((staff.unit(3), staff.unit(10)), r1, chord, neoscore.default_font.modified(weight=80), "#2e2afa")
     c2.rotation = 180
-    t1 = Text((staff.unit(-17), staff.unit(-4)), r1, "tambura", neoscore.default_font.modified(italic=True), "#2e2afa")
-    t2 = Text((staff.unit(5.5), staff.unit(12.5)), r1, "tambura", neoscore.default_font.modified(italic=True),
-              "#2e2afa")
-    t2.rotation = 180
     length = Unit(staff.unit(17))
     return length
 
@@ -1173,8 +1157,8 @@ def adv_harm_rank_1(staff, x):
             "fretboardFilledCircle", None, "#4b8c27"
         )
         i = random.randint(0, 3)
-        Text((staff.unit(-1), staff.unit(-6)), parent, ["BMaj7", "CMaj7", "DMaj7", "EMaj7"][i], None, "#4b8c27")
-        Text((staff.unit(4), staff.unit(-2.5)), parent, ["II", "III", "V", "VII"][i], None, "#4b8c27")
+        # Text((staff.unit(-1), staff.unit(-6)), parent, ["BMaj7", "CMaj7", "DMaj7", "EMaj7"][i], None, "#4b8c27")
+        Text((staff.unit(0.75), staff.unit(-6)), parent, ["II", "III", "V", "VII"][i], None, "#4b8c27")
 
     path = Path((staff.unit(x), staff.unit(0)), staff, "#4b8c2755")
     path.line_to(staff.unit(2), staff.unit(4))
@@ -1231,9 +1215,9 @@ def adv_harm_rank_2(staff, x):
             "fretboardFilledCircle", None, "#4b8c27"
         )
         i = random.randint(0, 3)
-        Text((staff.unit(-1), staff.unit(-6)), parent, ["Fo7", "F#o7", "Go7", "G#o7", "Ao7", "Bbo7", "Co7"][i],
-             None, "#4b8c27")
-        Text((staff.unit(4), staff.unit(-2.5)), parent, ["III", "IV", "V", "VI", "VII", "IX"][i], None, "#4b8c27")
+        # Text((staff.unit(-1), staff.unit(-6)), parent, ["Fo7", "F#o7", "Go7", "G#o7", "Ao7", "Bbo7", "Co7"][i],
+        #      None, "#4b8c27")
+        Text((staff.unit(0.75), staff.unit(-6)), parent, ["III", "IV", "V", "VI", "VII", "IX"][i], None, "#4b8c27")
 
     path = Path((staff.unit(x), staff.unit(0)), staff, "#4b8c2755")
     path.line_to(staff.unit(2), staff.unit(4))
@@ -1290,8 +1274,8 @@ def adv_harm_rank_3(staff, x):
             "fretboardFilledCircle", None, "#4b8c27"
         )
         i = random.randint(0, 3)
-        Text((staff.unit(0), staff.unit(-6)), parent, ["F#9", "G9", "Ab9", "A9", "Bb9", "C9"][i], None, "#4b8c27")
-        Text((staff.unit(4), staff.unit(-2.5)), parent, ["II", "III", "IV", "V", "VI", "VII"][i], None, "#4b8c27")
+        # Text((staff.unit(0), staff.unit(-6)), parent, ["F#9", "G9", "Ab9", "A9", "Bb9", "C9"][i], None, "#4b8c27")
+        Text((staff.unit(0.75), staff.unit(-6)), parent, ["II", "III", "IV", "V", "VI", "VII"][i], None, "#4b8c27")
 
     path = Path((staff.unit(x), staff.unit(0)), staff, "#4b8c2755")
     path.line_to(staff.unit(2), staff.unit(4))
@@ -1348,9 +1332,9 @@ def adv_harm_rank_4(staff, x):
             "fretboardFilledCircle", None, "#4b8c27"
         )
         i = random.randint(0, 3)
-        Text((staff.unit(0), staff.unit(-6)), parent,
-             ["F#Q", "GQ", "AbQ", "AQ", "BbQ", "CQ", "C#Q", "DQ", "EbQ"][i], None, "#4b8c27")
-        Text((staff.unit(4), staff.unit(-2.5)), parent,
+        # Text((staff.unit(0), staff.unit(-6)), parent,
+        #      ["F#Q", "GQ", "AbQ", "AQ", "BbQ", "CQ", "C#Q", "DQ", "EbQ"][i], None, "#4b8c27")
+        Text((staff.unit(0.75), staff.unit(-6)), parent,
              ["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"][i], None, "#4b8c27")
 
     path = Path((staff.unit(x), staff.unit(0)), staff, "#4b8c2755")

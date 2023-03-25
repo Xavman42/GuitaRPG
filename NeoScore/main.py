@@ -23,7 +23,7 @@ def refresh_func(func_time: float):
     global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
         my_next_point, my_staves, network, my_scene_changed, my_last_index, hud_last_index, hud_share_dict, \
         my_top_layer_assets, my_density
-    move_rate = 30
+    move_rate = 230
     if new_move:
         if not my_next_point == 37:
             my_density = max(my_density * 0.95, 0.2)
@@ -352,5 +352,5 @@ if __name__ == '__main__':
     neoscore.set_key_event_handler(start_game)
     reference_time = time.time()
     my_density = 2.0
-    neoscore.show(still_refresh_func, display_page_geometry=False,
+    neoscore.show(still_refresh_func, display_page_geometry=False, auto_viewport_interaction_enabled=False,
                   min_window_size=(1920, 680), max_window_size=(1920, 680))
