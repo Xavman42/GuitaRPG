@@ -22,7 +22,7 @@
 ~tambL2 = {
 	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_3, inf));
-	Pdefn(\duration, Pwhite(0.1, 3.0));
+	Pdefn(\duration, Pwhite(0.5, 5.0));
 	Pdefn(\play_rate, Pwhite(0.5, 2.2));
 	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 1.0, \freq, 200.0, \rq, 1.0, \lag, 2, \amp, 4);

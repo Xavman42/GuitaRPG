@@ -5,11 +5,11 @@
 	Pdefn(\bufarray, Prand(~harm_buff_array, inf));
 	Pdefn(\duration, Pseq([
 		Pwhite(0.01, 0.1, 1),
+		Pwhite(0.01, 1.1, 1),
 		Pwhite(0.01, 0.1, 1),
+		Pwhite(0.01, 1.1, 1),
 		Pwhite(0.01, 0.1, 1),
-		Pwhite(0.01, 0.1, 1),
-		Pwhite(0.01, 0.1, 1),
-		Pwhite(0.5, 3.0, 1)], inf));
+		Pwhite(1.5, 5.0, 1)], inf));
 	Pdefn(\play_rate, Prand([0.5, 1, 2, 4, 8], inf));
 	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
@@ -32,7 +32,7 @@
 		Pwhite(0.01, 0.1, 1),
 		Pwhite(0.01, 0.1, 1),
 		Pwhite(0.01, 0.1, 1),
-		Pwhite(2.5, 3.0, 1)], inf));
+		Pwhite(2.5, 8.0, 1)], inf));
 	Pdefn(\play_rate, Prand([0.5, 0.75, 1, 1.5, 2, 3, 4, 6, 8], inf));
 	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
@@ -55,7 +55,7 @@
 		Pwhite(0.01, 0.1, 1),
 		Pwhite(0.21, 0.3, 1),
 		Pwhite(0.01, 0.1, 1),
-		Pwhite(0.5, 1.0, 1)], inf));
+		Pwhite(0.5, 4.0, 1)], inf));
 	Pdefn(\play_rate, Prand([0.5, 4/6, 5/6, 1, 4/3, 5/3, 2, 8/3, 10/3, 4, 16/3, 20/3, 8], inf));
 	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);

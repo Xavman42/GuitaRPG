@@ -10,7 +10,7 @@
 	~hi_pass_synth.set(\mix, 0.0, \freq, 600, \lag, 2, \amp, 1);
 	~comb_synth.set(\mix, 0.0, \maxdelaytime, 0.2, \delaytime, 0.2, \decaytime, 1.0, \lag, 2, \amp, 1);
 	~random_delay_synth.set(\mix, 1.0, \min, -40, \max, -6, \del, 0.25, \amp, 4, \lag, 2);
-	~ping_pong_synth.set(\mix, 1.0, \del, 2, \delmin, -1, \delmax, 1, \fb, 0.7, \amp, 4, \lag, 2);
+	~ping_pong_synth.set(\mix, 0.0, \del, 2, \delmin, -1, \delmax, 1, \fb, 0.7, \amp, 4, \lag, 2);
 	~chorus_synth.set(\mix, 0.2, \predelay, 0.08, \speed, 0.03, \depth, 0.1, \ph_diff, 0.05, \lag, 2, \amp, 3);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 20, \lag, 2, \amp, 1);
@@ -26,10 +26,10 @@
 	Pdefn(\play_rate, Pwhite(0.1, 1.2));
 	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
-	~hi_pass_synth.set(\mix, 0.0, \freq, 600, \lag, 2, \amp, 1);
+	~hi_pass_synth.set(\mix, 1.0, \freq, 100, \lag, 2, \amp, 1);
 	~comb_synth.set(\mix, 0.0, \maxdelaytime, 0.2, \delaytime, 0.2, \decaytime, 1.0, \lag, 2, \amp, 1);
 	~random_delay_synth.set(\mix, 1.0, \min, -40, \max, -6, \del, 0.25, \amp, 4, \lag, 2);
-	~ping_pong_synth.set(\mix, 1.0, \del, 0.001, \fb, 0.7, \amp, 3, \lag, 2);
+	~ping_pong_synth.set(\mix, 0.5, \del, 0.001, \fb, 0.1, \amp, 2, \lag, 2);
 	~chorus_synth.set(\mix, 0.5, \predelay, 0.08, \speed, 4.0, \depth, 0.1, \ph_diff, 0.001, \lag, 2, \amp, 2);
 	~pitch_shift_synth.set(\mix, 0.0, \amp, 1, \lag, 2);
 	~ring_mod_synth.set(\mix, 0.0, \freq, 20, \lag, 2, \amp, 1);

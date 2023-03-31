@@ -136,6 +136,7 @@ Pbind(
 	\mul, Pdefn(\buf_mul, 0.1)
 ).play;
 
+NetAddr.langPort.postln;
 x = OSCFunc( { | message, time, addr, port |
 	var area, region, level;
 
@@ -235,13 +236,13 @@ NetAddr.langPort.postln;
 
 )
 
-~piece.scrape.l5.(); //dark dark blue
-~piece.perc.l5.(); //light orange
-~piece.tamb.l5.(); //green
-~piece.bart.l5.(); //pale blue almost white
+~piece.scrape.l1.(); //dark dark blue
+~piece.perc.l3.(); //light orange
+~piece.tamb.l4.(); //green
+~piece.bart.l4.(); //pale blue almost white
 ~piece.melo.l4.(); //light red
 ~piece.triad.l4.(); //light orange
-~piece.adv_harm.l4.();
+~piece.adv_harm.l1.();
 ~piece.harmonics.l4.();
 ~piece.rake.l4.();
 ~piece.trem.l4.();
