@@ -733,44 +733,70 @@ def harmonic_rank_4(staff, x):
 
 
 def rake_rank_1(staff, x):
-    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVI (RH~19)", None, "#c391c4")
+    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVI", None, "#c391c4")
     RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
                            (staff.unit(0), staff.unit(8)), c1,
+                           "wiggleTrillFastest", brush="#c391c4")
+    RepeatingMusicTextLine((staff.unit(6), staff.unit(1)), c1,
+                           (staff.unit(6), staff.unit(8)), c1,
                            "wiggleTrillFastest", brush="#c391c4")
     RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
                            (staff.unit(12), staff.unit(8)), c1,
                            "wiggleTrillFastest", brush="#c391c4")
-    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVI (RH~19)", None, "#c391c4")
+    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVI", None, "#c391c4")
     c2.rotation = 180
     length = Unit(staff.unit(14))
     return length
 
 
 def rake_rank_2(staff, x):
-    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CIV (RH~24)", None, "#c391c4")
+    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CIV", None, "#c391c4")
     RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
                            (staff.unit(0), staff.unit(8)), c1,
+                           "wiggleTrillFastest", brush="#c391c4")
+    RepeatingMusicTextLine((staff.unit(4), staff.unit(1)), c1,
+                           (staff.unit(4), staff.unit(8)), c1,
+                           "wiggleTrillFastest", brush="#c391c4")
+    RepeatingMusicTextLine((staff.unit(8), staff.unit(1)), c1,
+                           (staff.unit(8), staff.unit(8)), c1,
                            "wiggleTrillFastest", brush="#c391c4")
     RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
                            (staff.unit(12), staff.unit(8)), c1,
                            "wiggleTrillFastest", brush="#c391c4")
-    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CIV (RH~24)", None, "#c391c4")
+    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CIV", None, "#c391c4")
     c2.rotation = 180
     length = Unit(staff.unit(14))
     return length
 
 
 def rake_rank_3(staff, x):
-    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVII (RH~19)", None, "#c391c4")
+    c1 = Text((staff.unit(x), staff.unit(-2)), staff, "CVII", None, "#c391c4")
     RepeatingMusicTextLine((staff.unit(0), staff.unit(1)), c1,
-                           (staff.unit(0), staff.unit(8)), c1,
+                           (staff.unit(0), staff.unit(5)), c1,
                            "wiggleTrillFastest", brush="#c391c4")
-    RepeatingMusicTextLine((staff.unit(12), staff.unit(1)), c1,
-                           (staff.unit(12), staff.unit(8)), c1,
+    RepeatingMusicTextLine((staff.unit(4), staff.unit(3)), c1,
+                           (staff.unit(4), staff.unit(6)), c1,
                            "wiggleTrillFastest", brush="#c391c4")
-    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVII (RH~19", None, "#c391c4")
+    RepeatingMusicTextLine((staff.unit(6), staff.unit(2)), c1,
+                           (staff.unit(6), staff.unit(5)), c1,
+                           "wiggleTrillFastest", brush="#c391c4")
+    RepeatingMusicTextLine((staff.unit(10), staff.unit(0)), c1,
+                           (staff.unit(10), staff.unit(7)), c1,
+                           "wiggleTrillFastest", brush="#c391c4")
+    box = Path.rect((staff.unit(-1), staff.unit(-3)), c1, staff.unit(15), staff.unit(14), brush=Brush.no_brush(),
+                    pen="#0073c4")
+    dur = random.randint(4, 4)
+    arrow1 = Path.arrow((staff.unit(15.25), staff.unit(4)), box,
+                        (staff.unit(dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
+    arrow2 = Path.arrow((staff.unit(-0.25), staff.unit(4)), box,
+                        (staff.unit(-dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
+    arrow3 = Path.arrow((staff.unit(15.25), staff.unit(10)), box,
+                        (staff.unit(dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
+    arrow4 = Path.arrow((staff.unit(-0.25), staff.unit(10)), box,
+                        (staff.unit(-dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
+    c2 = Text((staff.unit(13), staff.unit(8)), c1, "CVII", None, "#c391c4")
     c2.rotation = 180
-    length = Unit(staff.unit(14))
+    length = Unit(staff.unit(15))
     return length
 
 
@@ -791,9 +817,20 @@ def rake_rank_4(staff, x):
     RepeatingMusicTextLine((staff.unit(8), staff.unit(5)), c1,
                            (staff.unit(8), staff.unit(7)), c1,
                            "wiggleTrillFastest", brush="#c391c4")
+    box = Path.rect((staff.unit(-1), staff.unit(-3)), c1, staff.unit(12), staff.unit(14), brush=Brush.no_brush(),
+                    pen="#0073c4")
+    dur = random.randint(4, 4)
+    arrow1 = Path.arrow((staff.unit(12.25), staff.unit(4)), box,
+                        (staff.unit(dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
+    arrow2 = Path.arrow((staff.unit(-0.25), staff.unit(4)), box,
+                        (staff.unit(-dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
+    arrow3 = Path.arrow((staff.unit(12.25), staff.unit(10)), box,
+                        (staff.unit(dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
+    arrow4 = Path.arrow((staff.unit(-0.25), staff.unit(10)), box,
+                        (staff.unit(-dur), staff.unit(0)), pen=Pen("#0073c455", Mm(1)), brush="#0073c455")
     c2 = Text((staff.unit(9), staff.unit(8)), c1, "G5", None, "#c391c4")
     c2.rotation = 180
-    length = Unit(staff.unit(10))
+    length = Unit(staff.unit(12))
     return length
 
 
