@@ -23,7 +23,7 @@ def refresh_func(func_time: float):
     global my_angle, my_move_dur, new_move, my_x_move_rate, my_y_move_rate, reference_time, rotate_dist, \
         my_next_point, my_staves, network, my_scene_changed, my_last_index, hud_last_index, hud_share_dict, \
         my_top_layer_assets, my_density
-    move_rate = 30
+    move_rate = 230
     if new_move:
         if not my_next_point == 37:
             my_density = max(my_density * 0.95, 0.2)
@@ -67,6 +67,7 @@ def refresh_func(func_time: float):
         else:
             end_text = Text((Unit(4030), Unit(-580)), None, "Congratulations!",
                             neoscore.default_font.modified(size=Unit(16)))
+            send_particle(my_client, "end", 1)
             neoscore.set_refresh_func(still_refresh_func)
 
 

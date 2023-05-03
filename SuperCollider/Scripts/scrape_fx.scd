@@ -3,8 +3,8 @@
 ~scrapeL1 = {
 	for (0, ~guitar_binds.size, {arg i; ~guitar_binds[i].stop;});
 	Pdefn(\bufarray, Prand(~buff_array_1, inf));
-	Pdefn(\duration, Pwhite(3.0, 4.4));
-	Pdefn(\play_rate, Pwhite(0.05, 0.2));
+	Pdefn(\duration, Pwhite(3.0, 10.4));
+	Pdefn(\play_rate, Pwhite(0.15, 0.3));
 	Pdefn(\buf_mul, 0.1);
 	~mid_cut_synth.set(\mix, 0.0, \freq, 440.0, \rq, 1.0, \lag, 2, \amp, 1);
 	~hi_pass_synth.set(\mix, 1.0, \freq, 100, \lag, 2, \amp, 1);
