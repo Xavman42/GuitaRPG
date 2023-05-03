@@ -8,6 +8,7 @@ s.waitForBoot({
 
 	ServerTree.removeAll;
 
+	Buffer.freeAll;
 	(~path ++ "Scripts/make_buffers.scd").load;
 	(~path ++ "Scripts/make_synthDefs.scd").load;
 
