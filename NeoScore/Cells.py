@@ -1406,6 +1406,7 @@ if __name__ == '__main__':
     staff_1 = Staff((Inch(0.5), Inch(1)), parent=None, length=Inch(1))
     clef_1 = InvisibleClef(Unit(0), staff_1, 'treble')
     scrape_rank_1(staff_1, y)
+    Text((Unit(0), Unit(-20)), staff_1, "Scrape your nail along the strings to produce a whistling sound")
 
     staff_2 = Staff((Inch(2), Inch(1)), parent=None, length=Inch(1))
     clef_2 = InvisibleClef(Unit(0), staff_2, 'treble')
@@ -1422,6 +1423,8 @@ if __name__ == '__main__':
     staff_5 = Staff((Inch(0.5), Inch(2.5)), parent=None, length=Inch(1))
     clef_5 = InvisibleClef(Unit(0), staff_5, 'treble')
     bartok_rank_1(staff_5, y)
+    Text((Unit(0), Unit(-55)), staff_5, "Bartok pizzicato: Pull the string away from the instrument")
+    Text((Unit(0), Unit(-42)), staff_5, "and let it slap against the fretboard")
 
     staff_6 = Staff((Inch(2), Inch(2.5)), parent=None, length=Inch(1))
     clef_6 = InvisibleClef(Unit(0), staff_6, 'treble')
@@ -1435,147 +1438,157 @@ if __name__ == '__main__':
     clef_8 = InvisibleClef(Unit(0), staff_8, 'treble')
     bartok_rank_4(staff_8, y)
 
-    staff_9 = Staff((Inch(0.5), Inch(4)), parent=None, length=Inch(1))
+    staff_9 = Staff((Inch(0.5), Inch(4.5)), parent=None, length=Inch(1))
     clef_9 = InvisibleClef(Unit(0), staff_9, 'treble')
     tambura_rank_1(staff_9, y)
+    Text((Unit(0), Unit(-55)), staff_9, "Tambura: finger the indicated chord")
+    Text((Unit(0), Unit(-42)), staff_9, "and strike the strings with the side of your thumb")
 
-    staff_10 = Staff((Inch(2), Inch(4)), parent=None, length=Inch(1))
+    staff_10 = Staff((Inch(2), Inch(4.5)), parent=None, length=Inch(1))
     clef_10 = InvisibleClef(Unit(0), staff_10, 'treble')
     tambura_rank_2(staff_10, y)
 
-    staff_11 = Staff((Inch(3.5), Inch(4)), parent=None, length=Inch(1))
+    staff_11 = Staff((Inch(3.5), Inch(4.5)), parent=None, length=Inch(1))
     clef_11 = InvisibleClef(Unit(0), staff_11, 'treble')
     tambura_rank_3(staff_11, y)
 
-    staff_12 = Staff((Inch(5), Inch(4)), parent=None, length=Inch(1))
+    staff_12 = Staff((Inch(5), Inch(4.5)), parent=None, length=Inch(1))
     clef_12 = InvisibleClef(Unit(0), staff_12, 'treble')
     tambura_rank_4(staff_12, y)
 
-    staff_13 = Staff((Inch(0.5), Inch(5.5)), parent=None, length=Inch(1))
+    staff_13 = Staff((Inch(0.5), Inch(6.0)), parent=None, length=Inch(1))
     clef_13 = InvisibleClef(Unit(0), staff_13, 'treble')
     perc_rank_1(staff_13, y)
+    Text((Unit(0), Unit(-30)), staff_13, "Percussion: find a different sound for each symbol")
 
-    staff_14 = Staff((Inch(2), Inch(5.5)), parent=None, length=Inch(1))
+    staff_14 = Staff((Inch(2), Inch(6.0)), parent=None, length=Inch(1))
     clef_14 = InvisibleClef(Unit(0), staff_14, 'treble')
     perc_rank_2(staff_14, y)
 
-    staff_15 = Staff((Inch(3.5), Inch(5.5)), parent=None, length=Inch(1))
+    staff_15 = Staff((Inch(3.5), Inch(6.0)), parent=None, length=Inch(1))
     clef_15 = InvisibleClef(Unit(0), staff_15, 'treble')
     perc_rank_3(staff_15, y)
 
-    staff_16 = Staff((Inch(5), Inch(5.5)), parent=None, length=Inch(1))
+    staff_16 = Staff((Inch(5), Inch(6.0)), parent=None, length=Inch(1))
     clef_16 = InvisibleClef(Unit(0), staff_16, 'treble')
     perc_rank_4(staff_16, y)
 
-    staff_17 = Staff((Inch(0.5), Inch(6.5)), parent=None, length=Inch(1))
+    staff_17 = Staff((Inch(0.5), Inch(7.0)), parent=None, length=Inch(1))
     clef_17 = InvisibleClef(Unit(0), staff_17, 'treble')
     triad_rank_1(staff_17, y)
+    Text((Unit(0), Unit(-25)), staff_17, "Improvise using these pitches")
 
-    staff_18 = Staff((Inch(2), Inch(6.5)), parent=None, length=Inch(1))
+    staff_18 = Staff((Inch(2), Inch(7.0)), parent=None, length=Inch(1))
     clef_18 = InvisibleClef(Unit(0), staff_18, 'treble')
     triad_rank_2(staff_18, y)
 
-    staff_19 = Staff((Inch(3.5), Inch(6.5)), parent=None, length=Inch(1))
+    staff_19 = Staff((Inch(3.5), Inch(7.0)), parent=None, length=Inch(1))
     clef_19 = InvisibleClef(Unit(0), staff_19, 'treble')
     triad_rank_3(staff_19, y)
 
-    staff_20 = Staff((Inch(5), Inch(6.5)), parent=None, length=Inch(1))
+    staff_20 = Staff((Inch(5), Inch(7.0)), parent=None, length=Inch(1))
     clef_20 = InvisibleClef(Unit(0), staff_20, 'treble')
     triad_rank_4(staff_20, y)
 
-    staff_21 = Staff((Inch(0.5), Inch(7.5)), parent=None, length=Inch(1))
+    staff_21 = Staff((Inch(0.5), Inch(8.0)), parent=None, length=Inch(1))
     clef_21 = InvisibleClef(Unit(0), staff_21, 'treble')
     melody_rank_1(staff_21, y)
+    Text((Unit(0), Unit(-25)), staff_21, "Embellish this melodic motive")
 
-    staff_22 = Staff((Inch(2), Inch(7.5)), parent=None, length=Inch(1))
+    staff_22 = Staff((Inch(2), Inch(8.0)), parent=None, length=Inch(1))
     clef_22 = InvisibleClef(Unit(0), staff_22, 'treble')
     melody_rank_2(staff_22, y)
 
-    staff_23 = Staff((Inch(3.5), Inch(7.5)), parent=None, length=Inch(1))
+    staff_23 = Staff((Inch(3.5), Inch(8.0)), parent=None, length=Inch(1))
     clef_23 = InvisibleClef(Unit(0), staff_23, 'treble')
     melody_rank_3(staff_23, y)
 
-    staff_24 = Staff((Inch(5), Inch(7.5)), parent=None, length=Inch(1))
+    staff_24 = Staff((Inch(5), Inch(8.0)), parent=None, length=Inch(1))
     clef_24 = InvisibleClef(Unit(0), staff_24, 'treble')
     melody_rank_4(staff_24, y)
 
-    staff_25 = Staff((Inch(0.5), Inch(8.5)), parent=None, length=Inch(1))
+    staff_25 = Staff((Inch(0.5), Inch(9.0)), parent=None, length=Inch(1))
     clef_25 = InvisibleClef(Unit(0), staff_25, 'treble')
     harmonic_rank_1(staff_25, y)
+    Text((Unit(0), Unit(-30)), staff_25, "Play this natural harmonic")
 
-    staff_26 = Staff((Inch(2), Inch(8.5)), parent=None, length=Inch(1))
+    staff_26 = Staff((Inch(2), Inch(9.0)), parent=None, length=Inch(1))
     clef_26 = InvisibleClef(Unit(0), staff_26, 'treble')
     harmonic_rank_2(staff_26, y)
 
-    staff_27 = Staff((Inch(3.5), Inch(8.5)), parent=None, length=Inch(1))
+    staff_27 = Staff((Inch(3.5), Inch(9.0)), parent=None, length=Inch(1))
     clef_27 = InvisibleClef(Unit(0), staff_27, 'treble')
     harmonic_rank_3(staff_27, y)
 
-    staff_28 = Staff((Inch(5), Inch(8.5)), parent=None, length=Inch(1))
+    staff_28 = Staff((Inch(5), Inch(9.0)), parent=None, length=Inch(1))
     clef_28 = InvisibleClef(Unit(0), staff_28, 'treble')
     harmonic_rank_4(staff_28, y)
 
-    staff_29 = Staff((Inch(0.5), Inch(9.5)), parent=None, length=Inch(1))
+    staff_29 = Staff((Inch(0.5), Inch(1.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_29 = InvisibleClef(Unit(0), staff_29, 'treble')
     rake_rank_1(staff_29, y)
+    Text((Unit(0), Unit(-30)), staff_29, "Play rake harmonics inspired by this gesture")
 
-    staff_30 = Staff((Inch(2), Inch(9.5)), parent=None, length=Inch(1))
+    staff_30 = Staff((Inch(2), Inch(1.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_30 = InvisibleClef(Unit(0), staff_30, 'treble')
     rake_rank_2(staff_30, y)
 
-    staff_31 = Staff((Inch(3.5), Inch(9.5)), parent=None, length=Inch(1))
+    staff_31 = Staff((Inch(3.5), Inch(1.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_31 = InvisibleClef(Unit(0), staff_31, 'treble')
     rake_rank_3(staff_31, y)
 
-    staff_32 = Staff((Inch(5), Inch(9.5)), parent=None, length=Inch(1))
+    staff_32 = Staff((Inch(5), Inch(1.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_32 = InvisibleClef(Unit(0), staff_32, 'treble')
     rake_rank_4(staff_32, y)
 
-    staff_33 = Staff((Inch(0.5), Inch(0.5)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_33 = Staff((Inch(0.5), Inch(3.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_33 = InvisibleClef(Unit(0), staff_33, 'treble')
     rasg_rank_1(staff_33, y)
+    Text((Unit(0), Unit(-50)), staff_33, "Rasgeuado using this chord")
 
-    staff_34 = Staff((Inch(2), Inch(0.5)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_34 = Staff((Inch(2), Inch(3.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_34 = InvisibleClef(Unit(0), staff_34, 'treble')
     rasg_rank_2(staff_34, y)
 
-    staff_35 = Staff((Inch(3.5), Inch(0.5)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_35 = Staff((Inch(3.5), Inch(3.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_35 = InvisibleClef(Unit(0), staff_35, 'treble')
     rasg_rank_3(staff_35, y)
 
-    staff_36 = Staff((Inch(5), Inch(0.5)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_36 = Staff((Inch(5), Inch(3.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_36 = InvisibleClef(Unit(0), staff_36, 'treble')
     rasg_rank_4(staff_36, y)
 
-    staff_37 = Staff((Inch(0.5), Inch(1.5)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_37 = Staff((Inch(0.5), Inch(5.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_37 = InvisibleClef(Unit(0), staff_37, 'treble')
     tremolo_rank_1(staff_37, y)
+    Text((Unit(0), Unit(-30)), staff_37, "Tremolo using these pitches")
 
-    staff_38 = Staff((Inch(2), Inch(1.5)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_38 = Staff((Inch(2), Inch(5.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_38 = InvisibleClef(Unit(0), staff_38, 'treble')
     tremolo_rank_2(staff_38, y)
 
-    staff_39 = Staff((Inch(3.5), Inch(1.5)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_39 = Staff((Inch(3.5), Inch(5.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_39 = InvisibleClef(Unit(0), staff_39, 'treble')
     tremolo_rank_3(staff_39, y)
 
-    staff_40 = Staff((Inch(5), Inch(1.5)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_40 = Staff((Inch(5), Inch(5.0)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_40 = InvisibleClef(Unit(0), staff_40, 'treble')
     tremolo_rank_4(staff_40, y)
 
-    staff_41 = Staff((Inch(0.5), Inch(3)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_41 = Staff((Inch(0.5), Inch(7)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_41 = InvisibleClef(Unit(0), staff_41, 'treble')
     adv_harm_rank_1(staff_41, y)
+    Text((Unit(0), Unit(-50)), staff_41, "Improvise with this chord")
 
-    staff_42 = Staff((Inch(2), Inch(3)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_42 = Staff((Inch(2), Inch(7)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_42 = InvisibleClef(Unit(0), staff_42, 'treble')
     adv_harm_rank_2(staff_42, y)
 
-    staff_43 = Staff((Inch(3.5), Inch(3)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_43 = Staff((Inch(3.5), Inch(7)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_43 = InvisibleClef(Unit(0), staff_43, 'treble')
     adv_harm_rank_3(staff_43, y)
 
-    staff_44 = Staff((Inch(5), Inch(3)), parent=neoscore.document.pages[1], length=Inch(1))
+    staff_44 = Staff((Inch(5), Inch(7)), parent=neoscore.document.pages[1], length=Inch(1))
     clef_44 = InvisibleClef(Unit(0), staff_44, 'treble')
     adv_harm_rank_4(staff_44, y)
 
