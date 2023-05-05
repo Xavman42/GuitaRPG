@@ -1,17 +1,18 @@
 (
 // Play Buffer
 SynthDef(\play_buf, {| bufnum = 0, out = 0, rate = 1, mul = 0.1|
-	var frames;
+	var frames, sig, env;
 	frames = BufFrames.kr(bufnum);
-	Out.ar(out,
-		PlayBuf.ar(1,
+	sig = PlayBuf.ar(1,
 			bufnum,
 			BufRateScale.kr(bufnum),
 			doneAction: Done.freeSelf,
 			rate: rate,
 			//startPos: (((rate>0).binaryValue*0) + ((rate<0).binaryValue*1))*frames
-		)*mul;
-	)
+		);
+	env = EnvGen.ar(Env.perc(0.0, 6.0, 1.0, -1.0), doneAction: 2);
+	sig = sig * mul * env;
+	Out.ar(out, sig);
 }).add;
 
 // Mids cut filter
