@@ -185,7 +185,7 @@ def make_level_text(my_hud_elements):
     rasg_text = Text((Unit(40), Unit(-90)), None, "rasgueado:", Font("Lora", 6))
     tremolo_text = Text((Unit(40), Unit(-80)), None, "tremolo:", Font("Lora", 6))
     adv_harm_text = Text((Unit(40), Unit(-70)), None, "ext. harm:", Font("Lora", 6))
-    current_region_text = Text((Unit(40), Unit(-60)), None, "current region:", Font("Lora", 6))
+   # current_region_text = Text((Unit(40), Unit(-60)), None, "current region:", Font("Lora", 6))
     my_hud_elements = add_element_to_hud(my_hud_elements, scrape_text)
     my_hud_elements = add_element_to_hud(my_hud_elements, bartok_text)
     my_hud_elements = add_element_to_hud(my_hud_elements, tambura_text)
@@ -197,7 +197,7 @@ def make_level_text(my_hud_elements):
     my_hud_elements = add_element_to_hud(my_hud_elements, rasg_text)
     my_hud_elements = add_element_to_hud(my_hud_elements, tremolo_text)
     my_hud_elements = add_element_to_hud(my_hud_elements, adv_harm_text)
-    my_hud_elements = add_element_to_hud(my_hud_elements, current_region_text)
+  #  my_hud_elements = add_element_to_hud(my_hud_elements, current_region_text)
     level_texts = {'scrape': [scrape_text, 0],
                    'bartok': [bartok_text, 0],
                    'tambura': [tambura_text, 0],
@@ -208,8 +208,8 @@ def make_level_text(my_hud_elements):
                    'rake': [rake_text, 0],
                    'rasg': [rasg_text, 0],
                    'tremolo': [tremolo_text, 0],
-                   'adv_harm': [adv_harm_text, 0],
-                   'current_region:': [current_region_text, 0]}
+                   'adv_harm': [adv_harm_text, 0]}
+                 #  'current_region:': [current_region_text, 0]}
     return my_hud_elements, level_texts
 
 

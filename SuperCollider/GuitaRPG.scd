@@ -8,6 +8,7 @@ s.waitForBoot({
 
 	ServerTree.removeAll;
 
+	Buffer.freeAll;
 	(~path ++ "Scripts/make_buffers.scd").load;
 	(~path ++ "Scripts/make_synthDefs.scd").load;
 
@@ -34,10 +35,11 @@ s.waitForBoot({
 		//m = Synth(\mic, [in0: 0, in1: 1, out0: ~live_reverb_bus, out1: ~live_delay_bus, out2: ~live_chorus_bus]);
 	};
 
-	ServerTree.add(~init);
-	ServerTree.run;
+	// ServerTree.add(~init);
+	// ServerTree.run;
 
 	s.sync;
+	~init.value;
 
 	(~path ++ "Scripts/scrape_fx.scd").load;
 	(~path ++ "Scripts/perc_fx.scd").load;
@@ -127,7 +129,7 @@ PathName("Samples/Pitches/".resolveRelative).folders.do({
 	});
 	~pitches = ~pitches.add(sub_array);
 });
-Pbind(
+~pbind = Pbind(
 	\instrument, \play_buf,
 	\dur, Pdefn(\duration, Pwhite(0.1, 1.5)),
 	\out, ~hi_pass_bus,
@@ -136,6 +138,7 @@ Pbind(
 	\mul, Pdefn(\buf_mul, 0.1)
 ).play;
 
+NetAddr.langPort.postln;
 x = OSCFunc( { | message, time, addr, port |
 	var area, region, level;
 
@@ -229,19 +232,23 @@ x = OSCFunc( { | message, time, addr, port |
 		{ level == 3}{~piece.rasg.l3}
 		{ level == 4}{~piece.rasg.l4}
 	}
+	{ region == "end"} {
+		~pbind.stop;
+		~reverb_synth.set(\mix, 0.6, \predelay, 1, \revtime, 5, \lpf, 500, \amp, 4.0, \lag, 2);
+	}
 }, "/print" );
 NetAddr.langPort.postln;
 ~piece.scrape.l1.();
 
 )
 
-~piece.scrape.l5.(); //dark dark blue
-~piece.perc.l5.(); //light orange
-~piece.tamb.l5.(); //green
-~piece.bart.l5.(); //pale blue almost white
+~piece.scrape.l1.(); //dark dark blue
+~piece.perc.l3.(); //light orange
+~piece.tamb.l4.(); //green
+~piece.bart.l4.(); //pale blue almost white
 ~piece.melo.l4.(); //light red
 ~piece.triad.l4.(); //light orange
-~piece.adv_harm.l4.();
+~piece.adv_harm.l1.();
 ~piece.harmonics.l4.();
 ~piece.rake.l4.();
 ~piece.trem.l4.();
@@ -278,5 +285,3 @@ Pdefn(\play_rate, Pwhite(0.8, 1.2));
 )
 
 Server.killAll;
-
-

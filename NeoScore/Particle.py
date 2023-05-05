@@ -31,6 +31,8 @@ def send_particle(client, region, level):
         name = "adv_harm"
     elif region == "tremolo":
         name = "trem"
+    elif region == "end":
+        name = "end"
     elif region == "Null":
         name = "Null"
     else:
