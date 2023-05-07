@@ -251,6 +251,8 @@ def load_assets():
           None, pathlib.Path(cwd + "/Assets/Area_1"), scale=0.38)
     Image((Unit(1145), Unit(-1070)),
           None, pathlib.Path(cwd + "/Assets/Area_2"), scale=0.38)
+    Image((Unit(2290), Unit(-700)),
+          None, pathlib.Path(cwd + "/Assets/Area_3"), scale=0.38)
     # temp = Image((Unit(-200), Unit(40)),
     #       my_staves[0], scrape_background, scale=1)
     # temp.rotation = -90
