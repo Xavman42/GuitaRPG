@@ -51,20 +51,6 @@ obtained a master’s degree in electrophysics from the National Chiao-Tung Univ
 2020, then another master's degree in music composition in 2022 from DePaul University. 
 Davenport is now working towards a DMA at the University of Illinois at Urbana-Champaign.
 
-## Technical requirements
-See tech rider for a stage plot.
-
-I will need two microphones: a pair of SM81s, a pair of KM 184s, or a pair of similar microphones.
-Optimally, these will be provided by the venue, but I can provide these if necessary.
-These microphones are routed into an audio interface. 
-A Scarlett 2i2 would work, but anything that can plug into my Linux laptop via USB is fine.
-(I will bring the Scarlett as a backup.) The interface is connected to my laptop via USB. 
-My computer sends processed audio back to the interface and out to the house mix.
-My laptop also sends a video signal via HDMI to a projector or television for the audience to see.
-Depending on the size of the space, it may be a good idea to send the unprocessed microphone signals to the house mix 
-as well.
-If possible, I would like a mono mix of the house mix sent to me for in-ear monitoring.
-
 
 ## Duration
 
@@ -76,7 +62,20 @@ I will perform this piece for 10 minutes.
 
 ## How to play
 
-After installing dependencies listed in requirements.txt, run the python file `NeoScore/main.py`.
-Press the `a` key to manually decide which direction to go.
+First, intall Python and SuperCollider. Following the procedures linked here is a good idea for the Python side of things: 
+https://neoscore.org/getting_started.html
+Be sure to install the Python dependencies listed in requirements.txt.
 
-I will update this later to include how to get the SuperCollider part up and running.
+For SuperCollider, you can download here: 
+https://supercollider.github.io/downloads.html
+For assistance in learning how to navigate the SuperCollider IDE, check out at least the first tutorial here:
+https://youtu.be/ntL8QDOhhL8
+
+Open the file `SuperCollider/GuitaRPG.scd`, place your cursor somewhere between lines 4 and 117 and run that block of code.
+
+Next, in the same SuperCollider file, place your cursor somewhere between lines 119 and 243 and run the second block of code. You should hear sounds now, though they may be faint.
+
+Next, run `NeoScore/main.py`. Two screens should appear, one is the main score window and the other is a HUD to help with navigating the score.
+With the main score window selected, press the `a` key to manually decide which direction to go. You are now playing the piece!
+
+If you should wish to peruse all the symbols which can appear on the screen and read a short description of my interpretation of each symbol, just run `NeoScore/cells.py`.
