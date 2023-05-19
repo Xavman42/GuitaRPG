@@ -26,7 +26,7 @@ def refresh_func(func_time: float):
     move_rate = 30
     if new_move:
         if not my_next_point == 37:
-            my_density = max(my_density * 0.95, 0.2)
+            my_density = max(my_density * 0.925, 0.2)
             my_angle, distance, my_next_point, my_staves, my_scene_changed, my_last_index, share_dict, indices, \
                 path_options, my_current_point, my_region, region_text = \
                 calculate_trajectory(my_point, my_last_point, my_last_index, possible_paths, my_staves, my_network,
@@ -247,10 +247,10 @@ def load_assets():
     # Scrape region background
     # scrape_background = pathlib.Path(cwd + "/Assets/scrape_background")
     # arrange_background(scrape_background, 14, my_staves[0])
-    Image((Unit(100), Unit(-690)),
-          None, pathlib.Path(cwd + "/Assets/Area_1"), scale=0.38)
-    Image((Unit(1145), Unit(-1070)),
-          None, pathlib.Path(cwd + "/Assets/Area_2"), scale=0.38)
+    # Image((Unit(100), Unit(-690)),
+    #       None, pathlib.Path(cwd + "/Assets/Area_1"), scale=0.38)
+    # Image((Unit(1145), Unit(-1070)),
+    #       None, pathlib.Path(cwd + "/Assets/Area_2"), scale=0.38)
     # Image((Unit(2290), Unit(-700)),
     #       None, pathlib.Path(cwd + "/Assets/Area_3"), scale=0.38)
     # temp = Image((Unit(-200), Unit(40)),
