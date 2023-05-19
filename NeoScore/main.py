@@ -244,51 +244,14 @@ def arrange_background(asset, number, staff):
 def load_assets():
     cwd = os.getcwd()
     disk = pathlib.Path(cwd + "/Assets/circle")
-    # Scrape region background
-    # scrape_background = pathlib.Path(cwd + "/Assets/scrape_background")
-    # arrange_background(scrape_background, 14, my_staves[0])
+
     # Image((Unit(100), Unit(-690)),
     #       None, pathlib.Path(cwd + "/Assets/Area_1"), scale=0.38)
     # Image((Unit(1145), Unit(-1070)),
     #       None, pathlib.Path(cwd + "/Assets/Area_2"), scale=0.38)
     # Image((Unit(2290), Unit(-700)),
     #       None, pathlib.Path(cwd + "/Assets/Area_3"), scale=0.38)
-    # temp = Image((Unit(-200), Unit(40)),
-    #       my_staves[0], scrape_background, scale=1)
-    # temp.rotation = -90
-    # temp = Image((Unit(-200), Unit(150)),
-    #              my_staves[0], scrape_background, scale=1)
-    # temp.rotation = -90
-    # # Percussion region background
-    # percussion_background = pathlib.Path(cwd + "/Assets/percussion_background")
-    # arrange_background(percussion_background, 7, my_staves[11])
-    # arrange_background(percussion_background, 7, my_staves[12])
-    # arrange_background(percussion_background, 7, my_staves[13])
-    # arrange_background(percussion_background, 7, my_staves[14])
-    # # Tambura region background
-    # tambura_background = pathlib.Path(cwd + "/Assets/tambura_background")
-    # # arrange_background(tambura_background, 2, my_staves[7])
-    # arrange_background(tambura_background, 2, my_staves[8])
-    # arrange_background(tambura_background, 2, my_staves[9])
-    # arrange_background(tambura_background, 2, my_staves[10])
-    # # Bartok region background
-    # bartok_background = pathlib.Path(cwd + "/Assets/bartok_background")
-    # arrange_background(bartok_background, 4, my_staves[3])
-    # arrange_background(bartok_background, 5, my_staves[4])
-    # arrange_background(bartok_background, 5, my_staves[5])
-    # arrange_background(bartok_background, 3, my_staves[6])
-    # # Melody region background
-    # melody_background = pathlib.Path(cwd + "/Assets/melody_background")
-    # arrange_background(melody_background, 15, my_staves[30])
-    # arrange_background(melody_background, 4, my_staves[31])
-    # arrange_background(melody_background, 4, my_staves[32])
-    # arrange_background(melody_background, 15, my_staves[33])
-    # # Triad region background
-    # triad_background = pathlib.Path(cwd + "/Assets/triad_background")
-    # arrange_background(triad_background, 6, my_staves[48])
-    # arrange_background(triad_background, 6, my_staves[49])
-    # arrange_background(triad_background, 6, my_staves[50])
-    # arrange_background(triad_background, 6, my_staves[51])
+
     top_layer_assets = []
     for i in my_network_points:
         top_layer_assets.append(Image((Unit((i[0]-42.5)), Unit((i[1]-12.5))), None, disk, scale=1/8))
